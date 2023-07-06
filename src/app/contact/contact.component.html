@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="form">
+    <div class="contact-info">
+      <img src="../assets/contact/sheep.gif">
+
+      <div class="info">
+        <div class="information">
+          <img src="../assets/icons/contact/maps.png" class="icon" alt="" />
+          <p>La Pobla de Farnals, Comunidad Valenciana, España</p>
+        </div>
+        <div class="information">
+          <img src="../assets/icons/contact/email.png" class="icon" alt="" />
+          <p>sergioferrerept@gmail.com</p>
+        </div>
+        <div class="information">
+          <img src="../assets/icons/contact/telefono.png" class="icon" alt="" style="width: 22px;"/>
+          <p>633 850 495</p>
+        </div>
+      </div>
+
+      <div class="social-media">
+        <p>Connect with us :</p>
+        <div class="social-icons">
+          <a href="https://twitter.com/aorrihtos" target="_blank">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://www.instagram.com/sergio_aorih/" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/sergio-ferrer-canet-a1957b24a" target="_blank">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+
+      <form (ngSubmit)="sendEmail()" [formGroup]="contactForm" autocomplete="off">
+        <h1 class="title">Contact us</h1>
+        <div class="input-container">
+          <input
+            type="text"
+            name="title"
+            class="input"
+            required
+            formControlName="title"
+          />
+          <label for=""><img src="../assets/icons/contact/title.png">Title</label>
+          <span>Title</span>
+        </div>
+        <div class="input-container">
+          <input
+            type="text"
+            name="subject"
+            class="input"
+            required
+            formControlName="subject"
+          />
+          <label for=""><img src="../assets/icons/contact/about.png" alt="">Subject</label>
+          <span>Subject</span>
+        </div>
+        <div class="input-container">
+          <input
+            type="tel"
+            name="phone"
+            class="input"
+            formControlName="phone"
+          />
+          <label for=""><img src="../assets/icons/contact/telefonoNegro.png" alt="">Phone (optional)</label>
+          <span>Phone</span>
+        </div>
+        <div class="input-container textarea">
+          <textarea
+            name="text"
+            class="input"
+            required
+            formControlName="text"
+          ></textarea>
+          <label for=""><img src="../assets/icons/signUp/email.png" alt="">Message *</label>
+          <span>Message</span>
+        </div>
+        <input type="submit" value="Send" class="red-button" />
+      </form>
+    </div>
+  </div>
+</div>

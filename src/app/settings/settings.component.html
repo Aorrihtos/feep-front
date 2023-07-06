@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+<div class="settings">
+  <div class="settings-container">
+    <div class="img">
+      <img src="../assets/settings/settings.gif">
+    </div>
+    <div class="text">
+      <h1>Settings</h1>
+      <ul>
+        <li><button class="white-button">Profile</button></li>
+        <li><button class="white-button" onclick="location.href= 'settings-blocked.html'">Blocked</button></li>
+        <li><button class="white-button" onclick="location.href= 'settings-themes.html'">Themes</button></li>
+      </ul>
+    </div>
+  </div>
+  <div class="settings-profile-container">
+    <div class="settings-profile">
+      <div class="header"></div>
+      <img src="../assets/profile-pic.jpg">
+      <div class="editable">
+        <form action="#">
+          <div class="input-field">
+            <input type="text" id="username" value="Aorih" pattern="[A-Za-z0-9]{3,15}" title="Please, enter between 3 and 15 characters"/>
+          </div>
+          <div class="input-field">
+            <input type="text" name="name" id="name" value="Sergio" pattern="[A-Za-z]{3,15}" title="Please, enter between 3 and 15 letters"/>
+          </div>
+          <div class="input-field">
+            <input type="text" value="Ferrer" pattern="[A-Za-z]{3,50}" title="Please, enter between 3 and 50 letters"/>
+          </div>
+          <div class="input-field">
+            <input type="date" name="date" id="date" value = "2000-08-28" required/>
+          </div>
+          <div class="input-field">
+            <input type="email" value="serfermpt@gmail.com"/>
+          </div>
+          <div class="input-field">
+            <input type="password" value="patata" pattern="[A-Za-z0-9]{3,15}" title="Please, enter between 3 and 15 characters"/>
+          </div>
+          <div class="submit-buttons">
+            <input type="submit" class="red-button" value="Ignore Changes" />
+            <input type="submit" class="red-button" value="Submit Changes" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
