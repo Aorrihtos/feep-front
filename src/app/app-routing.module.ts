@@ -13,6 +13,16 @@ const routes: Routes = [
     canMatch: [authGuard]
   },
   {
+    path: "contact",
+    loadChildren: ()=> import('./contact/contact.module').then(m => m.ContactModule),
+    canMatch: [authGuard]
+  },
+  {
+    path: "settings",
+    loadChildren: ()=> import('./settings/settings.module').then(m => m.SettingsModule),
+    canMatch: [authGuard]
+  },
+  {
     path: "**",
     redirectTo: ""
   }
