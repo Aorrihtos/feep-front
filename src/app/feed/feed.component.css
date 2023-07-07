@@ -29,10 +29,6 @@ hr{
   border: none;
 }
 
-button:hover{
-  cursor: pointer;
-}
-
 .white-button, .red-button:hover{
   background-color: white;
   color: var(--rojo);
@@ -104,124 +100,6 @@ button:hover{
   top: 130px;
   overflow: hidden;
   height: 100vh;
-}
-
-/* profile */
-
-.content-container .content
-.profile-container{
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  box-shadow: -1px 1px 15px -4px rgba(0,0,0,0.75);
-  width: 320px;
-  height: 532px;
-}
-
-.content-container .content .profile-container
-.header{
-  background-color: var(--rojo);
-  width: 100%;
-  height: 96px;
-}
-
-.content-container .content .profile-container
-.profile-pic-container{
-  position: absolute;
-  left: 96px;
-  top: 27px;
-  text-align: center;
-}
-
-.content-container .content .profile-container .profile-pic-container
-.img-container{
-  position: relative;
-}
-
-.content-container .content .profile-container .profile-pic-container .img-container
-img:first-child{
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 5px white solid;
-}
-
-.content-container .content .profile-container .profile-pic-container .img-container
-#edit{
-  width: 38px;
-  position: absolute;
-  top: 41px;
-  left: 46px;
-  visibility: hidden;
-}
-
-.content-container .content .profile-container .profile-pic-container
-.img-container:hover{
-  opacity: 0.9;
-  cursor: pointer;
-}
-
-.content-container .content .profile-container .profile-pic-container
-.img-container:hover #edit{
-  visibility: visible;
-}
-
-.content-container .content .profile-container .profile-pic-container
-p{
-  color: rgb(144, 144, 144);
-  margin-top: 2px;
-}
-
-.content-container .content .profile-container
-.info-container{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 148px 45px 20px 45px;
-}
-
-.content-container .content .profile-container .info-container
-.info{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  opacity: 0.5;
-}
-
-.content-container .content .profile-container .info-container .info
-img{
-  width: 28px;
-  margin-bottom: 3px;
-}
-
-.content-container .content .profile-container
-hr{
-  width: 80%;
-  margin-left: 10%;
-}
-
-.content-container .content .profile-container
-.aboutMe-container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 20px;
-  margin-top: 30px;
-}
-
-.content-container .content .profile-container .aboutMe-container
-textarea, textarea:focus{
-  border: none;
-  outline: none;
-  resize: none;
-  margin: 5px 10px 20px 10px;
-}
-
-.content-container .content .profile-container .aboutMe-container
-button{
-  margin-left: auto;
 }
 
 /* feed */
@@ -607,12 +485,6 @@ img{
   gap: 6px;
 }
 
-#info-followers:hover{
-  cursor: pointer;
-  filter: invert(41%) sepia(66%) saturate(569%) hue-rotate(165deg) brightness(100%) contrast(91%);
-  animation: scaleIcon 0.2s forwards;
-}
-
 .content-container .content .month-profile-container .profile-info-container .info
 img{
   width: 15px;
@@ -628,12 +500,6 @@ hr{
   width: 50%;
   margin-left: 24%;
 }
-
-@keyframes scaleIcon{
-  0% {transform: scale(1)}
-  100% {transform: scale(1.1)}
-}
-
 
 /* ALERT */
 

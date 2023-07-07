@@ -7,7 +7,33 @@
   padding: 0;
 }
 
+*::-webkit-scrollbar{
+  display: none;
+}
+
 .swal2-popup {
   font-size: 1rem !important;
   font-family: Poppins, serif;
+}
+
+.white-button, .red-button:hover{
+  background-color: white;
+  color: var(--rojo);
+  border: 1px var(--rojo) solid;
+  border-radius: 50px;
+  padding: 6px;
+  width: fit-content;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+.red-button, .white-button:hover{
+  background-color: var(--rojo);
+  color: white;
+  border-radius: 50px;
+  padding: 6px;
+  width: fit-content;
+  border: 1px var(--rojo) solid;
 }

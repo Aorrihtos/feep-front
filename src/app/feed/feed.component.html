@@ -1,55 +1,15 @@
-
-<!--<div class="alert" id="alert">-->
-<!--  <h2>-->
-<!--    Beery good! <br>-->
-<!--    You've earned <br>-->
-<!--    50 points!-->
-<!--  </h2>-->
-<!--  <img src="assets/alert.png">-->
-<!--</div>-->
-
 <app-navbar></app-navbar>
 
 <div class="background-img-container">
   <div class="edit-icon-container">
-    <img src="assets/icons/index/editing.png">
+    <img src="assets/icons/feed/editing.png">
   </div>
-  <img src="assets/bg-img.jpg">
+  <img src="assets/bg_default.jpg">
 </div>
 
 <div class="content-container">
   <div class="content">
-    <div class="profile-container">
-      <div class="header"></div>
-      <div class="profile-pic-container">
-        <div class="img-container">
-          <img src="assets/profile-pic.jpg">
-          <img id="edit" src="assets/icons/index/pencil-edit.png">
-        </div>
-        <h2>Aorih</h2>
-        <p>Galletita Profesional</p>
-      </div>
-      <div class="info-container">
-        <div class="info">
-          <img src="assets/icons/index/eye.png">
-          <p>2000</p>
-        </div>
-        <div class="info" id="info-followers">
-          <a href="pages/follows.html"><img src="assets/icons/signUp/usuario.png" alt=""></a>
-          <p>1000</p>
-        </div>
-        <div class="info">
-          <img src="assets/iconSheep.png" id="buttonSheep">
-          <p>500</p>
-        </div>
-      </div>
-      <hr>
-      <div class="aboutMe-container">
-        <textarea name="aboutMe" id="aboutMe" cols="30" rows="6" placeholder="About me..."></textarea>
-        <button class="white-button">Publish changes</button>
-      </div>
-    </div>
-
+    <app-profile></app-profile>
     <div class="feed-container">
       <div class="header"></div>
       <div class="feed">
@@ -64,8 +24,8 @@
           </div>
           <div class="post-buttons">
             <div class="attach-post">
-              <div><button class="red-button"><img src="assets/icons/index/imagen.png">Image</button></div>
-              <div><button class="red-button"><img src="assets/icons/index/clip.png">Document</button></div>
+              <div><button class="red-button"><img src="assets/icons/feed/imagen.png">Image</button></div>
+              <div><button class="red-button"><img src="assets/icons/feed/clip.png">Document</button></div>
             </div>
             <div class="post">
               <button class="white-button">Post</button>
@@ -85,16 +45,16 @@
                 <p>Hoy a las 12:04</p>
               </div>
               <div class="buttons" id="buttons-fb">
-                <button><img src="assets/icons/index/agregar-usuario.png">Follow</button>
-                <button><img src="assets/icons/index/bloquear-usuario.png">Block</button>
+                <button><img src="assets/icons/feed/agregar-usuario.png">Follow</button>
+                <button><img src="assets/icons/feed/bloquear-usuario.png">Block</button>
               </div>
             </div>
             <div onclick="location.href= 'post.html'" class="post-content">
               <p>Me ha gustado mucho esta maravillosa experiencia en el abismo de la oscuridad</p>
-              <img src="assets/bg-img.jpg">
+              <img src="assets/post.jpg">
               <div class="reaction">
-                <p><img src="assets/icons/index/heart.png">200</p>
-                <p><img src="assets/icons/index/mensaje.png">500</p>
+                <p><img src="assets/icons/feed/heart.png">200</p>
+                <p><img src="assets/icons/feed/mensaje.png">500</p>
               </div>
             </div>
           </div>
@@ -107,16 +67,16 @@
                 <p>Hoy a las 12:04</p>
               </div>
               <div class="buttons" id="buttons-fb">
-                <button><img src="assets/icons/index/agregar-usuario.png">Follow</button>
-                <button><img src="assets/icons/index/bloquear-usuario.png">Block</button>
+                <button><img src="assets/icons/feed/agregar-usuario.png">Follow</button>
+                <button><img src="assets/icons/feed/bloquear-usuario.png">Block</button>
               </div>
             </div>
             <div onclick="location.href= 'post.html'" class="post-content">
               <p>Me ha gustado mucho esta maravillosa experiencia en el abismo de la oscuridad</p>
-              <img src="assets/bg-img.jpg">
+              <img src="assets/post.jpg">
               <div class="reaction">
-                <p><img src="assets/icons/index/heart.png">200</p>
-                <p><img src="assets/icons/index/mensaje.png">500</p>
+                <p><img src="assets/icons/feed/heart.png">200</p>
+                <p><img src="assets/icons/feed/mensaje.png">500</p>
               </div>
             </div>
           </div>
@@ -129,16 +89,16 @@
                 <p>Hoy a las 12:04</p>
               </div>
               <div class="buttons" id="buttons-fb">
-                <button><img src="assets/icons/index/agregar-usuario.png">Follow</button>
-                <button><img src="assets/icons/index/bloquear-usuario.png">Block</button>
+                <button><img src="assets/icons/feed/agregar-usuario.png">Follow</button>
+                <button><img src="assets/icons/feed/bloquear-usuario.png">Block</button>
               </div>
             </div>
             <div onclick="location.href= 'post.html'" class="post-content">
               <p>Me ha gustado mucho esta maravillosa experiencia en el abismo de la oscuridad</p>
-              <img src="assets/bg-img.jpg">
+              <img src="assets/post.jpg">
               <div class="reaction">
-                <p><img src="assets/icons/index/heart.png">200</p>
-                <p><img src="assets/icons/index/mensaje.png">500</p>
+                <p><img src="assets/icons/feed/heart.png">200</p>
+                <p><img src="assets/icons/feed/mensaje.png">500</p>
               </div>
             </div>
           </div>
@@ -151,16 +111,16 @@
                 <p>Hoy a las 12:04</p>
               </div>
               <div class="buttons" id="buttons-fb">
-                <button><img src="assets/icons/index/agregar-usuario.png">Follow</button>
-                <button><img src="assets/icons/index/bloquear-usuario.png">Block</button>
+                <button><img src="assets/icons/feed/agregar-usuario.png">Follow</button>
+                <button><img src="assets/icons/feed/bloquear-usuario.png">Block</button>
               </div>
             </div>
             <div onclick="location.href= 'post.html'" class="post-content">
               <p>Me ha gustado mucho esta maravillosa experiencia en el abismo de la oscuridad</p>
-              <img src="assets/bg-img.jpg">
+              <img src="assets/post.jpg">
               <div class="reaction">
-                <p><img src="assets/icons/index/heart.png">200</p>
-                <p><img src="assets/icons/index/mensaje.png">500</p>
+                <p><img src="assets/icons/feed/heart.png">200</p>
+                <p><img src="assets/icons/feed/mensaje.png">500</p>
               </div>
             </div>
           </div>
@@ -182,7 +142,7 @@
             <h3>Aorih</h3>
             <div class="profile-info">
               <div class="info">
-                <img src="assets/icons/index/eye.png">
+                <img src="assets/icons/feed/eye.png">
                 <p>2000</p>
               </div>
               <div class="info">
@@ -206,7 +166,7 @@
             <h3>Aorih</h3>
             <div class="profile-info">
               <div class="info">
-                <img src="assets/icons/index/eye.png">
+                <img src="assets/icons/feed/eye.png">
                 <p>2000</p>
               </div>
               <div class="info">
@@ -230,7 +190,7 @@
             <h3>Aorih</h3>
             <div class="profile-info">
               <div class="info">
-                <img src="assets/icons/index/eye.png">
+                <img src="assets/icons/feed/eye.png">
                 <p>2000</p>
               </div>
               <div class="info">
@@ -254,7 +214,7 @@
             <h3>Aorih</h3>
             <div class="profile-info">
               <div class="info">
-                <img src="assets/icons/index/eye.png">
+                <img src="assets/icons/feed/eye.png">
                 <p>2000</p>
               </div>
               <div class="info">
@@ -278,7 +238,7 @@
             <h3>Aorih</h3>
             <div class="profile-info">
               <div class="info">
-                <img src="assets/icons/index/eye.png">
+                <img src="assets/icons/feed/eye.png">
                 <p>2000</p>
               </div>
               <div class="info">
