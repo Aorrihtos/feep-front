@@ -9,253 +9,65 @@
 
 <div class="content-container">
   <div class="content">
-    <app-profile></app-profile>
+    <app-profile [image]="image"></app-profile>
     <div class="feed-container">
       <div class="header"></div>
       <div class="feed">
         <div class="my-post">
           <div class="img-post">
             <div class="profile-img">
-              <img src="assets/profile-pic.jpg">
+              <img [src]="image">
             </div>
             <div>
-              <textarea name="post" id="post" placeholder="Write here..."></textarea>
+              <textarea name="post" id="post" placeholder="Write here..." #postArea></textarea>
             </div>
           </div>
           <div class="post-buttons">
             <div class="attach-post">
-              <div><button class="red-button"><img src="assets/icons/feed/imagen.png">Image</button></div>
-              <div><button class="red-button"><img src="assets/icons/feed/clip.png">Document</button></div>
+              <div>
+                <label for="image" class="red-button">
+                  <img src="assets/icons/feed/imagen.png">
+                  Image
+                  <input type="file" id="image" style="display: none" #fileInput>
+                </label>
+              </div>
+              <div><button type="button" class="red-button"><img src="assets/icons/feed/clip.png">Document</button></div>
             </div>
             <div class="post">
-              <button class="white-button">Post</button>
+              <button (click)="post()" class="white-button">Post</button>
             </div>
           </div>
         </div>
         <div class="buttons">
-          <button>Feed</button>
-          <button>My Posts</button>
+          <button (click)="activeArray = feed" [ngClass]="activeArray === feed ? 'active' : ''">Feed</button>
+          <button (click)="activeArray = posts" [ngClass]="activeArray === posts ? 'active': ''">My Posts</button>
         </div>
         <div class="posts">
-          <div class="post">
+          <div *ngFor="let post of activeArray" class="post">
             <div class="img-text">
-              <img src="assets/profile-pic.jpg">
+              <img src="{{activeArray === feed ? post.user_id.profile_pic : image}}">
               <div class="text">
-                <p>Aorih</p>
-                <p>Hoy a las 12:04</p>
+                <p>{{post.user_id.username}}</p>
+                <p>{{post.created_at | date: 'short'}}</p>
               </div>
               <div class="buttons" id="buttons-fb">
-                <button><img src="assets/icons/feed/agregar-usuario.png">Follow</button>
-                <button><img src="assets/icons/feed/bloquear-usuario.png">Block</button>
+                <button (click)="follow(post.user_id._id)"><img src="assets/icons/feed/agregar-usuario.png">Follow</button>
+                <button (click)="block(post.user_id._id)"><img src="assets/icons/feed/bloquear-usuario.png">Block</button>
               </div>
             </div>
             <div onclick="location.href= 'post.html'" class="post-content">
-              <p>Me ha gustado mucho esta maravillosa experiencia en el abismo de la oscuridad</p>
-              <img src="assets/post.jpg">
+              <p>{{post.content}}</p>
+              <img src="{{post.attached_file || ''}}">
               <div class="reaction">
-                <p><img src="assets/icons/feed/heart.png">200</p>
-                <p><img src="assets/icons/feed/mensaje.png">500</p>
+                <p><img src="assets/icons/feed/heart.png">{{post.likes}}</p>
+                <p><img src="assets/icons/feed/mensaje.png">{{post.comments}}</p>
               </div>
             </div>
-          </div>
-          <hr>
-          <div class="post">
-            <div class="img-text">
-              <img src="assets/profile-pic.jpg">
-              <div class="text">
-                <p>Aorih</p>
-                <p>Hoy a las 12:04</p>
-              </div>
-              <div class="buttons" id="buttons-fb">
-                <button><img src="assets/icons/feed/agregar-usuario.png">Follow</button>
-                <button><img src="assets/icons/feed/bloquear-usuario.png">Block</button>
-              </div>
-            </div>
-            <div onclick="location.href= 'post.html'" class="post-content">
-              <p>Me ha gustado mucho esta maravillosa experiencia en el abismo de la oscuridad</p>
-              <img src="assets/post.jpg">
-              <div class="reaction">
-                <p><img src="assets/icons/feed/heart.png">200</p>
-                <p><img src="assets/icons/feed/mensaje.png">500</p>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="post">
-            <div class="img-text">
-              <img src="assets/profile-pic.jpg">
-              <div class="text">
-                <p>Aorih</p>
-                <p>Hoy a las 12:04</p>
-              </div>
-              <div class="buttons" id="buttons-fb">
-                <button><img src="assets/icons/feed/agregar-usuario.png">Follow</button>
-                <button><img src="assets/icons/feed/bloquear-usuario.png">Block</button>
-              </div>
-            </div>
-            <div onclick="location.href= 'post.html'" class="post-content">
-              <p>Me ha gustado mucho esta maravillosa experiencia en el abismo de la oscuridad</p>
-              <img src="assets/post.jpg">
-              <div class="reaction">
-                <p><img src="assets/icons/feed/heart.png">200</p>
-                <p><img src="assets/icons/feed/mensaje.png">500</p>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="post">
-            <div class="img-text">
-              <img src="assets/profile-pic.jpg">
-              <div class="text">
-                <p>Aorih</p>
-                <p>Hoy a las 12:04</p>
-              </div>
-              <div class="buttons" id="buttons-fb">
-                <button><img src="assets/icons/feed/agregar-usuario.png">Follow</button>
-                <button><img src="assets/icons/feed/bloquear-usuario.png">Block</button>
-              </div>
-            </div>
-            <div onclick="location.href= 'post.html'" class="post-content">
-              <p>Me ha gustado mucho esta maravillosa experiencia en el abismo de la oscuridad</p>
-              <img src="assets/post.jpg">
-              <div class="reaction">
-                <p><img src="assets/icons/feed/heart.png">200</p>
-                <p><img src="assets/icons/feed/mensaje.png">500</p>
-              </div>
-            </div>
-          </div>
-          <hr>
-        </div>
-      </div>
-    </div>
-
-    <div class="month-profile-container">
-      <h2>Monthly Profiles</h2>
-      <div class="profile-container">
-        <div class="profile">
-          <div class="line"></div>
-          <div class="number" id="first">1</div>
-          <div class="profile-img">
-            <img src="assets/profile-pic.jpg">
-          </div>
-          <div class="profile-info-container">
-            <h3>Aorih</h3>
-            <div class="profile-info">
-              <div class="info">
-                <img src="assets/icons/feed/eye.png">
-                <p>2000</p>
-              </div>
-              <div class="info">
-                <img src="assets/icons/signUp/usuario.png">
-                <p>1000</p>
-              </div>
-              <div class="info">
-                <img src="assets/iconSheep.png">
-                <p>500</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="profile">
-          <div class="line"></div>
-          <div class="number" id="second">2</div>
-          <div class="profile-img">
-            <img src="assets/profile-pic.jpg">
-          </div>
-          <div class="profile-info-container">
-            <h3>Aorih</h3>
-            <div class="profile-info">
-              <div class="info">
-                <img src="assets/icons/feed/eye.png">
-                <p>2000</p>
-              </div>
-              <div class="info">
-                <img src="assets/icons/signUp/usuario.png">
-                <p>1000</p>
-              </div>
-              <div class="info">
-                <img src="assets/iconSheep.png">
-                <p>500</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="profile">
-          <div class="line"></div>
-          <div class="number" id="third">3</div>
-          <div class="profile-img">
-            <img src="assets/profile-pic.jpg">
-          </div>
-          <div class="profile-info-container">
-            <h3>Aorih</h3>
-            <div class="profile-info">
-              <div class="info">
-                <img src="assets/icons/feed/eye.png">
-                <p>2000</p>
-              </div>
-              <div class="info">
-                <img src="assets/icons/signUp/usuario.png">
-                <p>1000</p>
-              </div>
-              <div class="info">
-                <img src="assets/iconSheep.png">
-                <p>500</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="profile">
-          <div class="line"></div>
-          <div class="number">4</div>
-          <div class="profile-img">
-            <img src="assets/profile-pic.jpg">
-          </div>
-          <div class="profile-info-container">
-            <h3>Aorih</h3>
-            <div class="profile-info">
-              <div class="info">
-                <img src="assets/icons/feed/eye.png">
-                <p>2000</p>
-              </div>
-              <div class="info">
-                <img src="assets/icons/signUp/usuario.png">
-                <p>1000</p>
-              </div>
-              <div class="info">
-                <img src="assets/iconSheep.png">
-                <p>500</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="profile">
-          <div class="line"></div>
-          <div class="number">5</div>
-          <div class="profile-img">
-            <img src="assets/profile-pic.jpg">
-          </div>
-          <div class="profile-info-container">
-            <h3>Aorih</h3>
-            <div class="profile-info">
-              <div class="info">
-                <img src="assets/icons/feed/eye.png">
-                <p>2000</p>
-              </div>
-              <div class="info">
-                <img src="assets/icons/signUp/usuario.png">
-                <p>1000</p>
-              </div>
-              <div class="info">
-                <img src="assets/iconSheep.png">
-                <p>500</p>
-              </div>
-            </div>
+            <hr>
           </div>
         </div>
       </div>
     </div>
+    <app-rank></app-rank>
   </div>
 </div>
-
-<!--<script src="js/navTopBar.js"></script>-->
-<!--<script src="js/index.js"></script>-->

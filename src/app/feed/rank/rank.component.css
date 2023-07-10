@@ -1,0 +1,127 @@
+.month-profile-container{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: -1px 1px 15px -4px rgba(0,0,0,0.75);
+  width: 320px;
+  height: 500px;
+}
+
+.month-profile-container
+.profile-container{
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+
+.profile-container::-webkit-scrollbar{
+  display: none;
+}
+
+.month-profile-container
+h2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Rubik Bubbles';
+  letter-spacing: 2px;
+  color: white;
+  background-color: var(--rojo);
+  text-align: center;
+  height: 96px;
+  width: 100%;
+  font-weight: lighter;
+}
+
+.month-profile-container
+.profile{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  padding: 20px 0px 20px 0px;
+  border-bottom: 0.5px solid var(--rojo);
+}
+
+.month-profile-container
+.profile:hover{
+  cursor: pointer;
+  background-color: #e2e2e2;
+}
+
+.month-profile-container
+.line{
+  width: 11px;
+  height: 74px;
+  background-color: var(--rojo);
+}
+
+.month-profile-container
+.number{
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 40px;
+  background-color: var(--rojo);
+  color: white;
+  font-weight: bold;
+  font-size: 23px;
+}
+
+#first{background-color: #FDD05C !important;}
+#second{background-color: #CACACA !important;}
+#third{background-color: #F6963D !important;}
+
+.month-profile-container .profile-img
+img{
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px var(--rojo) solid;
+}
+
+.month-profile-container
+.profile-info-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.month-profile-container .profile-info-container
+.profile-info{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0.5;
+  gap: 12px;
+}
+
+.month-profile-container .profile-info-container .profile-info
+.info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.month-profile-container .profile-info-container .info
+img{
+  width: 15px;
+}
+
+.month-profile-container .profile-info-container .info
+p{
+  font-size: 14px;
+}
+
+.month-profile-container .profile-container
+hr{
+  width: 50%;
+  margin-left: 24%;
+}

@@ -1,0 +1,30 @@
+<div class="month-profile-container">
+  <h2>Monthly Profiles</h2>
+  <div class="profile-container">
+    <div *ngFor="let user of rank; index as i" class="profile">
+      <div class="line"></div>
+      <div class="number" id="{{colorMap.get(i+1)}}">{{i+1}}</div>
+      <div class="profile-img">
+        <ngx-skeleton-loader *ngIf="isLoading" appearance="circle"></ngx-skeleton-loader>
+        <img *ngIf="!isLoading" src="{{user.image_url}}">
+      </div>
+      <div class="profile-info-container">
+        <h3>{{user.user_id.username}}</h3>
+        <div class="profile-info">
+          <div class="info">
+            <img src="assets/icons/feed/eye.png">
+            <p>{{user.user_id.views}}</p>
+          </div>
+          <div class="info">
+            <img src="assets/icons/signUp/usuario.png">
+            <p>{{user.followers}}</p>
+          </div>
+          <div class="info">
+            <img src="assets/iconSheep.png">
+            <p>{{user.points}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

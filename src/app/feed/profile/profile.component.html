@@ -1,0 +1,30 @@
+<div class="profile-container">
+  <div class="header"></div>
+  <div class="profile-pic-container">
+    <div class="img-container">
+      <img [src]="image">
+      <img id="edit" src="assets/icons/feed/pencil-edit.png">
+    </div>
+    <h2>{{username}}</h2>
+  </div>
+  <p id="summary" contenteditable="true" #sumText>{{summary}}</p>
+  <div class="info-container">
+    <div class="info">
+      <img src="assets/icons/feed/eye.png">
+      <p>{{views}}</p>
+    </div>
+    <div class="info" id="info-followers">
+      <a href="pages/follows.html"><img src="assets/icons/signUp/usuario.png" alt=""></a>
+      <p>{{followers}}</p>
+    </div>
+    <div class="info">
+      <img src="assets/iconSheep.png" id="buttonSheep">
+      <p>{{points}}</p>
+    </div>
+  </div>
+  <hr>
+  <div class="aboutMe-container">
+    <textarea name="aboutMe" id="aboutMe" cols="30" rows="6" placeholder="About me..." #descArea>{{description}}</textarea>
+    <button (click)="setDescription()" class="white-button" #descBtn>Publish changes</button>
+  </div>
+</div>
