@@ -21,15 +21,16 @@ const routes: Routes = [
     path: "settings",
     loadChildren: ()=> import('./settings/settings.module').then(m => m.SettingsModule),
     canMatch: [authGuard]
-  },
-  {
-    path: "**",
-    redirectTo: ""
   }
+  // {
+  //   path: "**",
+  //   redirectTo: ""
+  // }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

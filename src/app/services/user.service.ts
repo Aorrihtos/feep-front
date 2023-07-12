@@ -5,10 +5,22 @@ import {map} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService{
 
   baseUrl = environment.baseUrl;
-  constructor(private http: HttpClient) { }
+  _followings: Map<string, any> = new Map();
+  _blocks: Map<string, any> = new Map();
+  constructor(private http: HttpClient) {
+    this.initalize()
+  }
+
+  get followings(){
+    return this._followings;
+  }
+
+  get blocks(){
+    return this._blocks;
+}
 
   detail(userId: string | null = null){
     const [token, user] = this.getUserCredentials();
@@ -58,15 +70,91 @@ export class UserService {
   }
 
   follow(userId: string){
-    console.log(userId);
+    const[token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    return this.http.post(`${this.baseUrl}/follow/add/${userId}`, null, {headers})
+      .subscribe((res: any) => {
+        this._followings.set(userId, res.follow.followed_id)
+        console.log(this.followings)
+      });
+  }
+
+  unfollow(userId: string){
+    const[token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    return this.http.delete(`${this.baseUrl}/follow/unfollow/${userId}`, {headers}).subscribe(
+      (res: any) => {
+        this._followings.delete(userId);
+      }
+    );
   }
 
   block(userId: string){
-    console.log(userId);
+    const [token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    return this.http.post(`${this.baseUrl}/block/add/${userId}`, null, {headers})
+      .subscribe((res: any) => {
+        this._blocks.set(userId, res.block.blocked_id);
+        this._followings.delete(userId);
+      });
   }
+
+  pardon(userId: string){
+    const[token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    return this.http.delete(`${this.baseUrl}/block/pardon/${userId}`, {headers}).subscribe(
+      (res: any) => {
+        this._blocks.delete(userId);
+      }
+    );
+  }
+
+  uploadImg(file: File){
+    const[token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    const formData = new FormData();
+    formData.append('file0', file);
+    return this.http.post(`${this.baseUrl}/user/upload`,formData, {headers});
+  }
+
+  update(data: any){
+    const[token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    return this.http.put(`${this.baseUrl}/user/update`, data, {headers})
+  }
+
   getUserCredentials(){
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user')!);
     return [token, user];
+  }
+
+  initalize(){
+    console.log("ENTRO AQUí")
+    const [token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    this.http.get(`${this.baseUrl}/user/following`, {headers}).subscribe(
+      (res: any) =>{
+        res.following.forEach((item: any) =>{
+          this._followings.set(item._id, item);
+        });
+        console.log(this._followings)
+      }
+    );
+    this.http.get(`${this.baseUrl}/user/blocks`, {headers}).subscribe(
+      (res: any) =>{
+        res.blocked.forEach((item: any) =>{
+          this._blocks.set(item.blocked_id._id, item);
+        });
+        console.log(this._blocks)
+      }
+    );
   }
 }

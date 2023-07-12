@@ -9,11 +9,11 @@
 
 <div class="content-container">
   <div class="content">
-    <app-profile [image]="image"></app-profile>
+    <app-profile [id]="id" [image]="image" (imageChange)="imageChangeEvent($event)"></app-profile>
     <div class="feed-container">
       <div class="header"></div>
       <div class="feed">
-        <div class="my-post">
+        <div *ngIf="mine" class="my-post">
           <div class="img-post">
             <div class="profile-img">
               <img [src]="image">
@@ -38,7 +38,7 @@
             </div>
           </div>
         </div>
-        <div class="buttons">
+        <div *ngIf="mine" class="buttons">
           <button (click)="activeArray = feed" [ngClass]="activeArray === feed ? 'active' : ''">Feed</button>
           <button (click)="activeArray = posts" [ngClass]="activeArray === posts ? 'active': ''">My Posts</button>
         </div>
@@ -51,8 +51,26 @@
                 <p>{{post.created_at | date: 'short'}}</p>
               </div>
               <div class="buttons" id="buttons-fb">
-                <button (click)="follow(post.user_id._id)"><img src="assets/icons/feed/agregar-usuario.png">Follow</button>
-                <button (click)="block(post.user_id._id)"><img src="assets/icons/feed/bloquear-usuario.png">Block</button>
+                <button
+                  *ngIf="!userService.followings.get(post.user_id._id)"
+                  (click)="unfollow(post.user_id._id)">
+                  <img src="assets/icons/feed/agregar-usuario.png">Follow
+                </button>
+                <button
+                  *ngIf="userService.followings.get(post.user_id._id)"
+                  (click)="unfollow(post.user_id._id)">
+                  <img src="assets/icons/feed/agregar-usuario.png">Unfollow
+                </button>
+                <button
+                  *ngIf="!userService.blocks.get(post.user_id._id)"
+                  (click)="block(post.user_id._id)">
+                  <img src="assets/icons/feed/bloquear-usuario.png">Block
+                </button>
+                <button
+                  *ngIf="userService.blocks.get(post.user_id._id)"
+                  (click)="block(post.user_id._id)">
+                  <img src="assets/icons/feed/bloquear-usuario.png">Unblock
+                </button>
               </div>
             </div>
             <div onclick="location.href= 'post.html'" class="post-content">
@@ -64,6 +82,10 @@
               </div>
             </div>
             <hr>
+          </div>
+          <div class="emptyContainer" *ngIf="activeArray.length <= 0">
+            <h3>Oops... Nothing to show here yet!</h3>
+            <img src="./assets/empty-placeholder.png" id="emptyImg">
           </div>
         </div>
       </div>

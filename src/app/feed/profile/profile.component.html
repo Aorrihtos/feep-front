@@ -1,13 +1,23 @@
 <div class="profile-container">
   <div class="header"></div>
+  <div *ngIf="id" class="fb-buttons">
+    <button *ngIf="!userService.followings.get(id)" (click)="follow(id)" class="white-button">Follow</button>
+    <button *ngIf="userService.followings.get(id)" (click)="unfollow(id)" class="white-button">Unfollow</button>
+    <button *ngIf="!userService.blocks.get(id)" (click)="block(id)" class="white-button">Block</button>
+    <button *ngIf="userService.blocks.get(id)" (click)="pardon(id)" class="white-button">Unblock</button>
+  </div>
+
   <div class="profile-pic-container">
     <div class="img-container">
-      <img [src]="image">
-      <img id="edit" src="assets/icons/feed/pencil-edit.png">
+      <label for="imgChanger">
+        <img [src]="image">
+        <img id="edit" src="assets/icons/feed/pencil-edit.png">
+      </label>
+      <input (change)="fileChangeEvent(imgInput)" type="file" id="imgChanger" style="display: none" #imgInput>
     </div>
     <h2>{{username}}</h2>
   </div>
-  <p id="summary" contenteditable="true" #sumText>{{summary}}</p>
+  <p id="summary" [contentEditable]="!id"  #sumText>{{summary}}</p>
   <div class="info-container">
     <div class="info">
       <img src="assets/icons/feed/eye.png">
@@ -24,7 +34,7 @@
   </div>
   <hr>
   <div class="aboutMe-container">
-    <textarea name="aboutMe" id="aboutMe" cols="30" rows="6" placeholder="About me..." #descArea>{{description}}</textarea>
-    <button (click)="setDescription()" class="white-button" #descBtn>Publish changes</button>
+    <textarea [disabled]="id" name="aboutMe" id="aboutMe" cols="30" rows="6" placeholder="About me..." #descArea>{{description}}</textarea>
+    <button *ngIf="!id" (click)="setDescription()" class="white-button" #descBtn>Publish changes</button>
   </div>
 </div>

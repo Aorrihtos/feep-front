@@ -399,3 +399,14 @@ img{
   width: 530px;
   box-shadow: -2px 1px 16px -1px rgba(0,0,0,0.75);
 }
+
+.emptyContainer{
+  padding: 20px;
+  text-align: center;
+}
+
+#emptyImg{
+  width: 95%;
+  margin: 0 auto;
+  display: block;
+}

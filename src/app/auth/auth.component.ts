@@ -3,8 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
 import {Router} from "@angular/router";
 import Swal from 'sweetalert2';
-import {TimerHandle} from "rxjs/internal/scheduler/timerHandle";
-import {Time} from "@angular/common";
+
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -69,7 +68,9 @@ export class AuthComponent {
       return;
     }
     this.authService.login(this.signInForm.value).subscribe(
-      res => this.router.navigateByUrl("/feed"),
+      res => {
+        this.router.navigateByUrl("/feed");
+      },
       err => {
       Swal.fire({
         icon: 'error',

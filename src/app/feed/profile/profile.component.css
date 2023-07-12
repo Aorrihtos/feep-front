@@ -12,6 +12,28 @@ h1,h2, button, textarea{
   height: 532px;
 }
 
+.fb-buttons{
+  position: absolute;
+  top: 105px;
+  margin: 11px;
+  left: 14px;
+}
+
+.fb-buttons > button:first-child{
+  border-color: blue;
+  color: blue;
+}
+
+.fb-buttons > button:first-child:hover{
+  background-color: blue;
+  color: white;
+}
+
+.fb-buttons > button:last-child{
+  position: absolute;
+  left: 217px;
+}
+
 .profile-container
 .header{
   background-color: var(--rojo);
@@ -107,6 +129,10 @@ textarea, textarea:focus{
   outline: none;
   resize: none;
   margin: 5px 10px 20px 10px;
+}
+
+.profile-container .aboutMe-container textarea[disabled]{
+  background-color: white;
 }
 
 .profile-container .aboutMe-container

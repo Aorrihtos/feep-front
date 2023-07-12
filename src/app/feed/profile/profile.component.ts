@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import Swal from "sweetalert2";
 
@@ -18,17 +28,26 @@ export class ProfileComponent implements OnInit, AfterViewInit{
   @ViewChild("descBtn")
   descBtn!: ElementRef<HTMLButtonElement>;
 
+  @Output('imageChange') emitter: EventEmitter<string> = new EventEmitter<string>();
+  @Input('image')
+  image: string = '';
+
+  @Input()
+  id: string | null = null;
+
   username: string = '';
   summary: string = '';
   description: string = '';
-  @Input()
-  image: string = '';
   views: number = 0;
   followers: number = 0;
   points: number = 0;
 
-  constructor(private userService: UserService) {
-    userService.detail()?.subscribe(
+  constructor(public userService: UserService) {
+
+  }
+
+  ngOnInit(): void {
+    this.userService.detail(this.id)?.subscribe(
       (res: any) => {
         console.log(res);
         this.setData(res.user);
@@ -37,9 +56,6 @@ export class ProfileComponent implements OnInit, AfterViewInit{
         console.log(err);
       }
     );
-  }
-
-  ngOnInit(): void {
   }
   ngAfterViewInit(): void {
     this.sumText.nativeElement.addEventListener('keypress', event =>{
@@ -81,4 +97,30 @@ export class ProfileComponent implements OnInit, AfterViewInit{
       }
     )
   }
+
+  follow(userId: string){
+    this.userService.follow(userId);
+  }
+
+  unfollow(userId: string) {
+    this.userService.unfollow(userId);
+  }
+
+  block(userId: string){
+    this.userService.block(userId);
+  }
+
+  pardon(userId: string){
+    this.userService.pardon(userId);
+  }
+
+  fileChangeEvent(imgInput: any){
+    const file: File = imgInput.files[0];
+    this.userService.uploadImg(file)?.subscribe(res => {
+      this.image = window.URL.createObjectURL(file);
+      this.emitter.emit(this.image);
+    });
+
+  }
+
 }

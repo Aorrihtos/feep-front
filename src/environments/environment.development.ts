@@ -1,4 +1,5 @@
 export const environment = {
   baseUrl: "http://localhost:3000/api/v1",
-  jwtKey: "m1ToKen$3cR37P4raF3ep%$_TrYi7"
+  jwtKey: "m1ToKen$3cR37P4raF3ep%$_TrYi7",
+  pwd: "%$$t0LOverU1!29"
 };

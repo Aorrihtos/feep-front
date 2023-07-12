@@ -1,7 +1,9 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {PostService} from "../services/post.service";
 import Swal from "sweetalert2";
+import {ActivatedRoute, Router} from "@angular/router";
+import {RankComponent} from "./rank/rank.component";
 
 @Component({
   selector: 'app-feed',
@@ -16,37 +18,52 @@ export class FeedComponent {
   @ViewChild('fileInput')
   fileInput!: ElementRef<HTMLInputElement>;
 
+  @ViewChild(RankComponent) rank!: RankComponent;
+
   image: string = '';
   posts: Array<any> = [];
   feed: Array<any> = [];
   activeArray: Array<any> = [];
+  id: string | null = null;
+  mine: boolean = true;
 
-  constructor(private userService: UserService, private postService: PostService) {
-    userService.getProfilePic()!.subscribe(
+  constructor(public userService: UserService,
+              private postService: PostService,
+              private aRouter: ActivatedRoute) {
+    aRouter.queryParams.subscribe(res =>{
+      this.id = res['id'];
+      if(this.id) this.mine = false;
+    })
+    userService.getProfilePic(this.id)!.subscribe(
       (res: any) =>{
         this.image = res;
       }
     );
-    userService.feed()?.subscribe(
-      (res: any) => {
-        const aux: Array<any> = res.feed;
-        for(let item of aux){
-          let index = aux.indexOf(item);
-          let userId = item.user_id._id;
-          this.userService.getProfilePic(userId)?.subscribe(res =>{
-            aux[index].user_id.profile_pic = res;
-          });
+    if(this.mine){
+      userService.feed()?.subscribe(
+        (res: any) => {
+          const aux: Array<any> = res.feed;
+          for(let item of aux){
+            let index = aux.indexOf(item);
+            let userId = item.user_id._id;
+            this.userService.getProfilePic(userId)?.subscribe(res =>{
+              aux[index].user_id.profile_pic = res;
+            });
+          }
+          this.feed = aux;
+          this.activeArray = this.feed;
+        },
+        (err: any) => {
+          console.log(err);
         }
-        this.feed = aux;
-        this.activeArray = this.feed;
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
-    userService.posts()?.subscribe(
+      );
+    }
+    userService.posts(this.id)?.subscribe(
       (res: any) => {
         this.posts = res.posts;
+        if(!this.mine){
+          this.activeArray = this.posts;
+        }
       },
       (err: any) => {
         console.log(err);
@@ -80,13 +97,17 @@ export class FeedComponent {
     )
   }
 
-  follow(userId: string){
-    console.log(userId);
-    console.log(this.fileInput.nativeElement.files!.item(0))
+  unfollow(userId: string){
+    this.userService.unfollow(userId);
+    console.log(this.activeArray);
+    //this.activeArray = this.activeArray.filter(i => i.user_id._id !== userId);
   }
 
   block(userId: string){
-    console.log(userId);
+    this.userService.block(userId);
+    if(this.activeArray === this.feed){
+      this.activeArray = this.activeArray.filter(i => i.user_id._id !== userId);
+    }
   }
 
   createPost(data: any){
@@ -103,5 +124,10 @@ export class FeedComponent {
       likes: 0,
       comments: 0
     }
+  }
+
+  imageChangeEvent(url: any){
+    this.image = url;
+    this.rank.setImage(url);
   }
 }

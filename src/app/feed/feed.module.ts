@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RankComponent } from './rank/rank.component';
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
+import {ImageCropperModule} from "ngx-image-cropper";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
     imports: [
         CommonModule,
         FeedRoutingModule,
-        NgxSkeletonLoaderModule
+        NgxSkeletonLoaderModule,
+        ImageCropperModule
     ]
 })
 export class FeedModule { }

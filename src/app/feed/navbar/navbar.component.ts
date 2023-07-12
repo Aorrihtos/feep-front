@@ -1,36 +1,33 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements AfterViewInit{
 
-  // let hamburguer = document.getElementById("hamburguer-icon");
-  //
-  // function hamburger_menu() {
-  //   var x = document.getElementById("myTopnav");
-  //   if (x.className === "nav-items-topBar") {
-  //     x.className += " responsive";
-  //   } else {
-  //     x.className = "nav-items-topBar";
-  //   }
-  // }
+  constructor(private router: Router) {
+  }
 
-  @ViewChild("hamburguerIcon")
-  hamburguer!: ElementRef<HTMLLinkElement>;
+  navigateHome(){
+    this.router.navigateByUrl('/feed').then(
+      () => window.location.reload()
+    )
+  }
 
-  @ViewChild("myTopnav")
-  navbar!: ElementRef<HTMLDivElement>;
-
-  hamburguer_menu(){
-    console.log(this.navbar.nativeElement.className)
-    if(this.navbar.nativeElement.className === "nav-items-topBar"){
-      this.navbar.nativeElement.className += " responsive";
-    } else {
-      this.navbar.nativeElement.className = "nav-items-topBar";
+  ngAfterViewInit(): void {
+    let hamburguer = document.getElementById("hamburguer-icon")!;
+    function hamburger_menu() {
+      var x = document.getElementById("myTopnav")!;
+      if (x.className === "nav-items-topBar") {
+        x.className += " responsive";
+      } else {
+        x.className = "nav-items-topBar";
+      }
     }
+    hamburguer.addEventListener("click", hamburger_menu);
   }
 
 }

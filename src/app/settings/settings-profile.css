@@ -52,104 +52,19 @@ button:hover{
   width: fit-content;
 }
 
-.settings .settings-profile-container {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.settings .settings-profile-container
-.settings-profile{
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  box-shadow: -1px 1px 15px -4px rgba(0,0,0,0.75);
-  width: 600px;
-  height: 500px;
-  border-radius: 20px;
-  position: relative;
-}
-
-.settings .settings-profile-container .settings-profile
-> .header{
-  height: 80px;
-  background-color: var(--rojo);
-}
-
-.settings .settings-profile-container .settings-profile
-> .text img{
-  width: 20px;
-  filter: invert(0%) sepia(96%) saturate(32%) hue-rotate(323deg) brightness(106%) contrast(100%);
-}
-
-.settings .settings-profile-container .settings-profile >
-img{
-  left: 234px;
-  top: 21px;
-  width: 130px;
-  height: 130px;
-  object-fit: contain;
-  border-radius: 85px;
-  border: 4px solid white;
-  position: absolute;
-}
-
-.settings .settings-profile-container .settings-profile
-.editable{
-  margin-top: 87px;
-}
-
-.settings .settings-profile-container .settings-profile .editable
-form{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 21px;
-}
-
-.settings .settings-profile-container .settings-profile .editable
-form .input-field{
+.settings{
   display: flex;
   flex-direction: row;
+  gap: 2rem;
   justify-content: center;
+  margin-left: -1rem;
 }
 
-.settings .settings-profile-container .settings-profile .editable
-form input{
-  border: none;
-  font-size: 17px;
-  text-align: center;
-}
-
-.settings .settings-profile-container .settings-profile .editable
-form #username{
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.settings .settings-profile-container .settings-profile .editable
-form input:focus{
-  outline: none;
-}
-
-.settings .settings-profile-container .settings-profile .editable
-form .input-field img{
-  width: 20px;
-}
-
-.settings .settings-profile-container .settings-profile .editable
-form .submit-buttons{
+.menu-buttons{
   display: flex;
   flex-direction: row;
-  gap: 25px;
-}
-
-.settings .settings-profile-container .settings-profile .editable
-form input[type=submit]{
-  font-size: 14px;
-}
-
-.settings .settings-profile-container .settings-profile .editable
-form input[type=submit]:hover{
-  cursor: pointer;
-  border: 1px solid var(--rojo);
+  padding: 1rem;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
