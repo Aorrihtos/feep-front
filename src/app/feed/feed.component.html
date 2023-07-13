@@ -10,7 +10,7 @@
 <div class="content-container">
   <div class="content">
     <app-profile [id]="id" [image]="image" (imageChange)="imageChangeEvent($event)"></app-profile>
-    <div class="feed-container">
+    <div *ngIf="!viewing_post" class="feed-container">
       <div class="header"></div>
       <div class="feed">
         <div *ngIf="mine" class="my-post">
@@ -73,7 +73,7 @@
                 </button>
               </div>
             </div>
-            <div onclick="location.href= 'post.html'" class="post-content">
+            <div (click)="navigatePost(post._id)" class="post-content">
               <p>{{post.content}}</p>
               <img src="{{post.attached_file || ''}}">
               <div class="reaction">
@@ -90,6 +90,11 @@
         </div>
       </div>
     </div>
+    <app-post-detail
+      *ngIf="viewing_post"
+      [idPost] = idPost
+      (viewing_post)="backEvent($event)">
+    </app-post-detail>
     <app-rank></app-rank>
   </div>
 </div>

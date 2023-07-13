@@ -26,6 +26,8 @@ export class FeedComponent {
   activeArray: Array<any> = [];
   id: string | null = null;
   mine: boolean = true;
+  viewing_post: boolean = false;
+  idPost: string = '';
 
   constructor(public userService: UserService,
               private postService: PostService,
@@ -126,8 +128,18 @@ export class FeedComponent {
     }
   }
 
+  navigatePost(idPost: string){
+    this.idPost = idPost;
+    this.viewing_post = true;
+
+  }
+
   imageChangeEvent(url: any){
     this.image = url;
     this.rank.setImage(url);
+  }
+
+  backEvent(value: boolean){
+    this.viewing_post = value;
   }
 }

@@ -8,6 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RankComponent } from './rank/rank.component';
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 import {ImageCropperModule} from "ngx-image-cropper";
+import { PostDetailComponent } from './post-detail/post-detail.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {ImageCropperModule} from "ngx-image-cropper";
         FeedComponent,
         NavbarComponent,
         ProfileComponent,
-        RankComponent
+        RankComponent,
+        PostDetailComponent
     ],
     exports: [
         NavbarComponent

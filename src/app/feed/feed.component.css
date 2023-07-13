@@ -40,6 +40,7 @@ hr{
   border-radius: 50px;
   padding: 6px;
   width: fit-content;
+  cursor: pointer;
 }
 
 
@@ -50,6 +51,7 @@ hr{
   padding: 6px;
   width: fit-content;
   border: 1px var(--rojo) solid;
+  display: block;
 }
 
 .active{
@@ -119,14 +121,15 @@ hr{
   background-color: white;
   box-shadow: -1px 1px 15px -4px rgba(0,0,0,0.75);
   width: 500px;
-  height: 900px;
+  height: 100vh;
 }
 
 .content-container .content .feed-container
 .header{
   background-color: var(--rojo);
-  width: 100%;
-  height: 2%;
+  width: 500px;
+  height: 25px;
+  position: absolute;
 }
 
 .content-container .content .feed-container .feed >
@@ -159,7 +162,7 @@ button:active{
 
 .content-container .content .feed-container
 .feed > .posts{
-  height: 644px;
+  height: 100vh;
   overflow: scroll;
 }
 
@@ -172,6 +175,7 @@ button:active{
 .feed{
   display: flex;
   flex-direction: column;
+  margin-top: 9%;
 }
 
 .content-container .content .feed-container .feed
@@ -233,11 +237,15 @@ textarea::-webkit-scrollbar{
   display: flex;
   flex-direction: row;
   gap: 10px;
+  align-items: center;
 }
 
 .content-container .content .feed-container .feed .my-post .post-buttons .attach-post
-button:hover img{
-  filter: invert(49%) sepia(80%) saturate(6935%) hue-rotate(346deg) brightness(116%) contrast(87%);}
+button:hover img,
+.content-container .content .feed-container .feed .my-post .post-buttons .attach-post
+label:hover img{
+  filter: invert(49%) sepia(80%) saturate(6935%) hue-rotate(346deg) brightness(116%) contrast(87%);
+}
 
 
 .content-container .content .feed-container .feed .my-post .post-buttons .attach-post

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment.development";
 import {map} from "rxjs";
+import Swal from "sweetalert2";
 @Injectable({
   providedIn: 'root'
 })
@@ -97,7 +98,11 @@ export class UserService{
     const headers = new HttpHeaders().set("Authorization", token);
     return this.http.post(`${this.baseUrl}/block/add/${userId}`, null, {headers})
       .subscribe((res: any) => {
-        this._blocks.set(userId, res.block.blocked_id);
+        this._blocks.set(userId, {
+          blocked_id: res.block.blocked_id,
+          points: res.block.blocked_id.points,
+          followers: res.block.blocked_id.followers
+        });
         this._followings.delete(userId);
       });
   }
@@ -106,11 +111,25 @@ export class UserService{
     const[token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.delete(`${this.baseUrl}/block/pardon/${userId}`, {headers}).subscribe(
-      (res: any) => {
-        this._blocks.delete(userId);
-      }
-    );
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be able to see his posts and comments again',
+      showDenyButton: true,
+      confirmButtonText: 'Unblock',
+      denyButtonText: `Cancel`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        return this.http.delete(`${this.baseUrl}/block/pardon/${userId}`, {headers})
+          .subscribe(
+          (res: any) => {
+            this._blocks.delete(userId);
+            return true;
+          }
+        );
+        //this._blocks = this._blocks.filter(item => item.blocked_id._id !== userId);
+      } else return false;
+    })
   }
 
   uploadImg(file: File){

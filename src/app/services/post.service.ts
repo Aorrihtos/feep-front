@@ -17,6 +17,20 @@ export class PostService {
     return this.http.post(`${this.baseUrl}/post/upload`, post, {headers});
   }
 
+  detail(idPost: string){
+    const [token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    return this.http.get(`${this.baseUrl}/post/detail/${idPost}`, {headers});
+  }
+
+  sendComment(content: string, idPost: string){
+    const [token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    return this.http.post(`${this.baseUrl}/comment/send/${idPost}`,{content: content} , {headers});
+  }
+
   getUserCredentials(){
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user')!);
