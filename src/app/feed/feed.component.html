@@ -28,7 +28,7 @@
                 <label for="image" class="red-button">
                   <img src="assets/icons/feed/imagen.png">
                   Image
-                  <input type="file" id="image" style="display: none" #fileInput>
+                  <input (change)="uploadImage(fileInput)" type="file" id="image" style="display: none" #fileInput>
                 </label>
               </div>
               <div><button type="button" class="red-button"><img src="assets/icons/feed/clip.png">Document</button></div>
@@ -42,7 +42,7 @@
           <button (click)="activeArray = feed" [ngClass]="activeArray === feed ? 'active' : ''">Feed</button>
           <button (click)="activeArray = posts" [ngClass]="activeArray === posts ? 'active': ''">My Posts</button>
         </div>
-        <div class="posts">
+        <div (scrollend)="loadNext()" *ngIf="!userService.blocks.get(id!)" class="posts">
           <div *ngFor="let post of activeArray" class="post">
             <div class="img-text">
               <img src="{{activeArray === feed ? post.user_id.profile_pic : image}}">
@@ -50,10 +50,10 @@
                 <p>{{post.user_id.username}}</p>
                 <p>{{post.created_at | date: 'short'}}</p>
               </div>
-              <div class="buttons" id="buttons-fb">
+              <div *ngIf="post.user_id._id !== loggedId" class="buttons" id="buttons-fb">
                 <button
                   *ngIf="!userService.followings.get(post.user_id._id)"
-                  (click)="unfollow(post.user_id._id)">
+                  (click)="userService.follow(post.user_id._id)">
                   <img src="assets/icons/feed/agregar-usuario.png">Follow
                 </button>
                 <button
@@ -68,32 +68,58 @@
                 </button>
                 <button
                   *ngIf="userService.blocks.get(post.user_id._id)"
-                  (click)="block(post.user_id._id)">
+                  (click)=" block(post.user_id._id)">
                   <img src="assets/icons/feed/bloquear-usuario.png">Unblock
                 </button>
               </div>
+              <div *ngIf="post.user_id._id === loggedId" class="buttons" id="buttons-fb">
+                <button
+                  (click)="delete(post._id)">
+                  <img src="assets/icons/feed/deletePost.png">Delete Post
+                </button>
+              </div>
             </div>
-            <div (click)="navigatePost(post._id)" class="post-content">
-              <p>{{post.content}}</p>
+            <div class="post-content">
+              <p (click)="navigatePost(post._id)">{{post.content}}</p>
               <img src="{{post.attached_file || ''}}">
               <div class="reaction">
-                <p><img src="assets/icons/feed/heart.png">{{post.likes}}</p>
+                <p>
+                  <img *ngIf="!checkIsLiked(post._id)"
+                    (click)="like(post._id)"
+                    src="assets/icons/feed/heart.png">
+                  <img *ngIf="checkIsLiked(post._id)"
+                       (click)="unlike(post._id)"
+                       src="../../assets/icons/feed/redFilledHeart.png">
+                  {{post.likes}}
+                </p>
                 <p><img src="assets/icons/feed/mensaje.png">{{post.comments}}</p>
               </div>
             </div>
             <hr>
           </div>
-          <div class="emptyContainer" *ngIf="activeArray.length <= 0">
+          <div class="emptyContainer" style="margin-bottom: 10rem">
             <h3>Oops... Nothing to show here yet!</h3>
             <img src="./assets/empty-placeholder.png" id="emptyImg">
           </div>
+        </div>
+        <div *ngIf="userService.blocks.get(id!)">
+          <img
+            src="./assets/blockedUser.png"
+            alt="blocked-user.png"
+            style="width: 100%; height: 500px;"
+          >
         </div>
       </div>
     </div>
     <app-post-detail
       *ngIf="viewing_post"
       [idPost] = idPost
-      (viewing_post)="backEvent($event)">
+      [isLiked] = checkIsLiked(idPost)
+      [loggedId]="loggedId"
+      (viewing_post)="backEvent($event)"
+      (liked_post)="like($event)"
+      (unliked_post)="unlike($event)"
+      (delete_post)="deletePostEvent($event)">
     </app-post-detail>
     <app-rank></app-rank>
   </div>

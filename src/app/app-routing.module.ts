@@ -18,14 +18,19 @@ const routes: Routes = [
     canMatch: [authGuard]
   },
   {
+    path: "follows",
+    loadChildren: ()=> import('./follows/follows.module').then(m => m.FollowsModule),
+    canMatch: [authGuard]
+  },
+  {
     path: "settings",
     loadChildren: ()=> import('./settings/settings.module').then(m => m.SettingsModule),
     canMatch: [authGuard]
+  },
+  {
+    path: "**",
+    redirectTo: ""
   }
-  // {
-  //   path: "**",
-  //   redirectTo: ""
-  // }
 ];
 
 @NgModule({

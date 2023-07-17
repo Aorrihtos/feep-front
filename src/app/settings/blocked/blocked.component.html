@@ -27,6 +27,10 @@
           <button (click)="unblock(b.blocked_id._id)"><img src="../../assets/icons/feed/bloquear-usuario.png">Unblock</button>
         </div>
       </div>
+      <img
+        *ngIf="blocks.length <= 0"
+        style="margin: 0 auto; width: 80%; height: 100%"
+        src="./assets/anyBlocks.png" alt="any-blocked-user.png">
     </div>
   </div>
 </div>

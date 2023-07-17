@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment.development";
-import {map} from "rxjs";
-import Swal from "sweetalert2";
+import {map, tap} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +9,9 @@ export class UserService{
 
   baseUrl = environment.baseUrl;
   _followings: Map<string, any> = new Map();
+  _followers: Map<string, any> = new Map();
   _blocks: Map<string, any> = new Map();
+
   constructor(private http: HttpClient) {
     this.initalize()
   }
@@ -19,10 +20,13 @@ export class UserService{
     return this._followings;
   }
 
+  get followers(){
+    return this._followers;
+  }
+
   get blocks(){
     return this._blocks;
 }
-
   detail(userId: string | null = null){
     const [token, user] = this.getUserCredentials();
     if(!token) return;
@@ -54,11 +58,12 @@ export class UserService{
     )
   }
 
-  feed(){
+  feed(page: number = 1){
     const [token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.get(`${this.baseUrl}/user/feed`, {headers});
+    const params = new HttpParams().set('page', page);
+    return this.http.get(`${this.baseUrl}/user/feed`, {headers, params});
   }
 
   posts(userId: string | null = null, page: number = 1){
@@ -111,25 +116,10 @@ export class UserService{
     const[token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will be able to see his posts and comments again',
-      showDenyButton: true,
-      confirmButtonText: 'Unblock',
-      denyButtonText: `Cancel`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        return this.http.delete(`${this.baseUrl}/block/pardon/${userId}`, {headers})
-          .subscribe(
-          (res: any) => {
-            this._blocks.delete(userId);
-            return true;
-          }
-        );
-        //this._blocks = this._blocks.filter(item => item.blocked_id._id !== userId);
-      } else return false;
-    })
+    return this.http.delete(`${this.baseUrl}/block/pardon/${userId}`, {headers})
+      .subscribe((res: any) =>{
+        this._blocks.delete(userId);
+      })
   }
 
   uploadImg(file: File){
@@ -155,7 +145,6 @@ export class UserService{
   }
 
   initalize(){
-    console.log("ENTRO AQUí")
     const [token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
@@ -164,7 +153,13 @@ export class UserService{
         res.following.forEach((item: any) =>{
           this._followings.set(item._id, item);
         });
-        console.log(this._followings)
+      }
+    );
+    this.http.get(`${this.baseUrl}/user/followers`, {headers}).subscribe(
+      (res: any) =>{
+        res.followers.forEach((item: any) =>{
+          this._followers.set(item._id, item);
+        });
       }
     );
     this.http.get(`${this.baseUrl}/user/blocks`, {headers}).subscribe(
@@ -172,7 +167,6 @@ export class UserService{
         res.blocked.forEach((item: any) =>{
           this._blocks.set(item.blocked_id._id, item);
         });
-        console.log(this._blocks)
       }
     );
   }

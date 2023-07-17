@@ -107,11 +107,32 @@ export class ProfileComponent implements OnInit, AfterViewInit{
   }
 
   block(userId: string){
-    this.userService.block(userId);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You wont be able to see his posts and comments',
+      showDenyButton: true,
+      confirmButtonText: 'Block',
+      denyButtonText: `Cancel`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.block(userId);
+      }
+    })
   }
 
   pardon(userId: string){
-    this.userService.pardon(userId);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be able to see his posts and comments again',
+      showDenyButton: true,
+      confirmButtonText: 'Unblock',
+      denyButtonText: `Cancel`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.userService.pardon(userId);
+      }
+    })
   }
 
   fileChangeEvent(imgInput: any){

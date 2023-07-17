@@ -11,9 +11,9 @@
     <div class="img-container">
       <label for="imgChanger">
         <img [src]="image">
-        <img id="edit" src="assets/icons/feed/pencil-edit.png">
+        <img *ngIf="!id" id="edit" src="assets/icons/feed/pencil-edit.png">
       </label>
-      <input (change)="fileChangeEvent(imgInput)" type="file" id="imgChanger" style="display: none" #imgInput>
+      <input *ngIf="!id" (change)="fileChangeEvent(imgInput)" type="file" id="imgChanger" style="display: none" #imgInput>
     </div>
     <h2>{{username}}</h2>
   </div>
@@ -23,8 +23,8 @@
       <img src="assets/icons/feed/eye.png">
       <p>{{views}}</p>
     </div>
-    <div class="info" id="info-followers">
-      <a href="pages/follows.html"><img src="assets/icons/signUp/usuario.png" alt=""></a>
+    <div class="info" [id]="id ? '' : 'info-followers'">
+      <a [routerLink]="id ? null : '/follows'"><img src="assets/icons/signUp/usuario.png" alt=""></a>
       <p>{{followers}}</p>
     </div>
     <div class="info">

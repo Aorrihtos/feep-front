@@ -30,4 +30,10 @@ export class NavbarComponent implements AfterViewInit{
     hamburguer.addEventListener("click", hamburger_menu);
   }
 
+  home(){
+    this.router.navigateByUrl('/feed').then(
+      ()=> window.location.reload()
+    )
+  }
+
 }

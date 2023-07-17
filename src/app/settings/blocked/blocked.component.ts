@@ -24,21 +24,18 @@ export class BlockedComponent {
   }
 
   unblock(userId: string){
-    // Swal.fire({
-    //   title: 'Are you sure?',
-    //   text: 'You will be able to see his posts and comments again',
-    //   showDenyButton: true,
-    //   confirmButtonText: 'Unblock',
-    //   denyButtonText: `Cancel`,
-    // }).then((result) => {
-    //   /* Read more about isConfirmed, isDenied below */
-    //   if (result.isConfirmed) {
-    //     this.userService.pardon(userId);
-    //     this.blocks = this.blocks.filter(item => item.blocked_id._id !== userId);
-    //   }
-    // })
-    const res = this.userService.pardon(userId);
-    console.log(res);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be able to see his posts and comments again',
+      showDenyButton: true,
+      confirmButtonText: 'Unblock',
+      denyButtonText: `Cancel`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.userService.pardon(userId);
+        this.blocks = this.blocks.filter(item => item.blocked_id._id !== userId);
+      }
+    })
   }
-
 }

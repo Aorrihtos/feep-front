@@ -4,7 +4,7 @@
     <div class="go-back">
       <img src="../../assets/icons/feed/flecha.png" (click)="back()">
     </div>
-    <div class="post-comment-container" id="comment-container">
+    <div *ngIf="post" class="post-comment-container" id="comment-container">
       <div class="post-top">
         <div class="og-post">
           <div class="img-text">
@@ -13,7 +13,7 @@
               <p>{{post.post.user_id.username}}</p>
               <p>{{post.post.created_at | date: 'short'}}</p>
             </div>
-            <div class="buttons" id="buttons-fb">
+            <div *ngIf="post.post.user_id._id !== loggedId" class="buttons" id="buttons-fb">
               <button
                 *ngIf="!userService.followings.get(post.post.user_id._id)"
                 (click)="userService.follow(post.post.user_id._id)">
@@ -35,18 +35,32 @@
                 <img src="../../assets/icons/feed/bloquear-usuario.png">Unblock
               </button>
             </div>
+            <div *ngIf="post.post.user_id._id === loggedId" class="buttons" id="buttons-fb">
+              <button
+                (click)="delete('post')">
+                <img src="assets/icons/feed/deletePost.png">Delete Post
+              </button>
+            </div>
           </div>
           <div class="post-content">
             <p>{{post.post.content}}</p>
             <div class="reaction">
-              <p><img src="../../assets/icons/feed/heart.png">{{post.likes}}</p>
+              <p style="cursor: pointer">
+                <img *ngIf="!isLiked"
+                     (click)="likePost()"
+                     src="assets/icons/feed/heart.png">
+                <img *ngIf="isLiked"
+                     (click)="unlikePost()"
+                     src="../../assets/icons/feed/redFilledHeart.png">
+                {{post.likes}}
+              </p>
               <p><img src="../../assets/icons/feed/mensaje.png">{{post.comments.length}}</p>
             </div>
           </div>
         </div>
         <div class="user-comment">
           <img [src]="imageLoggedUser">
-          <textarea id="commentArea" cols="30" rows="10" placeholder="Leave your comment" #commentArea></textarea>
+          <textarea (keydown)="keyPressEvent($event)" id="commentArea" cols="30" rows="10" placeholder="Leave your comment" #commentArea></textarea>
         </div>
         <button (click)="postComment()" class="red-button">Post</button>
       </div>
@@ -59,9 +73,15 @@
               <p>{{c.user_id.username}}</p>
               <p>{{c.created_at | date: 'short'}}</p>
             </div>
-            <div class="buttons" id="buttons-fb">
+            <div *ngIf="c.user_id._id !== loggedId" class="buttons" id="buttons-fb">
               <button><img src="../../assets/icons/feed/agregar-usuario.png">Follow</button>
               <button><img src="../../assets/icons/feed/bloquear-usuario.png">Block</button>
+            </div>
+            <div *ngIf="c.user_id._id === loggedId" class="buttons" id="buttons-fb">
+              <button
+                (click)="delete('comment', c._id)">
+                <img src="assets/icons/feed/deletePost.png">Delete Comment
+              </button>
             </div>
           </div>
           <div class="post-content">
