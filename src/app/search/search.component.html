@@ -1,16 +1,13 @@
 <app-navbar></app-navbar>
-<div class="follows">
+<div class="searcher">
   <div class="header"></div>
   <div class="container">
     <div class="go-back">
-      <img src="../assets/icons/feed/flecha.png" onclick="history.back()">
+      <img src="assets/icons/feed/flecha.png" onclick="history.back()">
     </div>
-    <div class="buttons">
-      <button (click)="activeArray = following" [ngClass]="activeArray === following ? 'active' : ''">Following</button>
-      <button (click)="activeArray = followers" [ngClass]="activeArray === followers ? 'active' : ''">Followers</button>
-    </div>
-    <div class="users">
-      <div *ngFor = "let user of activeArray" (click)="visit(user._id)" class="profile">
+    <hr>
+    <div *ngIf="results" (scrollend)="loadNext()" class="users">
+      <div (click)="visit(user._id)" *ngFor = "let user of results" class="profile">
         <div class="profile-img">
           <img [src]="user.profile_pic">
         </div>
@@ -34,22 +31,22 @@
         <div class="buttons" id="buttons-fb">
           <button
             *ngIf="!userService.followings.get(user._id)"
-            (click)="follow(user._id); $event.stopPropagation()">
+            (click)="follow(user._id, $event)">
             <img src="assets/icons/feed/agregar-usuario.png">Follow
           </button>
           <button
             *ngIf="userService.followings.get(user._id)"
-            (click)="unfollow(user._id); $event.stopPropagation()">
+            (click)="unfollow(user._id, $event)">
             <img src="assets/icons/feed/agregar-usuario.png">Unfollow
           </button>
           <button
             *ngIf="!userService.blocks.get(user._id)"
-            (click)="block(user._id); $event.stopPropagation()">
+            (click)="block(user._id, $event)">
             <img src="assets/icons/feed/bloquear-usuario.png">Block
           </button>
           <button
             *ngIf="userService.blocks.get(user._id)"
-            (click)="pardon(user._id); $event.stopPropagation() ">
+            (click)="pardon(user._id, $event)">
             <img src="assets/icons/feed/bloquear-usuario.png">Unblock
           </button>
         </div>

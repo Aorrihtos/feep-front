@@ -32,6 +32,7 @@ export class FeedComponent {
   paginationPosts: any;
   paginationFeed: any;
   postImage: File | null = null;
+  attached_file: string | null = null;
 
   constructor(public userService: UserService,
               private postService: PostService,
@@ -49,20 +50,7 @@ export class FeedComponent {
     if(this.mine){
       userService.feed()?.subscribe(
         (res: any) => {
-          const aux: Array<any> = res.feed;
-          for(let item of aux){
-            let index = aux.indexOf(item);
-            let userId = item.user_id._id;
-            this.userService.getProfilePic(userId)?.subscribe(res =>{
-              aux[index].user_id.profile_pic = res;
-            });
-            if(item.attached_file){
-              this.postService.getImage(item._id)?.subscribe(res =>{
-                aux[index].attached_file = res;
-              })
-            }
-          }
-          this.feed = aux;
+          this.feed = this.loadImages(res.feed);
           this.activeArray = this.feed;
           this.paginationFeed = res.pagination;
         },
@@ -74,16 +62,7 @@ export class FeedComponent {
     userService.posts(this.id)?.subscribe(
       (res: any) => {
         this.paginationPosts = res.pagination;
-        const aux: Array<any> = res.posts;
-        for(let post of aux){
-          let index = aux.indexOf(post);
-          if(post.attached_file){
-            this.postService.getImage(post._id)?.subscribe(res => {
-              aux[index].attached_file = res;
-            })
-          }
-        }
-        this.posts = aux;
+        this.posts = this.loadImages(res.posts);
         if(!this.mine){
           this.activeArray = this.posts;
         }
@@ -102,6 +81,7 @@ export class FeedComponent {
         this.postArea.nativeElement.value = "";
         this.posts.unshift(this.createPost(res.json.post));
         this.postImage = null;
+        this.paginationPosts.total_items++;
         if(res.json.reward){
           Swal.fire({
             icon: 'success',
@@ -132,7 +112,6 @@ export class FeedComponent {
       this.activeArray = this.activeArray.filter(i => i.user_id._id !== userId);
     }
   }
-
   createPost(data: any){
     if(this.postImage){
       data.attached_file = window.URL.createObjectURL(this.postImage);
@@ -154,8 +133,9 @@ export class FeedComponent {
 
   navigatePost(idPost: string){
     this.idPost = idPost;
+    const i = this.activeArray.findIndex(item => item._id === idPost);
+    this.attached_file = this.activeArray[i].attached_file;
     this.viewing_post = true;
-
   }
 
   imageChangeEvent(url: any){
@@ -225,9 +205,9 @@ export class FeedComponent {
     if(this.activeArray === this.posts && this.paginationPosts.page < this.paginationPosts.total_pages){
       this.userService.posts(null, ++this.paginationPosts.page)?.subscribe(
         (res: any) => {
+          res.posts = this.loadImages(res.posts);
           this.posts = this.posts.concat(res.posts);
           this.activeArray = this.posts;
-          console.log(this.activeArray)
           this.paginationPosts = res.pagination;
         },
         err => console.log(err)
@@ -235,15 +215,8 @@ export class FeedComponent {
     } else if (this.activeArray === this.feed && this.paginationFeed.page < this.paginationFeed.total_pages){
         this.userService.feed(++this.paginationFeed.page)?.subscribe(
           (res: any) => {
-            const aux: Array<any> = res.feed;
-            for(let item of aux){
-              let index = aux.indexOf(item);
-              let userId = item.user_id._id;
-              this.userService.getProfilePic(userId)?.subscribe(res =>{
-                aux[index].user_id.profile_pic = res;
-              });
-            }
-            this.feed = this.feed.concat(aux);
+            res.feed = this.loadImages(res.feed);
+            this.feed = this.feed.concat(res.feed);
             this.activeArray = this.feed;
             this.paginationFeed = res.pagination;
           },
@@ -256,13 +229,31 @@ export class FeedComponent {
 
   uploadImage(fileInput: any){
     const file: File = fileInput.files[0];
-    this.postArea.nativeElement.value = this.postArea.nativeElement.value.concat(`\n\n ${file.name}`)
     this.postImage = file ? file : null;
+    this.fileInput.nativeElement.value = "";
   }
 
   checkIsLiked(idPost: string){
     return this.postService.liked_posts.indexOf(idPost) >= 0;
   }
 
+  loadImages(posts: Array<any>): Array<any>{
+    const aux: Array<any> = posts;
+    for(let item of aux){
+      let index = aux.indexOf(item);
+      let userId = item.user_id._id;
+      this.userService.getProfilePic(userId)?.subscribe(res =>{
+        aux[index].user_id.profile_pic = res;
+      });
+      if(item.attached_file){
+        this.postService.getImage(item._id)?.subscribe(res =>{
+          aux[index].attached_file = res;
+        })
+      }
+    }
+    return aux;
+  }
+
   protected readonly localStorage = localStorage;
+  protected readonly window = window;
 }

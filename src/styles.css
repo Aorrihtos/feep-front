@@ -37,3 +37,27 @@ button:hover{
   width: fit-content;
   border: 1px var(--rojo) solid;
 }
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.load {
+  width: 40px;
+  height: 40px;
+  border:solid 6px rgb(238,68,60);
+  border-radius: 50%;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+
+  transition: all 0.5s ease-in;
+  animation-name:             rotate;
+  animation-duration:         1.0s;
+  animation-iteration-count:  infinite;
+  animation-timing-function: linear;
+}

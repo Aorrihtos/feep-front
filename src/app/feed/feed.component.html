@@ -20,6 +20,13 @@
             </div>
             <div>
               <textarea name="post" id="post" placeholder="Write here..." #postArea></textarea>
+              <div *ngIf="postImage" style="display: flex; gap: 10px; align-items: center">
+                <pre>{{postImage.name}}</pre>
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512" style="fill: #000000; cursor: pointer"
+                     (click)="postImage = null">
+                  <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                </svg>
+              </div>
             </div>
           </div>
           <div class="post-buttons">
@@ -40,7 +47,9 @@
         </div>
         <div *ngIf="mine" class="buttons">
           <button (click)="activeArray = feed" [ngClass]="activeArray === feed ? 'active' : ''">Feed</button>
-          <button (click)="activeArray = posts" [ngClass]="activeArray === posts ? 'active': ''">My Posts</button>
+          <button (click)="activeArray = posts" [ngClass]="activeArray === posts ? 'active': ''">My Posts
+            <div *ngIf="paginationPosts" class="counter">[ {{paginationPosts.total_items}} ]</div>
+          </button>
         </div>
         <div (scrollend)="loadNext()" *ngIf="!userService.blocks.get(id!)" class="posts">
           <div *ngFor="let post of activeArray" class="post">
@@ -79,16 +88,17 @@
                 </button>
               </div>
             </div>
-            <div class="post-content">
-              <p (click)="navigatePost(post._id)">{{post.content}}</p>
+            <div (click)="navigatePost(post._id)" class="post-content">
+              <p>{{post.content}}</p>
               <img src="{{post.attached_file || ''}}">
               <div class="reaction">
                 <p>
-                  <img *ngIf="!checkIsLiked(post._id)"
-                    (click)="like(post._id)"
+                  <img
+                    *ngIf="!checkIsLiked(post._id)"
+                    (click)="like(post._id); $event.stopPropagation();"
                     src="assets/icons/feed/heart.png">
                   <img *ngIf="checkIsLiked(post._id)"
-                       (click)="unlike(post._id)"
+                       (click)="unlike(post._id); $event.stopPropagation()"
                        src="../../assets/icons/feed/redFilledHeart.png">
                   {{post.likes}}
                 </p>
@@ -115,6 +125,7 @@
       *ngIf="viewing_post"
       [idPost] = idPost
       [isLiked] = checkIsLiked(idPost)
+      [attached_file]="attached_file"
       [loggedId]="loggedId"
       (viewing_post)="backEvent($event)"
       (liked_post)="like($event)"

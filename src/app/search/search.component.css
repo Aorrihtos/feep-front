@@ -39,15 +39,6 @@ button:hover{
   width: fit-content;
 }
 
-.active{
-  color: white !important;
-  background-color: var(--rojo) !important;
-}
-
-.container{
-  overflow: hidden;
-}
-
 .red-button, .white-button:hover{
   background-color: var(--rojo);
   color: white;
@@ -57,7 +48,7 @@ button:hover{
   border: 1px var(--rojo) solid;
 }
 
-.follows{
+.searcher{
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -68,39 +59,43 @@ button:hover{
   margin-top: 50px;
 }
 
-.follows
+.container{
+  overflow: hidden;
+}
+
+.searcher
 .header{
   background-color: var(--rojo);
   width: 100%;
   height: 2%;
 }
 
-.follows .container
+.searcher .container
 .go-back{
   display: flex;
   padding: 10px;
 }
 
-.follows .container .go-back
+.searcher .container .go-back
 img{
   width: 20px;
   margin-left: 15px;
 }
 
-.follows .container .go-back
+.searcher .container .go-back
 img:hover{
   cursor: pointer;
 }
 
 
-.follows
+.searcher
 .container > .buttons{
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.follows .container > .buttons
+.searcher .container > .buttons
 button{
   margin: auto;
   color: var(--rojo);
@@ -113,32 +108,32 @@ button{
   border-bottom: 1px solid var(--rojo);
 }
 
-.follows .container > .buttons
+.searcher .container > .buttons
 button:hover,
-.follows .container > .buttons
+.searcher .container > .buttons
 button:active{
   color: white;
   background-color: var(--rojo);
 }
 
-.follows
+.searcher
 .container > .users{
   height: 100vh;
   overflow: scroll;
 }
 
-.follows .container >
+.searcher .container >
 .users::-webkit-scrollbar{
   display: none;
 }
 
-.follows
+.searcher
 .container{
   display: flex;
   flex-direction: column;
 }
 
-.follows
+.searcher
 .users{
   display: flex;
   flex-direction: column;
@@ -149,7 +144,7 @@ button:active{
   display: none;
 }
 
-.follows
+.searcher
 .profile{
   display: flex;
   flex-direction: row;
@@ -159,13 +154,13 @@ button:active{
   border-bottom: 1px solid var(--rojo);
 }
 
-.follows
+.searcher
 .profile:hover{
   cursor: pointer;
   background-color: #e2e2e2;
 }
 
-.follows .profile-img
+.searcher .profile-img
 img{
   width: 55px;
   height: 55px;
@@ -174,7 +169,7 @@ img{
   border: 4px var(--rojo) solid;
 }
 
-.follows
+.searcher
 .profile-info-container{
   display: flex;
   flex-direction: row;
@@ -182,7 +177,7 @@ img{
   gap: 15px;
 }
 
-.follows   .profile-info-container
+.searcher   .profile-info-container
 .profile-info{
   display: flex;
   flex-direction: row;
@@ -192,7 +187,7 @@ img{
   gap: 12px;
 }
 
-.follows   .profile-info-container .profile-info
+.searcher   .profile-info-container .profile-info
 .info{
   display: flex;
   flex-direction: column;
@@ -206,17 +201,17 @@ img{
   animation: scaleIcon 0.2s forwards;
 }
 
-.follows   .profile-info-container .info
+.searcher   .profile-info-container .info
 img{
   width: 15px;
 }
 
-.follows .profile-info-container .info
+.searcher .profile-info-container .info
 p{
   font-size: 14px;
 }
 
-.follows .profile
+.searcher .profile
 .buttons{
   margin-left: auto;
   margin-right: 28px;
@@ -225,7 +220,7 @@ p{
   gap: 7px;
 }
 
-.follows .profile
+.searcher .profile
 .buttons button{
   background: none;
   border: none;
@@ -235,15 +230,15 @@ p{
   gap: 2px;
 }
 
-.follows .profile
+.searcher .profile
 .buttons button:first-child:hover{
   filter: invert(41%) sepia(66%) saturate(569%) hue-rotate(165deg) brightness(100%) contrast(91%);}
 
-.follows .profile
+.searcher .profile
 .buttons button:last-child:hover{
   filter: invert(46%) sepia(59%) saturate(5695%) hue-rotate(340deg) brightness(98%) contrast(92%);
 }
-.follows .profile
+.searcher .profile
 .buttons img{
   width: 16px;
 }

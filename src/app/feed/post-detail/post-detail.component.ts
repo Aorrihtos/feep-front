@@ -32,6 +32,9 @@ export class PostDetailComponent implements OnInit{
   @Input()
   loggedId!: string
 
+  @Input()
+  attached_file: string | null = null;
+
   imageLoggedUser!: string
 
   imageUserPost!: string;

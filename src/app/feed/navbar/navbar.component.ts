@@ -8,6 +8,9 @@ import {Router} from "@angular/router";
 })
 export class NavbarComponent implements AfterViewInit{
 
+  @ViewChild('searchInput')
+  searchInput!: ElementRef<HTMLInputElement>;
+
   constructor(private router: Router) {
   }
 
@@ -18,16 +21,14 @@ export class NavbarComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    let hamburguer = document.getElementById("hamburguer-icon")!;
-    function hamburger_menu() {
-      var x = document.getElementById("myTopnav")!;
-      if (x.className === "nav-items-topBar") {
-        x.className += " responsive";
-      } else {
-        x.className = "nav-items-topBar";
+    this.searchInput.nativeElement.addEventListener('keypress', event => {
+      if(event.key === 'Enter'){
+        const content = this.searchInput.nativeElement.value;
+        this.router.navigate(["/search"],
+          {queryParams: {user: content}}
+        );
       }
-    }
-    hamburguer.addEventListener("click", hamburger_menu);
+    })
   }
 
   home(){

@@ -138,6 +138,14 @@ export class UserService{
     return this.http.put(`${this.baseUrl}/user/update`, data, {headers})
   }
 
+  search(user: string, page: number = 1){
+    const[token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    const params = new HttpParams().set("user", user).set("page", page);
+    return this.http.get(`${this.baseUrl}/user/search`, {headers, params});
+  }
+
   getUserCredentials(){
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user')!);

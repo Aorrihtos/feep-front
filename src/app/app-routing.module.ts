@@ -28,6 +28,11 @@ const routes: Routes = [
     canMatch: [authGuard]
   },
   {
+    path: "search",
+    loadChildren: ()=> import('./search/search.module').then(m => m.SearchModule),
+    canMatch: [authGuard]
+  },
+  {
     path: "**",
     redirectTo: ""
   }

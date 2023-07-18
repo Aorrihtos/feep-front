@@ -1,18 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 import Swal from "sweetalert2";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-follows',
   templateUrl: './follows.component.html',
   styleUrls: ['./follows.component.css']
 })
-export class FollowsComponent implements OnInit{
+export class FollowsComponent{
 
   following: Array<any> = [];
   followers: Array<any> = [];
   activeArray: Array<any> = this.following;
-  constructor(public userService: UserService) {
+  constructor(public userService: UserService, private router: Router) {
     this.userService.followings.forEach(user => {
       this.userService.getProfilePic(user._id)?.subscribe(url => user.profile_pic = url);
       this.following.push(user);
@@ -21,9 +22,6 @@ export class FollowsComponent implements OnInit{
       this.userService.getProfilePic(user._id)?.subscribe(url => user.profile_pic = url);
       this.followers.push(user);
     });
-  }
-
-  ngOnInit(): void {
   }
 
   follow(userId: string){
@@ -73,4 +71,8 @@ export class FollowsComponent implements OnInit{
     })
   }
 
+  visit(idUser: string){
+    this.router.navigate(['/feed'], {queryParams: {id: idUser}})
+      .then(res => window.location.reload());
+  }
 }
