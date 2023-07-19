@@ -381,6 +381,7 @@ p{
   display: flex;
   align-items: center;
   gap: 2px;
+  width: auto;
 }
 
 .post-container .comment .img-text

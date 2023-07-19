@@ -37,6 +37,7 @@
             </div>
             <div *ngIf="post.post.user_id._id === loggedId" class="buttons" id="buttons-fb">
               <button
+                style="width: auto"
                 (click)="delete('post')">
                 <img src="assets/icons/feed/deletePost.png">Delete Post
               </button>

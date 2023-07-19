@@ -291,6 +291,9 @@ input[type=submit]:hover{
   margin-right: 0.8rem;
   transition: 0.3s;
   background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .social-icons a:hover {

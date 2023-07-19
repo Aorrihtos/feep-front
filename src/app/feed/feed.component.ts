@@ -22,6 +22,7 @@ export class FeedComponent {
 
   loggedId: string;
   image: string = '';
+  banner: string = '';
   posts: Array<any> = [];
   feed: Array<any> = [];
   activeArray: Array<any> = [];
@@ -236,7 +237,6 @@ export class FeedComponent {
   checkIsLiked(idPost: string){
     return this.postService.liked_posts.indexOf(idPost) >= 0;
   }
-
   loadImages(posts: Array<any>): Array<any>{
     const aux: Array<any> = posts;
     for(let item of aux){

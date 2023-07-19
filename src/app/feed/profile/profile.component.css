@@ -20,12 +20,12 @@ h1,h2, button, textarea{
 }
 
 .fb-buttons > button:first-child{
-  border-color: blue;
-  color: blue;
+  border-color: #00a4d6;
+  color: #00a4d6;
 }
 
 .fb-buttons > button:first-child:hover{
-  background-color: blue;
+  background-color: #00a4d6;
   color: white;
 }
 

@@ -152,6 +152,14 @@ export class UserService{
     return [token, user];
   }
 
+  deleteAccount(){
+    const[token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    return this.http.delete(`${this.baseUrl}/user/remove`, {headers})
+      .subscribe(() => localStorage.clear());
+  }
+
   initalize(){
     const [token] = this.getUserCredentials();
     if(!token) return;

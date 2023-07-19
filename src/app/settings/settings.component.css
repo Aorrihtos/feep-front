@@ -96,6 +96,13 @@ button:hover{
   margin-top: 16px;
 }
 
+.menu-buttons button[disabled]{
+  cursor: auto;
+  background-color: #e0e0e0;
+  border: #e0e0e0;
+  color: white;
+}
+
 .settings .settings-container .text
 h1{
   color: var(--rojo);
