@@ -160,7 +160,7 @@ img:hover{
 }
 
 .post-container .og-post
-.img-text:hover #buttons-fb{
+.img-text:hover .buttons-fb{
   display: flex;
 }
 
@@ -354,7 +354,7 @@ p{
 }
 
 .post-container .comment
-.img-text:hover #buttons-fb{
+.img-text:hover .buttons-fb{
   display: flex;
 }
 

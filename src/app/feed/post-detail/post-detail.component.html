@@ -13,7 +13,7 @@
               <p>{{post.post.user_id.username}}</p>
               <p>{{post.post.created_at | date: 'short'}}</p>
             </div>
-            <div *ngIf="post.post.user_id._id !== loggedId" class="buttons" id="buttons-fb">
+            <div *ngIf="post.post.user_id._id !== loggedId" class="buttons buttons-fb">
               <button
                 *ngIf="!userService.followings.get(post.post.user_id._id)"
                 (click)="userService.follow(post.post.user_id._id)">
@@ -35,7 +35,7 @@
                 <img src="../../assets/icons/feed/bloquear-usuario.png">Unblock
               </button>
             </div>
-            <div *ngIf="post.post.user_id._id === loggedId" class="buttons" id="buttons-fb">
+            <div *ngIf="post.post.user_id._id === loggedId" class="buttons buttons-fb">
               <button
                 style="width: auto"
                 (click)="delete('post')">
@@ -75,11 +75,11 @@
               <p>{{c.user_id.username}}</p>
               <p>{{c.created_at | date: 'short'}}</p>
             </div>
-            <div *ngIf="c.user_id._id !== loggedId" class="buttons" id="buttons-fb">
+            <div *ngIf="c.user_id._id !== loggedId" class="buttons buttons-fb">
               <button><img src="../../assets/icons/feed/agregar-usuario.png">Follow</button>
               <button><img src="../../assets/icons/feed/bloquear-usuario.png">Block</button>
             </div>
-            <div *ngIf="c.user_id._id === loggedId" class="buttons" id="buttons-fb">
+            <div *ngIf="c.user_id._id === loggedId" class="buttons buttons-fb">
               <button
                 (click)="delete('comment', c._id)">
                 <img src="assets/icons/feed/deletePost.png">Delete Comment

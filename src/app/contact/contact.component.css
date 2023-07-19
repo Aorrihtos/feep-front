@@ -192,7 +192,7 @@ textarea.input {
   opacity: 0;
   transition: 0.3s;
   height: 5px;
-  background-color: none;
+  background-color: unset;
   top: 50%;
   transform: translateY(-50%);
 }

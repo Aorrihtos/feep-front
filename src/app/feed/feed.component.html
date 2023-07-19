@@ -59,7 +59,7 @@
                 <p>{{post.user_id.username}}</p>
                 <p>{{post.created_at | date: 'short'}}</p>
               </div>
-              <div *ngIf="post.user_id._id !== loggedId" class="buttons" id="buttons-fb">
+              <div *ngIf="post.user_id._id !== loggedId" class="buttons buttons-fb">
                 <button
                   *ngIf="!userService.followings.get(post.user_id._id)"
                   (click)="userService.follow(post.user_id._id)">
@@ -81,7 +81,7 @@
                   <img src="assets/icons/feed/bloquear-usuario.png">Unblock
                 </button>
               </div>
-              <div *ngIf="post.user_id._id === loggedId" class="buttons" id="buttons-fb">
+              <div *ngIf="post.user_id._id === loggedId" class="buttons buttons-fb">
                 <button
                   (click)="delete(post._id)">
                   <img src="assets/icons/feed/deletePost.png">Delete Post
