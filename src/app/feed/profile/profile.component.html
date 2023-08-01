@@ -10,8 +10,8 @@
   <div class="profile-pic-container">
     <div class="img-container">
       <label for="imgChanger">
-        <img [src]="image">
-        <img *ngIf="!id" id="edit" src="assets/icons/feed/pencil-edit.png">
+        <img loading="lazy" [src]="image">
+        <img loading="lazy" *ngIf="!id" id="edit" src="assets/icons/feed/pencil-edit.png">
       </label>
       <input *ngIf="!id" (change)="fileChangeEvent(imgInput)" type="file" id="imgChanger" style="display: none" #imgInput>
     </div>

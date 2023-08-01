@@ -2,7 +2,7 @@
   <div class="header"></div>
   <div class="post">
     <div class="go-back">
-      <img src="../../assets/icons/feed/flecha.png" (click)="back()">
+      <img loading="lazy" src="../../assets/icons/feed/flecha.png" (click)="back()">
     </div>
     <div *ngIf="post" class="post-comment-container" id="comment-container">
       <div class="post-top">
@@ -88,9 +88,12 @@
           </div>
           <div class="post-content">
             <p>{{c.content}}</p>
-            <div class="reaction">
-              <p><img src="../../assets/icons/feed/heart.png">{{c.likes}}</p>
-            </div>
+<!--            <div class="reaction">-->
+<!--              <p>-->
+<!--                <img src="../../assets/icons/feed/heart.png">-->
+<!--                {{c.likes}}-->
+<!--              </p>-->
+<!--            </div>-->
           </div>
           <hr>
         </div>
