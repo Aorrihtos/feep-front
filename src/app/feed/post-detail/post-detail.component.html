@@ -88,12 +88,20 @@
           </div>
           <div class="post-content">
             <p>{{c.content}}</p>
-<!--            <div class="reaction">-->
-<!--              <p>-->
-<!--                <img src="../../assets/icons/feed/heart.png">-->
-<!--                {{c.likes}}-->
-<!--              </p>-->
-<!--            </div>-->
+            <div class="reaction">
+              <p>
+                <img *ngIf="commentService._likedComments.indexOf(c._id) >= 0"
+                  src="../../assets/icons/feed/redFilledHeart.png"
+                  (click)="commentService.unlike(c._id); c.likes = c.likes-1;"
+                  style="cursor: pointer">
+                <img
+                  *ngIf="commentService._likedComments.indexOf(c._id) < 0"
+                  src="../../assets/icons/feed/heart.png"
+                  (click)="commentService.like(c._id); c.likes = c.likes+1;"
+                  style="cursor: pointer;">
+                {{c.likes}}
+              </p>
+            </div>
           </div>
           <hr>
         </div>

@@ -1,7 +1,3 @@
-::ng-deep :root{
-  --rojo: º;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -25,7 +21,7 @@ button{
 hr{
   height: 0.5px;
   width: 100%;
-  background-color: var(--rojo);
+  background-color: #EF443C;
   border: none;
 }
 
@@ -42,8 +38,8 @@ hr{
 
 .white-button, .red-button:hover{
   background-color: white;
-  color: var(--rojo);
-  border: 1px var(--rojo) solid;
+  color: #EF443C;
+  border: 1px #EF443C solid;
   border-radius: 50px;
   padding: 6px;
   width: fit-content;
@@ -52,18 +48,18 @@ hr{
 
 
 .red-button, .white-button:hover{
-  background-color: var(--rojo);
+  background-color: #EF443C;
   color: white;
   border-radius: 50px;
   padding: 6px;
   width: fit-content;
-  border: 1px var(--rojo) solid;
+  border: 1px #EF443C solid;
   display: block;
 }
 
 .active{
   color: white !important;
-  background-color: var(--rojo) !important;
+  background-color: #EF443C !important;
 }
 /* BACKGROUND IMAGE */
 
@@ -79,7 +75,7 @@ hr{
 
 .background-img-container .edit-icon-container{
   position: absolute;
-  background-color: var(--rojo);
+  background-color: #EF443C;
   width: 40px;
   height: 40px;
   padding: 10px;
@@ -133,7 +129,7 @@ hr{
 
 .content-container .content .feed-container
 .header{
-  background-color: var(--rojo);
+  background-color: #EF443C;
   width: 500px;
   height: 25px;
   position: absolute;
@@ -149,14 +145,14 @@ hr{
 .content-container .content .feed-container .feed > .buttons
 button{
   margin: auto;
-  color: var(--rojo);
+  color: #EF443C;
   width: 100%;
   border: none;
   background-color: white;
   height: 45px;
   font-size: 15px;
-  border-top: 1px solid var(--rojo);
-  border-bottom: 1px solid var(--rojo);
+  border-top: 1px solid #EF443C;
+  border-bottom: 1px solid #EF443C;
 }
 
 .content-container .content .feed-container .feed > .buttons
@@ -164,7 +160,7 @@ button:hover,
 .content-container .content .feed-container .feed > .buttons
 button:active{
   color: white;
-  background-color: var(--rojo);
+  background-color: #EF443C;
 }
 
 .content-container .content .feed-container
@@ -207,7 +203,7 @@ img{
   height: 80px;
   object-fit: cover;
   border-radius: 50%;
-  border: 4px var(--rojo) solid;
+  border: 4px #EF443C solid;
 }
 
 .content-container .content .feed-container .feed .my-post .img-post
@@ -335,7 +331,7 @@ img{
   height: 55px;
   object-fit: cover;
   border-radius: 50%;
-  border: 4px var(--rojo) solid;
+  border: 4px #EF443C solid;
 }
 
 .content-container .content .feed-container .feed .post .img-text

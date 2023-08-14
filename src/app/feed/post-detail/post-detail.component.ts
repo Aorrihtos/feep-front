@@ -12,6 +12,7 @@ import {
 import {PostService} from "../../services/post.service";
 import {UserService} from "../../services/user.service";
 import Swal from "sweetalert2";
+import {CommentService} from "../../services/comment.service";
 
 @Component({
   selector: 'app-post-detail',
@@ -55,7 +56,7 @@ export class PostDetailComponent implements OnInit{
 
   post: any;
 
-  constructor(private postService: PostService, public userService: UserService) {
+  constructor(private postService: PostService, public userService: UserService, public commentService: CommentService) {
     this.userService.getProfilePic()?.subscribe(
       url => this.imageLoggedUser = url
     );
@@ -93,6 +94,7 @@ export class PostDetailComponent implements OnInit{
       (res: any) => {
         this.commentArea.nativeElement.value = '';
         res.comment.user_id.profile_pic = this.imageLoggedUser;
+        res.comment.likes = 0;
         this.comments.unshift(res.comment);
       }
     )

@@ -36,7 +36,7 @@ h1,h2, button, textarea{
 
 .profile-container
 .header{
-  background-color: var(--rojo);
+  background-color: #EF443C;
   width: 100%;
   height: 96px;
 }
@@ -67,7 +67,7 @@ img:first-child{
 #edit{
   width: 38px;
   position: absolute;
-  top: 41px;
+  top: 46px;
   left: 46px;
   visibility: hidden;
 }
@@ -75,12 +75,12 @@ img:first-child{
 .profile-container .profile-pic-container
 .img-container:hover{
   opacity: 0.9;
-  cursor: pointer;
 }
 
 .profile-container .profile-pic-container
 .img-container:hover #edit{
   visibility: visible;
+  cursor: pointer;
 }
 
 .profile-container .profile-pic-container

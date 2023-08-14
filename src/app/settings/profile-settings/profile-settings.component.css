@@ -24,7 +24,7 @@ input{
 .settings-profile-container .settings-profile
 > .header{
   height: 80px;
-  background-color: var(--rojo);
+  background-color: #EF443C;
 }
 
 .settings-profile-container .settings-profile
@@ -103,7 +103,7 @@ form input[type=submit]{
 .settings-profile-container .settings-profile .editable
 form input[type=submit]:hover{
   cursor: pointer;
-  border: 1px solid var(--rojo);
+  border: 1px solid #EF443C;
 }
 
 .input-field input[type="email"]{

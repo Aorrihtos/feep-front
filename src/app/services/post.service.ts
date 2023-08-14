@@ -61,14 +61,14 @@ export class PostService {
     const [token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.post(`${this.baseUrl}/like/add/${idPost}`,null , {headers});
+    return this.http.post(`${this.baseUrl}/like/add/post/${idPost}`,null , {headers});
   }
 
   unlike(idPost: string){
     const [token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.delete(`${this.baseUrl}/like/unlike/${idPost}` , {headers});
+    return this.http.delete(`${this.baseUrl}/like/unlike/post/${idPost}` , {headers});
   }
 
   delete(idPost: string){

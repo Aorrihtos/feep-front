@@ -4,6 +4,7 @@ import {PostService} from "../services/post.service";
 import Swal from "sweetalert2";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RankComponent} from "./rank/rank.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 @Component({
   selector: 'app-feed',
@@ -19,6 +20,8 @@ export class FeedComponent {
   fileInput!: ElementRef<HTMLInputElement>;
 
   @ViewChild(RankComponent) rank!: RankComponent;
+
+  @ViewChild(ProfileComponent) profileCard!: ProfileComponent;
 
   loggedId: string;
   image: string = '';
@@ -84,6 +87,7 @@ export class FeedComponent {
         this.postImage = null;
         this.paginationPosts.total_items++;
         if(res.json.reward){
+          this.profileCard.points = this.profileCard.points + res.json.reward;
           Swal.fire({
             icon: 'success',
             title: 'Congrats!',
