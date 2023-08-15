@@ -99,8 +99,9 @@ button:hover{
 .post-container
 .header{
   background-color: #EF443C;
-  width: 100%;
-  height: 2%;
+  width: 500px;
+  height: 25px;
+  position: absolute;
 }
 
 .post-container
@@ -108,6 +109,7 @@ button:hover{
   display: flex;
   padding: 10px;
   border-bottom: 0.5px solid #EF443C;
+  margin-top: 5%;
 }
 
 .post-container .go-back
@@ -130,7 +132,7 @@ img:hover{
 .post-container
 .post-comment-container{
   overflow: scroll;
-  height: 600px;
+  height: 92vh;
 }
 
 .post-container
@@ -173,7 +175,6 @@ img:hover{
 .buttons{
   margin-left: auto;
   margin-right: 0;
-  display: flex;
   flex-direction: row;
   gap: 7px;
   display: none;
