@@ -53,7 +53,10 @@ export class AuthComponent {
     private authService: AuthService,
     private router: Router
   ) {
-    console.log(this.today)
+    const token = localStorage.getItem('token');
+    if(token){
+      router.navigateByUrl('/feed').then(() => console.log('token encountered'));
+    }
   }
 
   signUpButton(){

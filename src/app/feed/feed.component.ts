@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RankComponent} from "./rank/rank.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {PostDetailComponent} from "./post-detail/post-detail.component";
 
 @Component({
   selector: 'app-feed',
@@ -32,11 +33,11 @@ export class FeedComponent {
   id: string | null = null;
   mine: boolean = true;
   viewing_post: boolean = false;
-  idPost: string = '';
   paginationPosts: any;
   paginationFeed: any;
   postImage: File | null = null;
-  attached_file: string | null = null;
+
+  data: any;
 
   constructor(public userService: UserService,
               private postService: PostService,
@@ -137,9 +138,23 @@ export class FeedComponent {
   }
 
   navigatePost(idPost: string){
-    this.idPost = idPost;
+
     const i = this.activeArray.findIndex(item => item._id === idPost);
-    this.attached_file = this.activeArray[i].attached_file;
+    console.log(this.activeArray[i])
+    //Data for post detail variables
+    this.data = {
+      idPost: idPost,
+      loggedId: this.loggedId,
+      idUser: this.activeArray[i].user_id._id,
+      content: this.activeArray[i].content,
+      attached_file: this.activeArray[i].attached_file,
+      imageUserPost: this.activeArray[i].user_id.profile_pic,
+      username: this.activeArray[i].user_id.username,
+      created_at: this.activeArray[i].created_at,
+      likes: this.activeArray[i].likes,
+      comments: this.activeArray[i].comments
+    };
+
     this.viewing_post = true;
   }
 

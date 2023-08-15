@@ -456,6 +456,23 @@ img{
   width: 12px;
 }
 
+/* NG SKELETON LOADER */
+.loader{
+  margin: 30px 30px;
+}
+.loader-title{
+  display: inline-flex;
+}
+.loader-title ngx-skeleton-loader:last-child{
+  display: flex;
+  flex-direction: column;
+  margin: auto 0;
+}
+.loader-content ngx-skeleton-loader:last-child{
+  display: flex;
+  justify-content: end;
+}
+
 
 /* back to top */
 #myBtn {

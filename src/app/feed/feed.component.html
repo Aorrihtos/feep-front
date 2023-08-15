@@ -123,14 +123,12 @@
     </div>
     <app-post-detail
       *ngIf="viewing_post"
-      [idPost] = idPost
-      [isLiked] = checkIsLiked(idPost)
-      [attached_file]="attached_file"
-      [loggedId]="loggedId"
+      [data] = data
+      [isLiked] = checkIsLiked(data.idPost)
       (viewing_post)="backEvent($event)"
       (liked_post)="like($event)"
       (unliked_post)="unlike($event)"
-      (delete_post)="deletePostEvent($event)">
+      (delete_post)="deletePostEvent($event)" >
     </app-post-detail>
     <app-rank></app-rank>
   </div>

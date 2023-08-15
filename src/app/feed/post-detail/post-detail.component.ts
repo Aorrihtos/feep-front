@@ -13,6 +13,7 @@ import {PostService} from "../../services/post.service";
 import {UserService} from "../../services/user.service";
 import Swal from "sweetalert2";
 import {CommentService} from "../../services/comment.service";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-post-detail',
@@ -21,26 +22,20 @@ import {CommentService} from "../../services/comment.service";
 })
 export class PostDetailComponent implements OnInit{
 
-  @ViewChild('commentArea')
-  commentArea!: ElementRef<HTMLTextAreaElement>;
-
-  @Input()
-  idPost!: string;
-
   @Input()
   isLiked!: boolean;
 
   @Input()
-  loggedId!: string
+  data: any;
 
-  @Input()
-  attached_file: string | null = null;
+  @ViewChild('commentArea')
+  commentArea!: ElementRef<HTMLTextAreaElement>;
 
   imageLoggedUser!: string
 
-  imageUserPost!: string;
-
   comments!: Array<any>;
+
+  isLoading: boolean = true;
 
   @Output('viewing_post')
   emitter: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -61,40 +56,41 @@ export class PostDetailComponent implements OnInit{
       url => this.imageLoggedUser = url
     );
   }
+
   ngOnInit(): void {
-    this.postService.detail(this.idPost)?.subscribe(
+    this.postService.detail(this.data.idPost)?.subscribe(
       (res: any) => {
         this.post = res;
-        this.userService.getProfilePic(res.post.user_id._id)?.subscribe(
-          url => this.imageUserPost = url
-        );
         this.comments = res.comments;
         this.comments.forEach((comment, index) =>{
           this.userService.getProfilePic(comment.user_id._id)?.subscribe(
             url => this.comments[index].user_id.profile_pic = url
           );
-        })
+        });
+        setTimeout(()=>{this.isLoading=false}, 500)
       }
     );
+
   }
 
   likePost(){
-    this.post.likes++;
-    this.likeEmitter.emit(this.idPost);
+    this.data.likes++;
+    this.likeEmitter.emit(this.data.idPost);
   }
 
   unlikePost(){
-    this.post.likes--;
-    this.unlikeEmitter.emit(this.idPost);
+    this.data.likes--;
+    this.unlikeEmitter.emit(this.data.idPost);
   }
 
   postComment(){
     const content = this.commentArea.nativeElement.value;
-    this.postService.sendComment(content, this.idPost)?.subscribe(
+    this.postService.sendComment(content, this.data.idPost)?.subscribe(
       (res: any) => {
         this.commentArea.nativeElement.value = '';
         res.comment.user_id.profile_pic = this.imageLoggedUser;
         res.comment.likes = 0;
+        this.data.comments++;
         this.comments.unshift(res.comment);
       }
     )
@@ -111,12 +107,13 @@ export class PostDetailComponent implements OnInit{
     }).then((result) => {
       if (result.isConfirmed) {
         if(action === 'post'){
-          this.delete_emitter.emit(this.idPost);
+          this.delete_emitter.emit(this.data.idPost);
           this.back();
         } else if (action === 'comment' && idComment !== null){
           this.postService.delComment(idComment)?.subscribe(
             (res: any) =>{
               const index = this.comments.findIndex(c => c._id === idComment);
+              this.data.comments--;
               this.comments.splice(index, 1);
             }
           )
