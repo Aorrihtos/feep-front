@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {PostService} from "../services/post.service";
 import Swal from "sweetalert2";
@@ -12,7 +12,7 @@ import {PostDetailComponent} from "./post-detail/post-detail.component";
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css']
 })
-export class FeedComponent {
+export class FeedComponent{
 
   @ViewChild('postArea')
   postArea!: ElementRef<HTMLTextAreaElement>;
@@ -36,46 +36,18 @@ export class FeedComponent {
   paginationPosts: any;
   paginationFeed: any;
   postImage: File | null = null;
+  isLoading: boolean = true;
 
   data: any;
 
   constructor(public userService: UserService,
               private postService: PostService,
               private aRouter: ActivatedRoute) {
+    this.isLoading = true;
     this.loggedId = (JSON.parse(localStorage.getItem('user')!))._id;
-    aRouter.queryParams.subscribe(res =>{
-      this.id = res['id'];
-      if(this.id) this.mine = false;
+    this.initialize().then(()=>{
+      setTimeout(()=> {this.isLoading=false}, 1000);
     })
-    userService.getProfilePic(this.id)!.subscribe(
-      (res: any) =>{
-        this.image = res;
-      }
-    );
-    if(this.mine){
-      userService.feed()?.subscribe(
-        (res: any) => {
-          this.feed = this.loadImages(res.feed);
-          this.activeArray = this.feed;
-          this.paginationFeed = res.pagination;
-        },
-        (err: any) => {
-          console.log(err);
-        }
-      );
-    }
-    userService.posts(this.id)?.subscribe(
-      (res: any) => {
-        this.paginationPosts = res.pagination;
-        this.posts = this.loadImages(res.posts);
-        if(!this.mine){
-          this.activeArray = this.posts;
-        }
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
   }
 
   post(){
@@ -271,6 +243,50 @@ export class FeedComponent {
       }
     }
     return aux;
+  }
+
+  async initialize(){
+    this.aRouter.queryParams.subscribe(res =>{
+      this.id = res['id'];
+      if(this.id) {this.mine = false} else {this.activeArray = this.feed}
+    })
+    this.userService.getProfilePic(this.id)!.subscribe(
+      (res: any) =>{
+        this.image = res;
+      }
+    );
+    if(!this.id){
+      this.userService.feed()?.subscribe(
+        (res: any) => {
+          this.feed = this.loadImages(res.feed);
+          this.activeArray = this.feed;
+          this.paginationFeed = res.pagination;
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
+    }
+    this.userService.posts(this.id)?.subscribe(
+      (res: any) => {
+        this.paginationPosts = res.pagination;
+        this.posts = this.loadImages(res.posts);
+        if(this.id){
+          this.activeArray = this.posts;
+        }
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
+
+  refreshData(){
+    this.isLoading = true;
+    this.initialize().then(()=> {
+      setTimeout(()=> {this.isLoading=false}, 1000);
+    });
+
   }
 
   protected readonly localStorage = localStorage;

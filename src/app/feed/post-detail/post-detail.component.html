@@ -67,37 +67,7 @@
         <button (click)="postComment()" class="red-button">Post</button>
       </div>
       <hr>
-      <div *ngIf="isLoading">
-        <div *ngFor="let i of [].constructor(15)" class="loader">
-          <div class="loader-title">
-            <ngx-skeleton-loader
-              animation="progress"
-              appearance="circle" [theme]="{
-          'width' : '45px',
-          'height' : '45px'
-        }">
-            </ngx-skeleton-loader>
-            <ngx-skeleton-loader
-              animation="progress"
-              appearance="line" count="2"  [theme]="{
-          'width' : '100px',
-          'height' : '10px'
-          }">
-            </ngx-skeleton-loader>
-          </div>
-          <div class="loader-content">
-            <ngx-skeleton-loader
-              animation="progress"
-              appearance="line" count="3"  [theme]="{'height' : '10px'}">
-            </ngx-skeleton-loader>
-            <ngx-skeleton-loader
-              animation="progress"
-              appearance="line" count="1"  [theme]="{'height' : '10px', 'width' : '20px'}">
-            </ngx-skeleton-loader>
-          </div>
-          <hr>
-        </div>
-      </div>
+      <app-comments-loader *ngIf="isLoading && data.comments > 0"></app-comments-loader>
       <div *ngIf="!isLoading" class="comments">
         <div *ngFor="let c of comments" class="comment">
           <div class="img-text">

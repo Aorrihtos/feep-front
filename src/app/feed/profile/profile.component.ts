@@ -3,9 +3,9 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   OnInit,
-  Output,
+  Output, SimpleChanges,
   ViewChild
 } from '@angular/core';
 import {UserService} from "../../services/user.service";
@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit, AfterViewInit{
+export class ProfileComponent implements OnInit, AfterViewInit, OnChanges{
 
   @ViewChild("descArea")
   descArea!: ElementRef<HTMLTextAreaElement>;
@@ -41,26 +41,31 @@ export class ProfileComponent implements OnInit, AfterViewInit{
   followers: number = 0;
   points: number = 0;
 
-  constructor(public userService: UserService) {
+  isLoading: boolean = true;
 
-  }
+  constructor(public userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.detail(this.id)?.subscribe(
-      (res: any) => {
-        console.log(res);
-        this.setData(res.user);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.initialize();
   }
   ngAfterViewInit(): void {
     this.sumText.nativeElement.addEventListener('keypress', event =>{
       if(event.code == "Enter" || this.sumText.nativeElement.textContent!.length >= 25)
         event.preventDefault();
     })
+  }
+
+  initialize(){
+    this.userService.detail(this.id)?.subscribe(
+      (res: any) => {
+        console.log(res);
+        this.setData(res.user);
+        setTimeout(()=>{this.isLoading = false}, 200);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   setData(user: any){
@@ -141,6 +146,11 @@ export class ProfileComponent implements OnInit, AfterViewInit{
       this.emitter.emit(this.image);
     });
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.isLoading = true;
+    this.initialize();
   }
 
 }

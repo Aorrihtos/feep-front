@@ -67,7 +67,7 @@ export class PostDetailComponent implements OnInit{
             url => this.comments[index].user_id.profile_pic = url
           );
         });
-        setTimeout(()=>{this.isLoading=false}, 500)
+        setTimeout(()=>{this.isLoading=false}, 200)
       }
     );
 

@@ -13,7 +13,7 @@
     <div *ngIf="!viewing_post" class="feed-container">
       <div class="header"></div>
       <div class="feed">
-        <div *ngIf="mine" class="my-post">
+        <div *ngIf="!id" class="my-post">
           <div class="img-post">
             <div class="profile-img">
               <img loading="lazy" [src]="image">
@@ -45,13 +45,14 @@
             </div>
           </div>
         </div>
-        <div *ngIf="mine" class="buttons">
+        <div *ngIf="!id" class="buttons">
           <button (click)="activeArray = feed" [ngClass]="activeArray === feed ? 'active' : ''">Feed</button>
           <button (click)="activeArray = posts" [ngClass]="activeArray === posts ? 'active': ''">My Posts
             <div *ngIf="paginationPosts" class="counter">[ {{paginationPosts.total_items}} ]</div>
           </button>
         </div>
-        <div (scrollend)="loadNext()" *ngIf="!userService.blocks.get(id!)" class="posts">
+        <app-feed-loader *ngIf="isLoading"></app-feed-loader>
+        <div (scrollend)="loadNext()" *ngIf="!userService.blocks.get(id!) && !isLoading" class="posts">
           <div *ngFor="let post of activeArray" class="post">
             <div class="img-text">
               <img loading="lazy" src="{{activeArray === feed ? post.user_id.profile_pic : image}}">
@@ -130,6 +131,6 @@
       (unliked_post)="unlike($event)"
       (delete_post)="deletePostEvent($event)" >
     </app-post-detail>
-    <app-rank></app-rank>
+    <app-rank (pageChanged)="refreshData()"></app-rank>
   </div>
 </div>

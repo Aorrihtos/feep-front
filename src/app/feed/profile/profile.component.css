@@ -140,6 +140,12 @@ button{
   margin-left: auto;
 }
 
+.loader-info-container{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
 #info-followers:hover{
   cursor: pointer;
   filter: invert(41%) sepia(66%) saturate(569%) hue-rotate(165deg) brightness(100%) contrast(91%);

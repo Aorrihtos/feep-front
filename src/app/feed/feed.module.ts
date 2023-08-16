@@ -9,6 +9,8 @@ import { RankComponent } from './rank/rank.component';
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 import {ImageCropperModule} from "ngx-image-cropper";
 import { PostDetailComponent } from './post-detail/post-detail.component';
+import { CommentsComponent } from './loaders/comments/comments.component';
+import { FeedLoaderComponent } from './loaders/feed-loader/feed-loader.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
         NavbarComponent,
         ProfileComponent,
         RankComponent,
-        PostDetailComponent
+        PostDetailComponent,
+        CommentsComponent,
+        FeedLoaderComponent
     ],
     exports: [
         NavbarComponent

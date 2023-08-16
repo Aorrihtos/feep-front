@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {RankService} from "../../services/rank.service";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
@@ -13,6 +13,9 @@ export class RankComponent{
 
   rank: Array<any> = [];
   isLoading: boolean = true;
+
+  @Output()
+  pageChanged: EventEmitter<null> = new EventEmitter<null>();
 
   setImage(value: string){
     const element = this.rank.find(item => item.user_id._id === JSON.parse(localStorage.getItem('user')!)._id)
@@ -42,7 +45,7 @@ export class RankComponent{
       this.rank = aux;
       setTimeout(()=>{
         this.isLoading = false;
-      },500)
+      },200)
       console.log(this.rank);
     });
   }
@@ -53,7 +56,8 @@ export class RankComponent{
     }
     this.router.navigate(['/feed'], {queryParams: {id: userId}})
       .then(() => {
-        window.location.reload();
+        //window.location.reload();
+        this.pageChanged.emit(null);
       });
   }
 

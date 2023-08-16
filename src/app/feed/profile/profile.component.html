@@ -1,24 +1,56 @@
 <div class="profile-container">
   <div class="header"></div>
-  <div *ngIf="id" class="fb-buttons">
+  <div *ngIf="isLoading && id" class="loader-fb-buttons">
+    <ngx-skeleton-loader
+      count="1"
+      [theme]="{'width': '70px', 'height': '34px', 'position': 'absolute', 'left': '15px', 'top': '110px'}"
+    ></ngx-skeleton-loader>
+    <ngx-skeleton-loader
+      count="1"
+      [theme]="{'width': '70px', 'height': '34px', 'position': 'absolute', 'right': '15px', 'top': '110px'}"
+    ></ngx-skeleton-loader>
+  </div>
+  <div *ngIf="id && !isLoading" class="fb-buttons">
     <button *ngIf="!userService.followings.get(id)" (click)="follow(id)" class="white-button">Follow</button>
     <button *ngIf="userService.followings.get(id)" (click)="unfollow(id)" class="white-button">Unfollow</button>
     <button *ngIf="!userService.blocks.get(id)" (click)="block(id)" class="white-button">Block</button>
     <button *ngIf="userService.blocks.get(id)" (click)="pardon(id)" class="white-button">Unblock</button>
   </div>
-
-  <div class="profile-pic-container">
-    <div class="img-container">
+  <div *ngIf="true" class="profile-pic-container">
+    <div *ngIf="isLoading" class="loader-pic`">
+      <ngx-skeleton-loader
+        appearance="circle"
+        [theme]="{'width': '130px', 'height': '130px' }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div *ngIf="!isLoading" class="img-container">
       <label for="imgChanger">
         <img loading="lazy" [src]="image">
         <img loading="lazy" *ngIf="!id" id="edit" src="assets/icons/feed/pencil-edit.png">
       </label>
       <input *ngIf="!id" (change)="fileChangeEvent(imgInput)" type="file" id="imgChanger" style="display: none" #imgInput>
     </div>
-    <h2>{{username}}</h2>
+    <ngx-skeleton-loader
+      *ngIf="isLoading"
+      appearance="line"
+    ></ngx-skeleton-loader>
+    <h2 *ngIf="!isLoading">{{username}}</h2>
   </div>
-  <p id="summary" [contentEditable]="!id"  #sumText>{{summary}}</p>
-  <div class="info-container">
+
+  <ngx-skeleton-loader
+    *ngIf="isLoading"
+    appearance="line"
+    [theme]="{ 'margin': '100px auto 20px 50px', 'width': '70%', 'height': '15px'}"
+  ></ngx-skeleton-loader>
+  <p *ngIf="!isLoading" id="summary" [contentEditable]="!id"  #sumText>{{summary}}</p>
+  <div *ngIf="isLoading" class="loader-info-container">
+    <ngx-skeleton-loader
+      appearance="line"
+      count="3"
+      [theme]="{'width':'30px', 'height':'35px', 'margin': '0 35px'}"
+    ></ngx-skeleton-loader>
+  </div>
+  <div *ngIf="!isLoading" class="info-container">
     <div class="info">
       <img src="assets/icons/feed/eye.png">
       <p>{{views}}</p>
@@ -34,7 +66,14 @@
   </div>
   <hr>
   <div class="aboutMe-container">
-    <textarea [disabled]="id" name="aboutMe" id="aboutMe" cols="30" rows="6" placeholder="About me..." #descArea>{{description}}</textarea>
-    <button *ngIf="!id" (click)="setDescription()" class="white-button" #descBtn>Publish changes</button>
+    <div *ngIf="isLoading" class="loader-aboutMe-container">
+      <ngx-skeleton-loader
+        count="3"
+      ></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{'width':'30%'}"></ngx-skeleton-loader>
+      <ngx-skeleton-loader *ngIf="!id" [theme]="{'width':'123.42px','height': '32px', 'display': 'block', 'margin-left':'156.58px'}"></ngx-skeleton-loader>
+    </div>
+    <textarea *ngIf="!isLoading" [disabled]="id" name="aboutMe" id="aboutMe" cols="30" rows="6" placeholder="About me..." #descArea>{{description}}</textarea>
+    <button *ngIf="!id && !isLoading" (click)="setDescription()" class="white-button" #descBtn>Publish changes</button>
   </div>
 </div>
