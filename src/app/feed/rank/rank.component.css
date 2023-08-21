@@ -29,7 +29,7 @@ h2{
   color: white;
   background-color: #EF443C;
   text-align: center;
-  height: 96px;
+  padding: 14px 0 14px 0;
   width: 100%;
   font-weight: lighter;
 }
@@ -124,4 +124,29 @@ p{
 hr{
   width: 50%;
   margin-left: 24%;
+}
+
+/*SKELETON LOADER*/
+
+.profile-container-loader{
+  overflow: scroll;
+}
+
+.profile-container-loader hr{
+  border-color: #EF443C;
+  border-top: none;
+}
+
+.profile-loader{
+  height: 75px;
+  width: 100%;
+  display: flex;
+  padding: 20px 0 20px 0;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-loader{
+  display: flex;
+  flex-direction: column;
 }
