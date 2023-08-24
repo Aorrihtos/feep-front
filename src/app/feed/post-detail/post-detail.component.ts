@@ -53,7 +53,7 @@ export class PostDetailComponent implements OnInit{
 
   constructor(private postService: PostService, public userService: UserService, public commentService: CommentService) {
     this.userService.getProfilePic()?.subscribe(
-      url => this.imageLoggedUser = url
+      url => this.imageLoggedUser = url.toString()
     );
   }
 

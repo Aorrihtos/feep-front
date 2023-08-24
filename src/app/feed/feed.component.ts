@@ -197,7 +197,6 @@ export class FeedComponent{
     if(this.activeArray === this.posts && this.paginationPosts.page < this.paginationPosts.total_pages){
       this.userService.posts(null, ++this.paginationPosts.page)?.subscribe(
         (res: any) => {
-          res.posts = this.loadImages(res.posts);
           this.posts = this.posts.concat(res.posts);
           this.activeArray = this.posts;
           this.paginationPosts = res.pagination;
@@ -207,7 +206,6 @@ export class FeedComponent{
     } else if (this.activeArray === this.feed && this.paginationFeed.page < this.paginationFeed.total_pages){
         this.userService.feed(++this.paginationFeed.page)?.subscribe(
           (res: any) => {
-            res.feed = this.loadImages(res.feed);
             this.feed = this.feed.concat(res.feed);
             this.activeArray = this.feed;
             this.paginationFeed = res.pagination;
@@ -228,22 +226,6 @@ export class FeedComponent{
   checkIsLiked(idPost: string){
     return this.postService.liked_posts.indexOf(idPost) >= 0;
   }
-  loadImages(posts: Array<any>): Array<any>{
-    const aux: Array<any> = posts;
-    for(let item of aux){
-      let index = aux.indexOf(item);
-      let userId = item.user_id._id;
-      this.userService.getProfilePic(userId)?.subscribe(res =>{
-        aux[index].user_id.profile_pic = res;
-      });
-      if(item.attached_file){
-        this.postService.getImage(item._id)?.subscribe(res =>{
-          aux[index].attached_file = res;
-        })
-      }
-    }
-    return aux;
-  }
 
   async initialize(){
     this.aRouter.queryParams.subscribe(res =>{
@@ -252,13 +234,14 @@ export class FeedComponent{
     })
     this.userService.getProfilePic(this.id)!.subscribe(
       (res: any) =>{
+        console.log(res);
         this.image = res;
       }
     );
     if(!this.id){
       this.userService.feed()?.subscribe(
         (res: any) => {
-          this.feed = this.loadImages(res.feed);
+          this.feed = res.feed;
           this.activeArray = this.feed;
           this.paginationFeed = res.pagination;
         },
@@ -270,7 +253,7 @@ export class FeedComponent{
     this.userService.posts(this.id)?.subscribe(
       (res: any) => {
         this.paginationPosts = res.pagination;
-        this.posts = this.loadImages(res.posts);
+        this.posts = res.posts;
         if(this.id){
           this.activeArray = this.posts;
         }

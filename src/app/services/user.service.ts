@@ -47,15 +47,7 @@ export class UserService{
     if(!token) return;
     const param = userId ? userId : '';
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.get(
-      `${this.baseUrl}/user/profile-pic/${param}`,
-      {headers, responseType: "arraybuffer"}
-    ).pipe(
-      map(res => {
-        let blob = new Blob([res]);
-        return window.URL.createObjectURL(blob);
-      })
-    )
+    return this.http.get(`${this.baseUrl}/user/profile-pic/${param}`, {headers});
   }
 
   feed(page: number = 1){

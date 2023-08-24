@@ -33,20 +33,10 @@ export class RankComponent{
 
   constructor(private rankService: RankService, private userService: UserService, private router: Router) {
     this.rankService.rank().subscribe( (res: any) => {
-      const aux: Array<any> = res.rank;
-      for (let item of aux){
-        let index = aux.indexOf(item);
-        this.userService.getProfilePic(item.user_id._id.toString())?.subscribe(
-          (res: any) => {
-            aux[index].image_url = res;
-          }
-        )
-      }
-      this.rank = aux;
+      this.rank = res.rank;
       setTimeout(()=>{
         this.isLoading = false;
       },200)
-      console.log(this.rank);
     });
   }
 
@@ -56,7 +46,6 @@ export class RankComponent{
     }
     this.router.navigate(['/feed'], {queryParams: {id: userId}})
       .then(() => {
-        //window.location.reload();
         this.pageChanged.emit(null);
       });
   }

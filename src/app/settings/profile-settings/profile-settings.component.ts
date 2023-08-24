@@ -44,7 +44,7 @@ export class ProfileSettingsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.userService.getProfilePic()?.subscribe(url => this.image = url)
+    this.userService.getProfilePic()?.subscribe(url => this.image = url.toString())
   }
 
   submit(){
