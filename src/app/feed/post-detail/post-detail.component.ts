@@ -62,11 +62,6 @@ export class PostDetailComponent implements OnInit{
       (res: any) => {
         this.post = res;
         this.comments = res.comments;
-        this.comments.forEach((comment, index) =>{
-          this.userService.getProfilePic(comment.user_id._id)?.subscribe(
-            url => this.comments[index].user_id.profile_pic = url
-          );
-        });
         setTimeout(()=>{this.isLoading=false}, 200)
       }
     );

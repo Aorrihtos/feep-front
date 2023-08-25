@@ -234,7 +234,6 @@ export class FeedComponent{
     })
     this.userService.getProfilePic(this.id)!.subscribe(
       (res: any) =>{
-        console.log(res);
         this.image = res;
       }
     );
