@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnChanges{
       (res: any) => {
         console.log(res);
         this.setData(res.user);
-        setTimeout(()=>{this.isLoading = false}, 200);
+        setTimeout(()=>{this.isLoading = false}, 500);
       },
       err => {
         console.log(err);

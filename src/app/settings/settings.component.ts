@@ -25,7 +25,7 @@ export class SettingsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.clear();
-        this.router.navigateByUrl("");
+        this.router.navigateByUrl("").then(()=> window.location.reload());
       }
     })
   }
@@ -41,7 +41,7 @@ export class SettingsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.userService.deleteAccount();
-        this.router.navigateByUrl("");
+        this.router.navigateByUrl("").then(()=> window.location.reload());
       }
     })
   }

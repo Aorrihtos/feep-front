@@ -64,7 +64,7 @@
           <img [src]="imageLoggedUser">
           <textarea (keydown)="keyPressEvent($event)" id="commentArea" cols="30" rows="10" placeholder="Leave your comment" #commentArea></textarea>
         </div>
-        <button (click)="postComment()" class="red-button">Post</button>
+        <button (click)="postComment()" class="red-button" #postBtn>Post</button>
       </div>
       <hr>
       <app-comments-loader *ngIf="isLoading && data.comments > 0"></app-comments-loader>

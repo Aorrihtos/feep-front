@@ -31,6 +31,9 @@ export class PostDetailComponent implements OnInit{
   @ViewChild('commentArea')
   commentArea!: ElementRef<HTMLTextAreaElement>;
 
+  @ViewChild('postBtn')
+  postBtn!: ElementRef<HTMLButtonElement>;
+
   imageLoggedUser!: string
 
   comments!: Array<any>;
@@ -62,7 +65,7 @@ export class PostDetailComponent implements OnInit{
       (res: any) => {
         this.post = res;
         this.comments = res.comments;
-        setTimeout(()=>{this.isLoading=false}, 200)
+        setTimeout(()=>{this.isLoading=false}, 500)
       }
     );
 
@@ -79,6 +82,7 @@ export class PostDetailComponent implements OnInit{
   }
 
   postComment(){
+    this.postBtn.nativeElement.disabled=true;
     const content = this.commentArea.nativeElement.value;
     this.postService.sendComment(content, this.data.idPost)?.subscribe(
       (res: any) => {
@@ -87,6 +91,7 @@ export class PostDetailComponent implements OnInit{
         res.comment.likes = 0;
         this.data.comments++;
         this.comments.unshift(res.comment);
+        this.postBtn.nativeElement.disabled=false;
       }
     )
   }

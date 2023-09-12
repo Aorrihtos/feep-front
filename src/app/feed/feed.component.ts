@@ -17,6 +17,9 @@ export class FeedComponent{
   @ViewChild('postArea')
   postArea!: ElementRef<HTMLTextAreaElement>;
 
+  @ViewChild('postBtn')
+  postBtn!: ElementRef<HTMLButtonElement>;
+
   @ViewChild('fileInput')
   fileInput!: ElementRef<HTMLInputElement>;
 
@@ -51,6 +54,7 @@ export class FeedComponent{
   }
 
   post(){
+    this.postBtn.nativeElement.disabled = true;
     const content = this.postArea.nativeElement.value;
     if(!content || content.trim() == "") return;
     this.postService.publish(content, this.postImage)?.subscribe(
@@ -67,6 +71,7 @@ export class FeedComponent{
             text: `Today you have earned ${res.json.reward} points!`
           })
         }
+        this.postBtn.nativeElement.disabled=false;
       },
       (err: any) => {
         Swal.fire({
