@@ -62,9 +62,11 @@ export class AuthComponent {
   signUpButton(){
     this.container.nativeElement.classList.add("sign-up-mode");
   }
+
   signInButton(){
     this.container.nativeElement.classList.remove("sign-up-mode");
   }
+
   login(){
     if(this.signInForm.invalid){
       this.signInForm.markAllAsTouched()
@@ -82,6 +84,7 @@ export class AuthComponent {
       })
     });
   }
+
   register(){
     if(this.signUpForm.invalid) {
       this.signUpForm.markAllAsTouched();
@@ -92,11 +95,11 @@ export class AuthComponent {
       new Date(this.today!)
     ];
     const years = aux.getFullYear() - birth.getFullYear();
-    if(years < 18){
+    if(years < 13){
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: `You must be over 18 years old to sign up! Try it again in ${18 - years} years, if we still alive...`
+        text: `You must be over 13 years old to sign up! Try it again in ${13 - years} years`
       });
       return;
     }
