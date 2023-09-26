@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
-import {environment} from "../../../environments/environment.development";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-profile-settings',
