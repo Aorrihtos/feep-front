@@ -183,8 +183,8 @@ export class FeedComponent{
   }
 
   commentEvent(comments: any){
-    console.log(comments.idPost + "" + comments.value);
-    this.activeArray[comments.idPost].comments = comments.value;
+    const index = this.activeArray.findIndex(post => post._id == comments.idPost);
+    this.activeArray[index].comments = comments.value;
   }
 
   updatePostLikes(idPost: string, action: string){
