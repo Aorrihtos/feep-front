@@ -13,29 +13,17 @@ export class SearchComponent {
   results: Array<any> = [];
   data!: string;
   pagination: any;
+  isLoading: boolean = true;
 
   constructor(public userService: UserService, private aRouter: ActivatedRoute, private router: Router) {
     this.aRouter.queryParams.subscribe(res => {
       this.data = res['user'];
       this.userService.search(this.data)?.subscribe((res: any) => {
-        res.users = this.loadImages(res.users);
         this.results = res.users;
         this.pagination = res.pagination;
+        this.isLoading = false;
       });
     });
-  }
-
-  loadImages(users: Array<any>): Array<any>{
-    const aux: Array<any> = users;
-    for(let item of aux){
-      let index = aux.indexOf(item);
-      let userId = item._id;
-      this.userService.getProfilePic(userId)?.subscribe(res =>{
-        aux[index].profile_pic = res;
-        console.log(res)
-      });
-    }
-    return aux;
   }
 
   follow(userId: string, event: Event){
@@ -86,7 +74,6 @@ export class SearchComponent {
     console.log(this.pagination)
     if(this.pagination.page < this.pagination.total_pages){
       this.userService.search(this.data, ++this.pagination.page)?.subscribe((res: any) => {
-        res.users = this.loadImages(res.users);
         this.results = this.results.concat(res.users);
         this.pagination = res.pagination;
       })

@@ -52,6 +52,9 @@ export class PostDetailComponent implements OnInit{
   @Output('delete_post')
   delete_emitter: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output('comment_update')
+  comment_emiter: EventEmitter<{idPost: string, value: number}> = new EventEmitter<{idPost: string, value: number}>();
+
   post: any;
 
   constructor(private postService: PostService, public userService: UserService, public commentService: CommentService) {
@@ -92,6 +95,7 @@ export class PostDetailComponent implements OnInit{
         this.data.comments++;
         this.comments.unshift(res.comment);
         this.postBtn.nativeElement.disabled=false;
+        this.comment_emiter.emit({idPost: this.data.idPost, value: this.data.comments});
       }
     )
   }

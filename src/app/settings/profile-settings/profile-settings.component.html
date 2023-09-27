@@ -9,6 +9,7 @@
             type="text"
             id="username"
             name="username"
+            placeholder="Username"
             maxlength="15"
             title="Please, enter between 3 and 15 characters"
             formControlName="username"
@@ -18,6 +19,7 @@
           <input
             type="text"
             name="name"
+            placeholder="Name"
             id="name"
             title="Please, enter between 3 and 15 letters"
             formControlName="name"
@@ -27,7 +29,8 @@
           <input
             type="text"
             name="surname"
-            pattern="[A-Za-z]{3,50}"
+            placeholder="Surname"
+            pattern="[a-zA-Z]+([ ]?[a-zA-Z]+){3,50}"
             title="Please, enter between 3 and 50 letters"
             formControlName="surname"
           />
@@ -36,6 +39,7 @@
           <input
             type="date"
             name="date"
+            placeholder="Date of birth"
             id="date"
             formControlName="date"
           />
@@ -43,6 +47,7 @@
         <div class="input-field">
           <input
             type="email"
+            placeholder="Email"
             name="email"
             formControlName="email"
           />
@@ -52,6 +57,7 @@
             type="password"
             [value]="user.password"
             maxlength="15"
+            placeholder="Password"
             title="Please, enter between 3 and 15 characters"
             formControlName="password"
           />

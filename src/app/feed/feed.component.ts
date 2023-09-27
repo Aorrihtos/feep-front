@@ -167,6 +167,7 @@ export class FeedComponent{
     }).then((result) => {
       if (result.isConfirmed) {
         this.deletePostEvent(idPost);
+        this.paginationPosts.total_items--;
       }
     })
   }
@@ -179,6 +180,11 @@ export class FeedComponent{
         this.activeArray = this.posts;
       }
     )
+  }
+
+  commentEvent(comments: any){
+    console.log(comments.idPost + "" + comments.value);
+    this.activeArray[comments.idPost].comments = comments.value;
   }
 
   updatePostLikes(idPost: string, action: string){

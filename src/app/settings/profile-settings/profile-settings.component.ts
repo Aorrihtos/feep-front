@@ -29,10 +29,10 @@ export class ProfileSettingsComponent implements OnInit{
         Validators.maxLength(15),
         Validators.pattern(/[A-Za-z]/)
       ]],
-      surname: [this.user.surname, [
+      surname: [this.user.surname || "", [
         Validators.minLength(3),
         Validators.maxLength(50),
-        Validators.pattern(/[A-Za-z]/)
+        Validators.pattern(/[a-zA-Z]+([ ]?[a-zA-Z]+)*/)
       ]],
       date: [this.user.date],
       email: [this.user.email, [Validators.email]],

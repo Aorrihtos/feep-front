@@ -45,6 +45,12 @@ export class AuthComponent {
       Validators.minLength(3),
       Validators.maxLength(15),
       Validators.pattern(/[A-Za-z0-9]/)
+    ]],
+    repeatPassword: ["", [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(15),
+      Validators.pattern(/[A-Za-z0-9]/)
     ]]
   })
 
@@ -86,14 +92,16 @@ export class AuthComponent {
   }
 
   register(){
-    if(this.signUpForm.invalid) {
+    if(this.signUpForm.invalid || this.signUpForm.controls["password"].value != this.signUpForm.controls["repeatPassword"].value) {
       this.signUpForm.markAllAsTouched();
       return;
     }
+
     const [birth, aux] = [
       new Date(this.signUpForm.controls['date'].value),
       new Date(this.today!)
     ];
+
     const years = aux.getFullYear() - birth.getFullYear();
     if(years < 13){
       Swal.fire({

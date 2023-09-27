@@ -6,7 +6,8 @@
       <img src="assets/icons/feed/flecha.png" onclick="history.back()">
     </div>
     <hr>
-    <div *ngIf="results" (scrollend)="loadNext()" class="users">
+    <app-search-loader *ngIf="isLoading"></app-search-loader>
+    <div *ngIf="!isLoading" (scrollend)="loadNext()" class="users">
       <div (click)="visit(user._id)" *ngFor = "let user of results" class="profile">
         <div class="profile-img">
           <img [src]="user.profile_pic">

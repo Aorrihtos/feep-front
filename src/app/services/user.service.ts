@@ -148,8 +148,7 @@ export class UserService{
     const[token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.delete(`${this.baseUrl}/user/remove`, {headers})
-      .subscribe(() => localStorage.clear());
+    return this.http.delete(`${this.baseUrl}/user/remove`, {headers});
   }
 
   initalize(){

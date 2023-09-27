@@ -132,6 +132,21 @@
             Please, enter between 3 and 15 characters
           </p>
         </div>
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            placeholder="Repeat password"
+            maxlength="15"
+            title="Please, enter between 3 and 15 characters"
+            formControlName="repeatPassword"/>
+          <p class="input-error"
+             *ngIf="(this.signUpForm.controls['repeatPassword'].errors
+                    && this.signUpForm.controls['repeatPassword'].touched)
+                    || this.signUpForm.controls['password'].value != this.signUpForm.controls['repeatPassword'].value">
+            Passwords don't match
+          </p>
+        </div>
         <input type="submit" class="btn" value="Sign up" />
       </form>
     </div>

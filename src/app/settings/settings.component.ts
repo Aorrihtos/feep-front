@@ -40,8 +40,10 @@ export class SettingsComponent {
       confirmButtonColor: "#EF443CFF"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.userService.deleteAccount();
-        this.router.navigateByUrl("").then(()=> window.location.reload());
+        this.userService.deleteAccount()?.subscribe(()=>{
+          localStorage.clear();
+          this.router.navigateByUrl("").then(()=> window.location.reload());
+        });
       }
     })
   }

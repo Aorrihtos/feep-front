@@ -96,7 +96,9 @@ form .submit-buttons{
 }
 
 .settings-profile-container .settings-profile .editable
-form input[type=submit]{
+form input[type=submit],
+.settings-profile-container .settings-profile .editable
+form input[type=button]{
   font-size: 14px;
 }
 
