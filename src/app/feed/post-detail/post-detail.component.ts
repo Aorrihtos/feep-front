@@ -119,6 +119,7 @@ export class PostDetailComponent implements OnInit{
               const index = this.comments.findIndex(c => c._id === idComment);
               this.data.comments--;
               this.comments.splice(index, 1);
+              this.comment_emiter.emit({idPost: this.data.idPost, value: this.data.comments});
             }
           )
         }

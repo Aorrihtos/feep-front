@@ -100,12 +100,15 @@ form input[type=submit],
 .settings-profile-container .settings-profile .editable
 form input[type=button]{
   font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  border: 1px solid #EF443C;
 }
 
 .settings-profile-container .settings-profile .editable
-form input[type=submit]:hover{
+form input[type=submit]:hover,
+.settings-profile-container .settings-profile .editable
+form input[type=button]:hover{
   cursor: pointer;
-  border: 1px solid #EF443C;
 }
 
 .input-field input[type="email"]{
