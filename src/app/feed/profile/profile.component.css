@@ -164,5 +164,13 @@ button{
 }
 
 #summary {
-  margin: 100px auto 20px auto;
+  margin: 100px 0 20px 0;
+  border: none;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+#summary:focus {
+  border: none;
+  outline: none;
 }

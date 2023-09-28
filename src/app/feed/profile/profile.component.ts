@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -16,13 +15,13 @@ import Swal from "sweetalert2";
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit, AfterViewInit, OnChanges{
+export class ProfileComponent implements OnInit, OnChanges{
 
   @ViewChild("descArea")
   descArea!: ElementRef<HTMLTextAreaElement>;
 
   @ViewChild("sumText")
-  sumText!: ElementRef<HTMLParagraphElement>;
+  sumText!: ElementRef<HTMLInputElement>;
 
   @ViewChild("descBtn")
   descBtn!: ElementRef<HTMLButtonElement>;
@@ -48,11 +47,21 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnChanges{
   ngOnInit(): void {
     this.initialize();
   }
-  ngAfterViewInit(): void {
-    this.sumText.nativeElement.addEventListener('keypress', event =>{
-      if(event.code == "Enter" || this.sumText.nativeElement.textContent!.length >= 25)
+
+  keyCapEvent(){
+    const summaryInput = this.sumText.nativeElement;
+    summaryInput.addEventListener('keypress', event =>{
+      if(event.code == "Enter")
         event.preventDefault();
-    })
+    });
+    summaryInput.addEventListener('paste', event =>{
+        event.preventDefault();
+    });
+    summaryInput.addEventListener('change', event =>{
+      if(summaryInput.textContent!.length > 20){
+        summaryInput.textContent = summaryInput.textContent!.substring(0,20);
+      }
+    });
   }
 
   initialize(){
@@ -60,7 +69,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnChanges{
       (res: any) => {
         console.log(res);
         this.setData(res.user);
-        setTimeout(()=>{this.isLoading = false}, 500);
+        setTimeout(()=>{this.isLoading = false; this.keyCapEvent();}, 500);
       },
       err => {
         console.log(err);
@@ -70,9 +79,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnChanges{
 
   setData(user: any){
     this.username = user.data.username;
-    this.summary = user.data.summary
-      ? user.data.summary
-      : 'Insert your summary!';
+    this.summary = user.data.summary;
     this.description = user.data.description
       ? user.data.description
       : '';
@@ -82,9 +89,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnChanges{
   }
 
   setDescription(){
+    console.log(this.sumText.nativeElement.value)
     this.userService.description({
       description: this.descArea.nativeElement.value,
-      summary: this.sumText.nativeElement.textContent
+      summary: this.sumText.nativeElement.value
     })?.subscribe(
       (res: any) => {
         this.description = res.user.description;
@@ -141,11 +149,19 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnChanges{
 
   fileChangeEvent(imgInput: any){
     const file: File = imgInput.files[0];
-    this.userService.uploadImg(file)?.subscribe(res => {
-      this.image = window.URL.createObjectURL(file);
-      this.emitter.emit(this.image);
+    this.userService.uploadImg(file)?.subscribe({
+      complete: ()=> {
+        this.image = window.URL.createObjectURL(file);
+        this.emitter.emit(this.image);
+      },
+      error: (err)=> {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.error.message
+        })
+      }
     });
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {

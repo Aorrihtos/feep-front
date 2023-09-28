@@ -264,6 +264,7 @@ img{
   margin: 30px;
   display: flex;
   flex-direction: column;
+  overflow-wrap: break-word;
 }
 
 .content-container .content .feed-container .feed .post

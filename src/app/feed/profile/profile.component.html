@@ -28,7 +28,7 @@
         <img loading="lazy" [src]="image">
         <img loading="lazy" *ngIf="!id" id="edit" src="assets/icons/feed/pencil-edit.png">
       </label>
-      <input *ngIf="!id" (change)="fileChangeEvent(imgInput)" type="file" id="imgChanger" style="display: none" #imgInput>
+      <input *ngIf="!id" (change)="fileChangeEvent(imgInput); imgInput.value='';" type="file" id="imgChanger" style="display: none" #imgInput>
     </div>
     <ngx-skeleton-loader
       *ngIf="isLoading"
@@ -42,7 +42,8 @@
     appearance="line"
     [theme]="{ 'margin': '100px auto 20px 50px', 'width': '70%', 'height': '15px'}"
   ></ngx-skeleton-loader>
-  <p *ngIf="!isLoading" id="summary" [contentEditable]="!id"  #sumText>{{summary}}</p>
+<!--  <p *ngIf="!isLoading" data-placeholder="Summary" id="summary" [contentEditable]="!id"  #sumText>{{summary}}</p>-->
+  <input *ngIf="!isLoading" type="text" placeholder="Insert your summary!" id="summary" [contentEditable]="!id" [value]="summary" maxlength="20" #sumText>
   <div *ngIf="isLoading" class="loader-info-container">
     <ngx-skeleton-loader
       appearance="line"

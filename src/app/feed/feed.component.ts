@@ -77,8 +77,9 @@ export class FeedComponent{
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong! Try again later'
-        })
+          text: err.error.message
+        });
+        this.postBtn.nativeElement.disabled=false;
       }
     )
   }
@@ -230,7 +231,7 @@ export class FeedComponent{
 
   uploadImage(fileInput: any){
     const file: File = fileInput.files[0];
-    this.postImage = file ? file : null;
+    this.postImage = file || null;
     this.fileInput.nativeElement.value = "";
   }
 
