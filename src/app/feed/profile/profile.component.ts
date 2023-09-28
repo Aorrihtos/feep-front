@@ -89,7 +89,6 @@ export class ProfileComponent implements OnInit, OnChanges{
   }
 
   setDescription(){
-    console.log(this.sumText.nativeElement.value)
     this.userService.description({
       description: this.descArea.nativeElement.value,
       summary: this.sumText.nativeElement.value

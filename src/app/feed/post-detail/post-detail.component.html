@@ -62,7 +62,7 @@
         </div>
         <div class="user-comment">
           <img [src]="imageLoggedUser">
-          <textarea (keydown)="keyPressEvent($event)" id="commentArea" cols="30" rows="10" placeholder="Leave your comment" #commentArea></textarea>
+          <textarea (keydown)="keyPressEvent($event)" id="commentArea" maxlength="250" cols="30" rows="10" placeholder="Leave your comment" #commentArea></textarea>
         </div>
         <button (click)="postComment()" class="red-button" #postBtn>Post</button>
       </div>

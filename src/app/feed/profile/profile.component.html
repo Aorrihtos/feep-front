@@ -43,7 +43,7 @@
     [theme]="{ 'margin': '100px auto 20px 50px', 'width': '70%', 'height': '15px'}"
   ></ngx-skeleton-loader>
 <!--  <p *ngIf="!isLoading" data-placeholder="Summary" id="summary" [contentEditable]="!id"  #sumText>{{summary}}</p>-->
-  <input *ngIf="!isLoading" type="text" placeholder="Insert your summary!" id="summary" [contentEditable]="!id" [value]="summary" maxlength="20" #sumText>
+  <input *ngIf="!isLoading" type="text" placeholder="Insert your summary!" id="summary" [readOnly]="id" [value]="summary" maxlength="20" #sumText>
   <div *ngIf="isLoading" class="loader-info-container">
     <ngx-skeleton-loader
       appearance="line"
@@ -74,7 +74,7 @@
       <ngx-skeleton-loader [theme]="{'width':'30%'}"></ngx-skeleton-loader>
       <ngx-skeleton-loader *ngIf="!id" [theme]="{'width':'123.42px','height': '32px', 'display': 'block', 'margin-left':'156.58px'}"></ngx-skeleton-loader>
     </div>
-    <textarea *ngIf="!isLoading" [disabled]="id" name="aboutMe" id="aboutMe" cols="30" rows="6" placeholder="About me..." #descArea>{{description}}</textarea>
+    <textarea *ngIf="!isLoading" [disabled]="id" name="aboutMe" id="aboutMe" cols="30" rows="6" maxlength="250" placeholder="About me..." #descArea>{{description}}</textarea>
     <button *ngIf="!id && !isLoading" (click)="setDescription()" class="white-button" #descBtn>Publish changes</button>
   </div>
 </div>

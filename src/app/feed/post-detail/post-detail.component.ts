@@ -87,6 +87,17 @@ export class PostDetailComponent implements OnInit{
   postComment(){
     this.postBtn.nativeElement.disabled=true;
     const content = this.commentArea.nativeElement.value;
+
+    if(content.length > 250){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Comment is to long, maximum 250 characters"
+      });
+      this.postBtn.nativeElement.disabled=false;
+      return;
+    }
+
     this.postService.sendComment(content, this.data.idPost)?.subscribe(
       (res: any) => {
         this.commentArea.nativeElement.value = '';

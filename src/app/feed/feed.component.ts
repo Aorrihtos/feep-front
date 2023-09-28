@@ -56,7 +56,20 @@ export class FeedComponent{
   post(){
     this.postBtn.nativeElement.disabled = true;
     const content = this.postArea.nativeElement.value;
+
+    if(content.length > 500){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Post is too long. Maximum 500 characters.'
+      });
+      this.postArea.nativeElement.value = "";
+      this.postBtn.nativeElement.disabled = false;
+      return;
+    }
+
     if(!content || content.trim() == "") return;
+
     this.postService.publish(content, this.postImage)?.subscribe(
       (res: any)=>{
         this.postArea.nativeElement.value = "";
