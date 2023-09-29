@@ -13,6 +13,9 @@ export class AuthComponent {
   @ViewChild("container")
   container!: ElementRef<HTMLDivElement>;
 
+  @ViewChild("signUpBtn")
+  signUpBtn!: ElementRef<HTMLInputElement>;
+
   today = new Date(Date.now()).toISOString().split('T').shift();
 
   signInForm: FormGroup = this.fb.group({
@@ -92,8 +95,10 @@ export class AuthComponent {
   }
 
   register(){
+    this.signUpBtn.nativeElement.disabled = true;
     if(this.signUpForm.invalid || this.signUpForm.controls["password"].value != this.signUpForm.controls["repeatPassword"].value) {
       this.signUpForm.markAllAsTouched();
+      this.signUpBtn.nativeElement.disabled = false;
       return;
     }
 
@@ -109,6 +114,7 @@ export class AuthComponent {
         title: 'Oops...',
         text: `You must be over 13 years old to sign up! Try it again in ${13 - years} years`
       });
+      this.signUpBtn.nativeElement.disabled = false;
       return;
     }
     this.authService.register(this.signUpForm.value).subscribe(
@@ -120,6 +126,7 @@ export class AuthComponent {
           timer: 2000,
           timerProgressBar: true,
         }).then((result) => {
+          this.signUpBtn.nativeElement.disabled = false;
           this.router.navigateByUrl("/feed")
         })
       },
@@ -130,6 +137,7 @@ export class AuthComponent {
           title: 'Oops...',
           text: err.error.message
         });
+        this.signUpBtn.nativeElement.disabled = false;
       }
     )
   }

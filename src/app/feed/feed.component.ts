@@ -68,7 +68,11 @@ export class FeedComponent{
       return;
     }
 
-    if(!content || content.trim() == "") return;
+    // Check if content is empty
+    if((!content || content.trim() == "") && !this.postImage){
+      this.postBtn.nativeElement.disabled = false;
+      return;
+    }
 
     this.postService.publish(content, this.postImage)?.subscribe(
       (res: any)=>{
