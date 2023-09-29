@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script
+    src="https://kit.fontawesome.com/64d58efce2.js"
+    crossorigin="anonymous"
+  ></script>
+  <title>Sign in & Sign up</title>
+</head>
+<body>
+<div class="container" #container>
+  <div class="forms-container">
+    <div class="signin-signup">
+      <!-- Login Form Starts-->
+      <form (ngSubmit)="login()" [formGroup]="signInForm" class="sign-in-form">
+        <h2 class="title">Sign in</h2>
+        <div class="input-field">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            placeholder="Username"
+            required
+            formControlName="username"/>
+          <p class="input-error"
+             *ngIf="this.signInForm.controls['username'].errors
+                    && this.signInForm.controls['username'].touched">
+            Username is required
+          </p>
+        </div>
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            formControlName="password"/>
+          <p class="input-error"
+             *ngIf="this.signInForm.controls['password'].errors
+                    && this.signInForm.controls['password'].touched">
+            Password is required
+          </p>
+        </div>
+        <input type="submit" value="Login" class="btn solid" />
+      </form>
+
+      <!-- Register form starts     -->
+      <form (ngSubmit)="register()" [formGroup]="signUpForm" class="sign-up-form">
+        <h2 class="title">Sign up</h2>
+        <div class="input-field">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            required
+            title="Please, enter between 3 and 15 letters"
+            formControlName="name"
+            maxlength="15"/>
+          <p class="input-error"
+             *ngIf="this.signUpForm.controls['name'].errors
+                    && this.signUpForm.controls['name'].touched">
+            Please, enter between 3 and 15 letters
+          </p>
+        </div>
+        <div class="input-field">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            placeholder="Surname (optional)"
+            maxlength="50"
+            title="Please, enter between 3 and 50 letters"
+            formControlName="surname"/>
+          <p class="input-error"
+             *ngIf="this.signUpForm.controls['surname'].errors
+                    && this.signUpForm.controls['surname'].errors">
+            Please, enter between 3 and 50 letters
+          </p>
+        </div>
+        <div class="input-field">
+          <i class="fas fa-calendar-alt"></i>
+          <input
+            type="date"
+            required
+            formControlName="date"
+            [max]="today"/>
+          <p class="input-error"
+             *ngIf="this.signUpForm.controls['date'].errors
+                    && this.signUpForm.controls['date'].touched">
+            Date is required
+          </p>
+        </div>
+        <div class="input-field">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            placeholder="Username"
+            maxlength="15"
+            title="Please, enter between 3 and 15 characters"
+            formControlName="username"/>
+          <p class="input-error"
+             *ngIf="this.signUpForm.controls['username'].errors
+                    && this.signUpForm.controls['username'].touched">
+            Please, enter between 3 and 15 characters
+          </p>
+        </div>
+        <div class="input-field">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            formControlName="email"/>
+          <p class="input-error"
+             *ngIf="this.signUpForm.controls['email'].errors
+                    && this.signUpForm.controls['email'].touched">
+            Please, put a valid email.
+          </p>
+        </div>
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            placeholder="Password"
+            maxlength="15"
+            title="Please, enter between 3 and 15 characters"
+            formControlName="password"/>
+          <p class="input-error"
+             *ngIf="this.signUpForm.controls['password'].errors
+                    && this.signUpForm.controls['password'].touched">
+            Please, enter between 3 and 15 characters
+          </p>
+        </div>
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            placeholder="Repeat password"
+            maxlength="15"
+            title="Please, enter between 3 and 15 characters"
+            formControlName="repeatPassword"/>
+          <p class="input-error"
+             *ngIf="(this.signUpForm.controls['repeatPassword'].errors
+                    && this.signUpForm.controls['repeatPassword'].touched)
+                    || this.signUpForm.controls['password'].value != this.signUpForm.controls['repeatPassword'].value">
+            Passwords don't match
+          </p>
+        </div>
+        <input type="submit" class="btn" value="Sign up" #signUpBtn/>
+      </form>
+    </div>
+  </div>
+
+  <div class="panels-container">
+    <div class="panel left-panel">
+      <div class="content">
+        <img loading="lazy" src="assets/logo.png">
+        <h1>Sign up</h1>
+        <p>
+          Provide your info and sign up now
+        </p>
+        <button
+          class="btn transparent"
+          id="sign-up-btn"
+          (click)="signUpButton()">
+          Sign up
+        </button>
+      </div>
+    </div>
+    <div class="panel right-panel">
+      <div class="content">
+        <img loading="lazy" src="assets/logo.png">
+        <h1>Sign In</h1>
+        <p>
+          Use your user name to sign in
+        </p>
+        <button
+          class="btn transparent"
+          id="sign-in-btn"
+          (click)="signInButton()">
+          Sign in
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

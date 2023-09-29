@@ -1,1 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Roboto:wght@300;500&display=swap");
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  background: #F1F1F1;
+}
+
+*::-webkit-scrollbar{
+  display: none;
+}
+
+.swal2-popup {
+  font-size: 1rem !important;
+  font-family: Poppins, serif;
+}
+
+.white-button, .red-button:hover{
+  background-color: white;
+  color: #EF443C;
+  border: 1px #EF443C solid;
+  border-radius: 50px;
+  padding: 6px;
+  width: fit-content;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+.red-button, .white-button:hover{
+  background-color: #EF443C;
+  color: white;
+  border-radius: 50px;
+  padding: 6px;
+  width: fit-content;
+  border: 1px #EF443C solid;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.load {
+  width: 40px;
+  height: 40px;
+  border:solid 6px rgb(238,68,60);
+  border-radius: 50%;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+
+  transition: all 0.5s ease-in;
+  animation-name:             rotate;
+  animation-duration:         1.0s;
+  animation-iteration-count:  infinite;
+  animation-timing-function: linear;
+}

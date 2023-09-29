@@ -1,0 +1,59 @@
+<app-navbar></app-navbar>
+<div class="follows">
+  <div class="header"></div>
+  <div class="container">
+    <div class="go-back">
+      <img loading="lazy" src="../assets/icons/feed/flecha.png" onclick="history.back()">
+    </div>
+    <div class="buttons">
+      <button (click)="activeArray = following" [ngClass]="activeArray === following ? 'active' : ''">Following</button>
+      <button (click)="activeArray = followers" [ngClass]="activeArray === followers ? 'active' : ''">Followers</button>
+    </div>
+    <div class="users">
+      <div *ngFor = "let user of activeArray" (click)="visit(user._id)" class="profile">
+        <div class="profile-img">
+          <img loading="lazy" [src]="user.profile_pic">
+        </div>
+        <div class="profile-info-container">
+          <h3>{{user.username}}</h3>
+          <div class="profile-info">
+            <div class="info">
+              <img loading="lazy" src="../assets/icons/feed/eye.png">
+              <p>{{user.views}}</p>
+            </div>
+            <div class="info">
+              <img loading="lazy" src="../assets/icons/signUp/usuario.png">
+              <p>{{user.followers}}</p>
+            </div>
+            <div class="info">
+              <img loading="lazy" src="../assets/iconSheep.png">
+              <p>{{user.points}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="buttons" id="buttons-fb">
+          <button
+            *ngIf="!userService.followings.get(user._id)"
+            (click)="follow(user._id); $event.stopPropagation()">
+            <img loading="lazy" src="assets/icons/feed/agregar-usuario.png">Follow
+          </button>
+          <button
+            *ngIf="userService.followings.get(user._id)"
+            (click)="unfollow(user._id); $event.stopPropagation()">
+            <img loading="lazy" src="assets/icons/feed/agregar-usuario.png">Unfollow
+          </button>
+          <button
+            *ngIf="!userService.blocks.get(user._id)"
+            (click)="block(user._id); $event.stopPropagation()">
+            <img loading="lazy" src="assets/icons/feed/bloquear-usuario.png">Block
+          </button>
+          <button
+            *ngIf="userService.blocks.get(user._id)"
+            (click)="pardon(user._id); $event.stopPropagation() ">
+            <img loading="lazy" src="assets/icons/feed/bloquear-usuario.png">Unblock
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

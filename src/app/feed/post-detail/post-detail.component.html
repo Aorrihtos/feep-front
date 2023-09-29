@@ -1,0 +1,113 @@
+<div class="post-container">
+  <div class="header"></div>
+  <div class="post">
+    <div class="go-back">
+      <img loading="lazy" src="../../assets/icons/feed/flecha.png" (click)="back()">
+    </div>
+    <div class="post-comment-container" id="comment-container">
+      <div class="post-top">
+        <div class="og-post">
+          <div class="img-text">
+            <img [src]="data.imageUserPost">
+            <div class="text">
+              <p>{{data.username}}</p>
+              <p>{{data.created_at | date: 'short'}}</p>
+            </div>
+            <div *ngIf="data.idUser !== data.loggedId" class="buttons buttons-fb">
+              <button
+                *ngIf="!userService.followings.get(data.idUser)"
+                (click)="userService.follow(data.idUser)">
+                <img src="../../assets/icons/feed/agregar-usuario.png">Follow
+              </button>
+              <button
+                *ngIf="userService.followings.get(data.idUser)"
+                (click)="userService.unfollow(data.idUser)">
+                <img src="../../assets/icons/feed/agregar-usuario.png">Unfollow
+              </button>
+              <button
+                *ngIf="!userService.blocks.get(data.idUser)"
+                (click)="userService.block(post.post.user_id._id)">
+                <img src="../../assets/icons/feed/bloquear-usuario.png">Block
+              </button>
+              <button
+                *ngIf="userService.blocks.get(data.idUser)"
+                (click)="userService.pardon(data.idUser)">
+                <img src="../../assets/icons/feed/bloquear-usuario.png">Unblock
+              </button>
+            </div>
+            <div *ngIf="data.idUser === data.loggedId" class="buttons buttons-fb">
+              <button
+                style="width: auto"
+                (click)="delete('post')">
+                <img src="assets/icons/feed/deletePost.png">Delete Post
+              </button>
+            </div>
+          </div>
+          <div class="post-content">
+            <p>{{data.content}}</p>
+            <img src="{{data.attached_file}}">
+            <div class="reaction">
+              <p style="cursor: pointer">
+                <img *ngIf="!isLiked"
+                     (click)="likePost()"
+                     src="assets/icons/feed/heart.png">
+                <img *ngIf="isLiked"
+                     (click)="unlikePost()"
+                     src="../../assets/icons/feed/redFilledHeart.png">
+                {{data.likes}}
+              </p>
+              <p><img src="../../assets/icons/feed/mensaje.png">{{data.comments}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="user-comment">
+          <img [src]="imageLoggedUser">
+          <textarea (keydown)="keyPressEvent($event)" id="commentArea" maxlength="250" cols="30" rows="10" placeholder="Leave your comment" #commentArea></textarea>
+        </div>
+        <button (click)="postComment()" class="red-button" #postBtn>Post</button>
+      </div>
+      <hr>
+      <app-comments-loader *ngIf="isLoading && data.comments > 0"></app-comments-loader>
+      <div *ngIf="!isLoading" class="comments">
+        <div *ngFor="let c of comments" class="comment">
+          <div class="img-text">
+            <img src="{{c.user_id.profile_pic}}">
+            <div class="text">
+              <p>{{c.user_id.username}}</p>
+              <p>{{c.created_at | date: 'short'}}</p>
+            </div>
+            <div *ngIf="c.user_id._id !== data.loggedId" class="buttons buttons-fb">
+              <button><img src="../../assets/icons/feed/agregar-usuario.png">Follow</button>
+              <button><img src="../../assets/icons/feed/bloquear-usuario.png">Block</button>
+            </div>
+            <div *ngIf="c.user_id._id === data.loggedId" class="buttons buttons-fb">
+              <button
+                (click)="delete('comment', c._id)">
+                <img src="assets/icons/feed/deletePost.png">Delete Comment
+              </button>
+            </div>
+          </div>
+          <div class="post-content">
+            <p>{{c.content}}</p>
+            <div class="reaction">
+              <p>
+                <img *ngIf="commentService._likedComments.indexOf(c._id) >= 0"
+                  src="../../assets/icons/feed/redFilledHeart.png"
+                  (click)="commentService.unlike(c._id); c.likes = c.likes-1;"
+                  style="cursor: pointer">
+                <img
+                  *ngIf="commentService._likedComments.indexOf(c._id) < 0"
+                  src="../../assets/icons/feed/heart.png"
+                  (click)="commentService.like(c._id); c.likes = c.likes+1;"
+                  style="cursor: pointer;">
+                {{c.likes}}
+              </p>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+  <img id="myBtn" src="../../assets/icons/feed/flecha-arriba.png">
+</div>

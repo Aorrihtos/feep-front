@@ -1,0 +1,52 @@
+<div *ngFor="let i of [].constructor(10)">
+  <ngx-skeleton-loader
+    appearance="circle"
+    [theme]="{
+          'width': '55px',
+          'height':'55px',
+          'margin':'0'
+        }"
+  >
+  </ngx-skeleton-loader>
+  <ngx-skeleton-loader
+    appearance="line"
+    [theme]="{
+          'width': '80px',
+          'height':'19px',
+          'margin':'0'
+        }"
+  >
+  </ngx-skeleton-loader>
+  <ngx-skeleton-loader
+    appearance="line"
+    count="3"
+    [theme]="{
+          'width': '15px',
+          'height':'39px',
+          'margin':'0 10px 0 0',
+        }"
+  >
+  </ngx-skeleton-loader>
+  <ngx-skeleton-loader
+    appearance="line"
+    count="1"
+    [theme]="{
+          'width': '69px',
+          'height':'18px',
+          'position': 'absolute',
+          'right':'100px',
+          'top':'40px'
+        }">
+  </ngx-skeleton-loader>
+  <ngx-skeleton-loader
+    appearance="line"
+    count="1"
+    [theme]="{
+          'width': '50px',
+          'height':'18px',
+          'position': 'absolute',
+          'right':'30px',
+          'top':'40px',
+        }">
+  </ngx-skeleton-loader>
+</div>

@@ -1,0 +1,72 @@
+<div class="settings-profile-container">
+  <div class="settings-profile">
+    <div class="header"></div>
+    <img [src]="image">
+    <div class="editable">
+      <form [formGroup]="profileForm" (ngSubmit)="submit()">
+        <div class="input-field">
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            maxlength="15"
+            title="Please, enter between 3 and 15 characters"
+            formControlName="username"
+          />
+        </div>
+        <div class="input-field">
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            id="name"
+            title="Please, enter between 3 and 15 letters"
+            formControlName="name"
+          />
+        </div>
+        <div class="input-field">
+          <input
+            type="text"
+            name="surname"
+            placeholder="Surname"
+            pattern="[a-zA-Z]+([ ]?[a-zA-Z]+){3,50}"
+            title="Please, enter between 3 and 50 letters"
+            formControlName="surname"
+          />
+        </div>
+        <div class="input-field">
+          <input
+            type="date"
+            name="date"
+            placeholder="Date of birth"
+            id="date"
+            formControlName="date"
+          />
+        </div>
+        <div class="input-field">
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            formControlName="email"
+          />
+        </div>
+        <div class="input-field">
+          <input
+            type="password"
+            [value]="user.password"
+            maxlength="15"
+            placeholder="Password"
+            title="Please, enter between 3 and 15 characters"
+            formControlName="password"
+          />
+        </div>
+        <div class="submit-buttons">
+          <input (click)="cancel()" type="button" class="red-button" value="Ignore Changes" />
+          <input type="submit" class="red-button" value="Submit Changes" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

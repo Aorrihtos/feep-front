@@ -1,0 +1,176 @@
+h1,h2, button, textarea{
+  font-family: "Poppins";
+}
+
+.profile-container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: -1px 1px 15px -4px rgba(0,0,0,0.75);
+  width: 320px;
+  height: 532px;
+}
+
+.fb-buttons{
+  position: absolute;
+  top: 105px;
+  margin: 11px;
+  left: 14px;
+}
+
+.fb-buttons > button:first-child{
+  border-color: #00a4d6;
+  color: #00a4d6;
+}
+
+.fb-buttons > button:first-child:hover{
+  background-color: #00a4d6;
+  color: white;
+}
+
+.fb-buttons > button:last-child{
+  position: absolute;
+  left: 217px;
+}
+
+.profile-container
+.header{
+  background-color: #EF443C;
+  width: 100%;
+  height: 96px;
+}
+
+.profile-container
+.profile-pic-container{
+  position: absolute;
+  left: 96px;
+  top: 27px;
+  text-align: center;
+}
+
+.profile-container .profile-pic-container
+.img-container{
+  position: relative;
+}
+
+.profile-container .profile-pic-container .img-container
+img:first-child{
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px white solid;
+}
+
+.profile-container .profile-pic-container .img-container
+#edit{
+  width: 38px;
+  position: absolute;
+  top: 46px;
+  left: 46px;
+  visibility: hidden;
+}
+
+.profile-container .profile-pic-container
+.img-container:hover{
+  opacity: 0.9;
+}
+
+.profile-container .profile-pic-container
+.img-container:hover #edit{
+  visibility: visible;
+  cursor: pointer;
+}
+
+.profile-container .profile-pic-container
+p{
+  color: rgb(144, 144, 144);
+  margin-top: 2px;
+}
+
+.profile-container
+.info-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0px 45px 20px 45px;
+}
+.profile-container .info-container
+.info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.5;
+}
+
+.profile-container .info-container .info img{
+  width: 28px;
+  margin-bottom: 3px;
+}
+
+.profile-container hr{
+  width: 80%;
+  margin-left: 10%;
+  border-top: solid 1px #EF443C;
+}
+
+.profile-container .aboutMe-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+  margin-top: 30px;
+}
+
+.profile-container .aboutMe-container
+textarea, textarea:focus{
+  border: none;
+  outline: none;
+  resize: none;
+  margin: 5px 10px 20px 10px;
+}
+
+.profile-container .aboutMe-container textarea[disabled]{
+  background-color: white;
+}
+
+.profile-container .aboutMe-container
+button{
+  margin-left: auto;
+}
+
+.loader-info-container{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#info-followers:hover{
+  cursor: pointer;
+  filter: invert(41%) sepia(66%) saturate(569%) hue-rotate(165deg) brightness(100%) contrast(91%);
+  animation: scaleIcon 0.2s forwards;
+}
+
+@keyframes scaleIcon{
+  0% {transform: scale(1)}
+  100% {transform: scale(1.1)}
+}
+
+.profile-pic-container p:focus{
+  border: none;
+  outline: none;
+  color: black;
+}
+
+#summary {
+  margin: 100px 0 20px 0;
+  border: none;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+#summary:focus {
+  border: none;
+  outline: none;
+}

@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+<div class="searcher">
+  <div class="header"></div>
+  <div class="container">
+    <div class="go-back">
+      <img src="assets/icons/feed/flecha.png" onclick="history.back()">
+    </div>
+    <hr>
+    <app-search-loader *ngIf="isLoading"></app-search-loader>
+    <div *ngIf="!isLoading" (scrollend)="loadNext()" class="users">
+      <div (click)="visit(user._id)" *ngFor = "let user of results" class="profile">
+        <div class="profile-img">
+          <img [src]="user.profile_pic">
+        </div>
+        <div class="profile-info-container">
+          <h3>{{user.username}}</h3>
+          <div class="profile-info">
+            <div class="info">
+              <img src="../assets/icons/feed/eye.png">
+              <p>{{user.views}}</p>
+            </div>
+            <div class="info">
+              <img src="../assets/icons/signUp/usuario.png">
+              <p>{{user.followers}}</p>
+            </div>
+            <div class="info">
+              <img src="../assets/iconSheep.png">
+              <p>{{user.points}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="buttons" id="buttons-fb">
+          <button
+            *ngIf="!userService.followings.get(user._id)"
+            (click)="follow(user._id, $event)">
+            <img src="assets/icons/feed/agregar-usuario.png">Follow
+          </button>
+          <button
+            *ngIf="userService.followings.get(user._id)"
+            (click)="unfollow(user._id, $event)">
+            <img src="assets/icons/feed/agregar-usuario.png">Unfollow
+          </button>
+          <button
+            *ngIf="!userService.blocks.get(user._id)"
+            (click)="block(user._id, $event)">
+            <img src="assets/icons/feed/bloquear-usuario.png">Block
+          </button>
+          <button
+            *ngIf="userService.blocks.get(user._id)"
+            (click)="pardon(user._id, $event)">
+            <img src="assets/icons/feed/bloquear-usuario.png">Unblock
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

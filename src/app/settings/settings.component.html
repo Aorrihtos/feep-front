@@ -1,0 +1,22 @@
+<app-navbar></app-navbar>
+<div class="settings">
+  <div class="settings-container">
+    <div class="img">
+      <img src="../assets/settings/settings.gif">
+    </div>
+    <div class="text">
+      <h1>Settings</h1>
+      <div class="menu-buttons">
+          <button class="white-button" (click)="active = 'profile'">Profile</button>
+          <button class="white-button" (click)="active = 'blocked'">Blocked</button>
+          <button class="white-button" disabled>Themes</button>
+          <button class="white-button" (click)="logout()">Log out</button>
+          <button class="red-button" (click)="deleteAccount()">Delete account</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <app-profile-settings *ngIf="active === 'profile'"></app-profile-settings>
+    <app-blocked *ngIf="active === 'blocked'"></app-blocked>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+div {
+  padding: 20px 0 20px 30px;
+  display: flex;
+  align-items: center;
+  gap: 13px; position:
+  relative;
+  border-bottom: 1px solid #EF443C;
+}
+
+div:first-child{
+  border-top: 1px solid #EF443C;
+}
