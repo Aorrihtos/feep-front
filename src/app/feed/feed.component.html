@@ -29,7 +29,9 @@
               <img *ngIf="!isLoading" loading="lazy" [src]="image">
             </div>
             <div>
-              <textarea name="post" [maxLength]="500" id="post" placeholder="Write here..." #postArea></textarea>
+              <div class="text-area-container">
+                <textarea name="post" [maxLength]="500" id="post" placeholder="Write here..." #postArea></textarea>
+              </div>
               <div *ngIf="postImage" style="display: flex; gap: 10px; align-items: center; position: absolute">
                 <pre>{{postImage.name}}</pre>
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512" style="fill: #000000; cursor: pointer"
@@ -125,7 +127,7 @@
         </div>
         <div *ngIf="userService.blocks.get(id!)">
           <img
-            src="./assets/blockedUser.png"
+            src="./assets/blockedUser.webp"
             alt="blocked-user.png"
             style="width: 100%; height: 500px;"
           >

@@ -168,9 +168,157 @@ button{
   border: none;
   text-align: center;
   font-family: "Montserrat", sans-serif;
+  width: 100%;
 }
 
 #summary:focus {
   border: none;
   outline: none;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1336px) {
+  .profile-container {
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  #summary{
+    margin: 20px 0 20px -59px;
+    background: none;
+    text-align: center;
+  }
+
+  .profile-container .profile-container-content {
+    display: flex;
+    flex-direction: row;
+    gap: 3%;
+    align-items: center;
+  }
+
+  .left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 40%;
+  }
+
+  hr{
+    display: none;
+  }
+
+  .line-responsive{
+    border: 0.2px solid #EF443C;
+    margin: 50px 0px 50px 0px;
+    height: 150px;
+  }
+
+  .profile-container .profile-pic-container .img-container img:first-child {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-container .profile-pic-container > h2 {
+    font-size: 23px;
+  }
+
+  .profile-container .profile-pic-container input {
+    font-size: 15px;
+  }
+
+  .profile-container .profile-pic-container {
+    top: 40px;
+  }
+
+  .profile-container .info-container .info img {
+    width: 30px;
+  }
+
+  .profile-container .info-container {
+    width: 273px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    gap: 18%;
+    margin-top: 5px;
+    left: -8%;
+  }
+
+  .profile-container .aboutMe-container {
+    margin: 40px 45px 40px 0px;
+    width: 100%;
+  }
+
+  .profile-container .aboutMe-container textarea, textarea:focus {
+    margin: -7px 10px 20px 10px;
+    font-size: 98%;
+    height: 160px;
+    width: 100%;
+  }
+
+  button {
+    font-size: 12px;
+  }
+
+  .profile-container .aboutMe-container button {
+    font-size: 96%;
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 650px) {
+  /* PROFILE */
+  .profile-container .profile-pic-container > h2 {
+    font-size: 16px;
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  .profile-container .profile-pic-container p {
+    font-size: 11px;
+    width: 70%;
+    margin: 0 auto;
+  }
+
+
+  .profile-container .info-container .info img {
+    width: 16px;
+  }
+
+  .profile-container .aboutMe-container button {
+    font-size: 68%;
+    margin-right: -24px;
+    width: 56px;
+  }
+
+  .profile-container .aboutMe-container textarea, textarea:focus {
+    font-size: 69%;
+    height: 124px;
+    padding-left: 10px;
+  }
+
+  .profile-container .profile-pic-container {
+    top: -183px;
+    width: auto;
+  }
+
+  .profile-container .aboutMe-container {
+    margin: 40px 45px 14px 0px;
+    width: 100%;
+  }
+
+  .profile-container .profile-container-content {
+    gap: 0;
+  }
+
+  .profile-container .info-container {
+    gap: 11%;
+    margin-top: 95px;
+    width: auto;
+    margin-left: 34px;
+    margin-right: 34px;
+  }
 }

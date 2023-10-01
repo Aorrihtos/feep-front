@@ -114,3 +114,66 @@ form input[type=button]:hover{
 .input-field input[type="email"]{
   width: 300px;
 }
+
+@media (max-width: 1300px){
+
+  /* SECTIONS */
+  .settings-profile-container {
+    width: 95%;
+  }
+
+  .settings-profile-container .settings-profile {
+    width: 100% !important;
+  }
+
+  .settings-profile-container .settings-profile > img {
+    left: 50% !important;
+    transform: translate(-50%, 0%);
+  }
+
+  .settings-profile-container .settings-profile .editable form .submit-buttons {
+    width: 80%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 822px){
+
+  /* sections */
+  .settings-profile-container .settings-profile .editable form .submit-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .settings-profile-container .settings-profile {
+    height: 535px !important;
+  }
+
+  .settings-profile-container .settings-profile > img {
+    width: 110px !important;
+    height: 110px !important;
+  }
+}
+
+
+@media (max-width: 420px){
+
+  /* sections */
+  .settings-profile-container .settings-profile > img {
+    width: 90px !important;
+    height: 90px !important;
+    top: 36px !important;
+  }
+
+  .settings-profile-container .settings-profile .editable {
+    margin-top: 73px !important;
+  }
+
+  .settings-profile-container .settings-profile .editable form input {
+    font-size: 12px !important;
+  }
+
+  .settings-profile-container .settings-profile .editable form input[type=submit] {
+    font-size: 12px !important;
+  }
+}

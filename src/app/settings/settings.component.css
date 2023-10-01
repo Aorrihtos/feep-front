@@ -127,3 +127,152 @@ li button:active{
   padding: 6px;
   border: 1px #EF443C solid;
 }
+
+@media (max-width: 1300px){
+
+  /* SETTINGS CONTAINER */
+  .settings {
+    flex-direction: column !important;
+    align-items: center;
+    gap: 44px;
+  }
+
+  .settings .settings-container {
+    width: 95%;
+    height: 333px;
+    margin: 0;
+  }
+
+  .settings .settings-container .img > img {
+    position: absolute;
+    top: -21%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
+
+  .settings .settings-container > .img {
+    height: 23%;
+    position: relative;
+  }
+
+  .settings .settings-container .text {
+    margin-top: 95px;
+  }
+
+  .settings .settings-container .text ul {
+    display: flex;
+    gap: 43px;
+    width: 80%;
+    justify-content: center;
+  }
+
+  .settings .settings-container .text ul li button {
+    margin-top: 27px;
+    width: 120px;
+    font-size: 17px;
+  }
+
+  /* SECTIONS */
+  .settings .settings-profile-container {
+    width: 95%;
+  }
+
+  .settings .settings-profile-container .settings-profile {
+    width: 100% !important;
+  }
+
+  .settings .settings-profile-container .settings-profile > img {
+    left: 50% !important;
+    transform: translate(-50%, 0%);
+  }
+
+  .settings .settings-profile-container .settings-profile .editable form .submit-buttons {
+    width: 80%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 822px){
+
+  /* Settings container */
+  .settings .settings-container {
+    height: 300px;
+  }
+
+  .settings .settings-container .text h1 {
+    font-size: 26px;
+  }
+
+  .settings .settings-container .text ul {
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 13px;
+  }
+
+  .settings .settings-container .text ul li button {
+    margin-top: 6px;
+    width: 100px;
+    font-size: 15px;
+    padding: 3px;
+  }
+
+  .settings .settings-container .img > img {
+    width: 153px;
+    display: block;
+    margin: auto;
+    margin-top: 24px;
+  }
+
+  .settings .settings-container .text {
+    margin-top: 74px;
+  }
+
+  /* sections */
+  .settings .settings-profile-container .settings-profile .editable form .submit-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .settings .settings-profile-container .settings-profile {
+    height: 535px !important;
+  }
+
+  .settings .settings-profile-container .settings-profile > img {
+    width: 110px !important;
+    height: 110px !important;
+  }
+}
+
+
+@media (max-width: 420px){
+  /* settings */
+  .settings .settings-container {
+    height: 384px !important;
+  }
+
+  .settings .settings-container .img > img {
+    width: 120px;
+    margin-top: 43px;
+  }
+
+  /* sections */
+  .settings .settings-profile-container .settings-profile > img {
+    width: 90px !important;
+    height: 90px !important;
+    top: 36px !important;
+  }
+
+  .settings .settings-profile-container .settings-profile .editable {
+    margin-top: 73px !important;
+  }
+
+  .settings .settings-profile-container .settings-profile .editable form input {
+    font-size: 12px !important;
+  }
+
+  .settings .settings-profile-container .settings-profile .editable form input[type=submit] {
+    font-size: 12px !important;
+  }
+}
