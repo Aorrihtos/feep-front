@@ -425,113 +425,14 @@ img{
 
 /* RESPONSIVE */
 @media (max-width: 1336px){
-  /* BOTTOM NAV */
-  .navigation-bar {
-    display: block;
-    background: #fff;
-    border-radius: 3px;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-  .navigation-bar .list-items {
-    list-style: none;
-    display: flex;
-    position: relative;
-    background-color: white;
-  }
-  .navigation-bar .list-items .pointer {
-    position: absolute;
-    left: 0px;
-    height: 100%;
-    width: 4.5rem;
-    z-index: 0;
-    transition: all 0.2s linear;
-  }
-  .navigation-bar .list-items .pointer::before,
-  .navigation-bar .list-items .pointer::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 100%;
-  }
-
-  .navigation-bar .list-items .item {
-    flex: 1 1 0px;
-    position: relative;
-    z-index: 2;
-  }
-  .navigation-bar .list-items .item .link {
-    display: inline-block;
-    height: 4rem;
-    width: 4.5rem;
-    line-height: 4.5;
-    text-align: center;
-    /* color: var(--rojo); */
-  }
-  /* .navigation-bar .list-items .item.active .link {
-    color: var(--rojo);
-  } */
-  .navigation-bar .list-items .item .link svg {
-    font-size: larger;
-    transition: font-size 0.2s linear;
-  }
-  .navigation-bar .list-items .item.active .link svg {
-    font-size: larger;
-  }
-
-  #home-bn{
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -17px);
-    background: var(--rojo);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70px;
-    height: 70px;
-  }
-
-  #home-bn svg{
-    color: white !important;
-  }
-
-
-  /* DISPLAY NONE OF 3 CONTAINERS */
-  /* .content-container .content .profile-container{
-    display: none;
-  } */
-
-  .content-container .content .month-profile-container{
-    display: none;
-  }
-
-  /* .content-container .content .feed-container{
-    display: none;
-  } */
-
-
-
-
-  /* RESPONSIVE CONTAINERS*/
-
-  /* General */
   .content-container .content {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 42px;
     overflow: visible;
+    /* align-items: center; */
   }
-
-  .content-container .content .profile-container .header {
-    height: 60px;
-  }
-
-  /* FEED CONTAINER */
 
   .content-container .content .feed-container {
     width: 100%;
@@ -546,8 +447,8 @@ img{
   }
 
   .content-container .content .feed-container .feed .my-post .img-post textarea {
-    width: 100%;
     height: 118px;
+    width: 100%;
   }
 
   .content-container .content .feed-container .feed .my-post .img-post .profile-img img {
@@ -566,28 +467,12 @@ img{
     width: 57%;
   }
 
-  /* MONTH CONTAINER */
-  .content-container .content .month-profile-container {
-    width: 492px;
-    height: 803px;
-  }
-
-  .content-container .content .month-profile-container h2 {
-    font-size: 27px;
-  }
-
-  .content-container .content .month-profile-container .profile-container {
-    width: 100%;
-    height: 100%;
-  }
-
-  .content-container .content .month-profile-container .profile {
-    gap: 45px;
+  #emptyImg {
+    width: 65%;
   }
 }
 
 @media (max-width: 650px){
-  /* FEED */
   .content-container .content .feed-container .feed .my-post .img-post .text-area-container {
     width: 71%;
   }
@@ -644,16 +529,10 @@ img{
   }
 
   .content-container .content .feed-container .feed .post .post-content .reaction p img {
-    width: 15px;
+    width: 10px;
   }
 
-  /* BOTTTOM NAV */
-  svg{
-    width: 22px;
-  }
-
-  #home-bn{
-    width: 50px;
-    height: 50px;
+  #emptyImg {
+    width: 100%;
   }
 }
