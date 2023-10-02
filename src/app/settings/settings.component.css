@@ -54,6 +54,17 @@ button:hover{
   display: flex;
   flex-direction: row;
   margin: 66px;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.menu-buttons{
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .settings
@@ -135,6 +146,7 @@ li button:active{
     flex-direction: column !important;
     align-items: center;
     gap: 44px;
+    margin-bottom: 100px;
   }
 
   .settings .settings-container {
@@ -172,7 +184,12 @@ li button:active{
     font-size: 17px;
   }
 
+  .data-container{
+    width: 95%;
+  }
+
   /* SECTIONS */
+
   .settings .settings-profile-container {
     width: 95%;
   }

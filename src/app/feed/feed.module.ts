@@ -11,6 +11,7 @@ import {ImageCropperModule} from "ngx-image-cropper";
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { CommentsComponent } from './loaders/comments/comments.component';
 import { FeedLoaderComponent } from './loaders/feed-loader/feed-loader.component';
+import { BottombarComponent } from './bottombar/bottombar.component';
 
 
 @NgModule({
@@ -21,10 +22,12 @@ import { FeedLoaderComponent } from './loaders/feed-loader/feed-loader.component
         RankComponent,
         PostDetailComponent,
         CommentsComponent,
-        FeedLoaderComponent
+        FeedLoaderComponent,
+        BottombarComponent
     ],
     exports: [
-        NavbarComponent
+        NavbarComponent,
+        BottombarComponent
     ],
     imports: [
         CommonModule,

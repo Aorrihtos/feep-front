@@ -150,3 +150,9 @@ hr{
   display: flex;
   flex-direction: column;
 }
+
+@media (max-width: 1336px) {
+  .month-profile-container{
+    display: none;
+  }
+}

@@ -25,6 +25,10 @@ h1,h2, button{
 
 .nav-topBar .logo img{
   width: 170px;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .nav-topBar .nav-items-topBar li img{
@@ -204,5 +208,11 @@ h1,h2, button{
 
   .nav-items-topBar.responsive .dropdown-content li a{
     color: #EF443C;
+  }
+}
+
+@media (max-width: 1336px){
+  .dropdown-content, .container-search{
+    display: none !important;
   }
 }

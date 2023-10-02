@@ -63,6 +63,9 @@ form .input-field{
   display: flex;
   flex-direction: row;
   justify-content: center;
+  background: none;
+  max-width: 80%;
+  overflow: hidden;
 }
 
 .settings-profile-container .settings-profile .editable
@@ -118,10 +121,6 @@ form input[type=button]:hover{
 @media (max-width: 1300px){
 
   /* SECTIONS */
-  .settings-profile-container {
-    width: 95%;
-  }
-
   .settings-profile-container .settings-profile {
     width: 100% !important;
   }
