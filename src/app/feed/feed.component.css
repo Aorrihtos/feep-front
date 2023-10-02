@@ -431,7 +431,6 @@ img{
     flex-direction: column;
     gap: 42px;
     overflow: visible;
-    /* align-items: center; */
   }
 
   .content-container .content .feed-container {
