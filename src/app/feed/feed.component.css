@@ -524,11 +524,11 @@ img{
   }
 
   .content-container .content .feed-container .feed .post .post-content .reaction p {
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .content-container .content .feed-container .feed .post .post-content .reaction p img {
-    width: 10px;
+    width: 12px;
   }
 
   #emptyImg {

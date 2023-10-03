@@ -33,6 +33,11 @@ const routes: Routes = [
     canMatch: [authGuard]
   },
   {
+    path: "rank",
+    loadChildren: ()=> import('./rank-mobile/rank-mobile.module').then(m => m.RankMobileModule),
+    canMatch: [authGuard]
+  },
+  {
     path: "**",
     redirectTo: ""
   }

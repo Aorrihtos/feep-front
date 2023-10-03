@@ -215,4 +215,8 @@ h1,h2, button{
   .dropdown-content, .container-search{
     display: none !important;
   }
+  .nav-topBar{
+    height: 57px;
+  }
 }
+
