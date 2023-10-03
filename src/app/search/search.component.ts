@@ -13,16 +13,15 @@ export class SearchComponent {
   results: Array<any> = [];
   data!: string;
   pagination: any;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
 
   constructor(public userService: UserService, private aRouter: ActivatedRoute, private router: Router) {
     this.aRouter.queryParams.subscribe(res => {
       this.data = res['user'];
-      this.userService.search(this.data)?.subscribe((res: any) => {
-        this.results = res.users;
-        this.pagination = res.pagination;
-        this.isLoading = false;
-      });
+      if(this.data){
+        this.isLoading = true;
+        this.initData(this.data);
+      }
     });
   }
 
@@ -83,6 +82,19 @@ export class SearchComponent {
   visit(idUser: string){
     this.router.navigate(['/feed'], {queryParams: {id: idUser}})
       .then(res => window.location.reload());
+  }
+
+  changeData(data: string){
+    this.isLoading = true;
+    this.initData(data);
+  }
+
+  initData(data: string){
+    this.userService.search(data)?.subscribe((res: any) => {
+      this.results = res.users;
+      this.pagination = res.pagination;
+      this.isLoading = false;
+    });
   }
 
 }

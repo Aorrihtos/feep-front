@@ -247,3 +247,22 @@ p{
 .buttons img{
   width: 16px;
 }
+
+@media (max-width: 650px) {
+  .follows{
+    width: auto;
+    margin-top: 0;
+  }
+
+  .follows .profile-info-container{
+    flex-direction: column;
+  }
+  .header {
+    display: none;
+  }
+
+  .users .profile:last-child{
+    margin-bottom: 63px;
+  }
+
+}

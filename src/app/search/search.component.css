@@ -74,6 +74,7 @@ button:hover{
 .go-back{
   display: flex;
   padding: 10px;
+  position: relative;
 }
 
 .searcher .container .go-back
@@ -241,4 +242,52 @@ p{
 .searcher .profile
 .buttons img{
   width: 16px;
+}
+
+.go-back input, .go-back button{
+  display: none;
+}
+
+@media (max-width: 650px) {
+  .searcher{
+    width: auto;
+    margin-top: 0;
+  }
+
+  .searcher .profile-info-container{
+    flex-direction: column;
+  }
+  .header {
+    display: none;
+  }
+
+  .go-back{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .go-back input, .go-back button{
+    display: block;
+  }
+
+  .go-back input{
+    width: 200px;
+    height: 30px;
+    border: 1px solid #EF443C;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 50px;
+    color: #65737e;
+    outline: none;
+  }
+
+  .users .profile:last-child{
+    margin-bottom: 63px;
+  }
+
 }

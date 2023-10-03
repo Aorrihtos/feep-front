@@ -423,6 +423,13 @@ img{
   display: block;
 }
 
+.mobile-skeleton{
+  display: none;
+}
+.desktop-skeleton{
+  display: block;
+}
+
 /* RESPONSIVE */
 @media (max-width: 1336px){
   .content-container .content {
@@ -469,6 +476,15 @@ img{
   #emptyImg {
     width: 65%;
   }
+
+  .desktop-skeleton{
+    display: none;
+  }
+
+  .mobile-skeleton{
+    display: block;
+  }
+
 }
 
 @media (max-width: 650px){
@@ -534,4 +550,5 @@ img{
   #emptyImg {
     width: 100%;
   }
+
 }

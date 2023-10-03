@@ -1,5 +1,22 @@
 <div class="profile-container">
-  <div class="header"></div>
+  <div class="header">
+    <div *ngIf="id && !isLoading" class="fb-buttons-mobile">
+      <button *ngIf="!userService.followings.get(id)" (click)="follow(id)" class="white-button">Follow</button>
+      <button *ngIf="userService.followings.get(id)" (click)="unfollow(id)" class="white-button">Unfollow</button>
+      <button *ngIf="!userService.blocks.get(id)" (click)="block(id)" class="white-button">Block</button>
+      <button *ngIf="userService.blocks.get(id)" (click)="pardon(id)" class="white-button">Unblock</button>
+    </div>
+  </div>
+  <div *ngIf="isLoading" class="loader-card-mobile">
+    <ngx-skeleton-loader
+      appearance="line"
+      [theme]="{
+        'width':'100%',
+        'height':'100%',
+        'border-radius':'0'
+      }"
+    ></ngx-skeleton-loader>
+  </div>
   <div class="profile-container-content">
     <div class="left">
       <div *ngIf="isLoading && id" class="loader-fb-buttons">
@@ -18,12 +35,20 @@
         <button *ngIf="!userService.blocks.get(id)" (click)="block(id)" class="white-button">Block</button>
         <button *ngIf="userService.blocks.get(id)" (click)="pardon(id)" class="white-button">Unblock</button>
       </div>
-      <div *ngIf="true" class="profile-pic-container">
+      <div class="profile-pic-container">
         <div *ngIf="isLoading" class="loader-pic">
           <ngx-skeleton-loader
             appearance="circle"
             [theme]="{'width': '130px', 'height': '130px' }"
           ></ngx-skeleton-loader>
+        </div>
+        <div *ngIf="isLoading" class="loader-pic-mobile">
+          <ngx-skeleton-loader
+            appearance="circle"
+            [theme]="{
+              'width':'110px',
+              'height':'110px'
+            }"></ngx-skeleton-loader>
         </div>
         <div *ngIf="!isLoading" class="img-container">
           <label for="imgChanger">
@@ -33,6 +58,7 @@
           <input *ngIf="!id" (change)="fileChangeEvent(imgInput); imgInput.value='';" type="file" id="imgChanger" style="display: none" #imgInput>
         </div>
         <ngx-skeleton-loader
+          class="loader-username"
           *ngIf="isLoading"
           appearance="line"
         ></ngx-skeleton-loader>
@@ -40,6 +66,7 @@
       </div>
 
       <ngx-skeleton-loader
+        class="loader-summary"
         *ngIf="isLoading"
         appearance="line"
         [theme]="{ 'margin': '100px auto 20px 50px', 'width': '70%', 'height': '15px'}"
@@ -47,6 +74,7 @@
       <input *ngIf="!isLoading" type="text" placeholder="Insert your summary!" id="summary" [readOnly]="id" [value]="summary" maxlength="20" #sumText>
       <div *ngIf="isLoading" class="loader-info-container">
         <ngx-skeleton-loader
+          class="loader-counters"
           appearance="line"
           count="3"
           [theme]="{'width':'30px', 'height':'35px', 'margin': '0 35px'}"

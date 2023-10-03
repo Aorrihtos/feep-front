@@ -489,3 +489,12 @@ img{
   0% {transform: scale(1)}
   100% {transform: scale(1.1)}
 }
+
+@media (max-width: 1336px) {
+  .post-container, .header{
+    width: 100% !important;
+  }
+  .comments .comment:last-child{
+    margin-bottom: 85px;
+  }
+}

@@ -145,8 +145,9 @@ li button:active{
   .settings {
     flex-direction: column !important;
     align-items: center;
-    gap: 44px;
+    gap: 25px;
     margin-bottom: 100px;
+    margin-top: 30px;
   }
 
   .settings .settings-container {
@@ -265,6 +266,11 @@ li button:active{
 
 @media (max-width: 420px){
   /* settings */
+  .settings{
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
   .settings .settings-container {
     height: 384px !important;
   }

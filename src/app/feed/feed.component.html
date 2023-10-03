@@ -16,7 +16,9 @@
         <div *ngIf="!id" class="my-post">
           <div class="img-post">
             <div class="profile-img">
+              <!--DESKTOP AND MOBILE SKELETONS -->
               <ngx-skeleton-loader
+                class="desktop-skeleton"
                 *ngIf="isLoading"
                 appearance="circle"
                 [theme]="{
@@ -26,6 +28,18 @@
                   'padding':'0'
                 }"
               ></ngx-skeleton-loader>
+              <ngx-skeleton-loader
+                class="mobile-skeleton"
+                *ngIf="isLoading"
+                appearance="circle"
+                [theme]="{
+                  'width':'62px',
+                  'height':'62px',
+                  'margin':'0',
+                  'padding':'0'
+                }"
+              ></ngx-skeleton-loader>
+              <!-- END OF SKELETONS -->
               <img *ngIf="!isLoading" loading="lazy" [src]="image">
             </div>
             <div class="text-area-container">

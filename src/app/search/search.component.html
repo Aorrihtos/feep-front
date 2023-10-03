@@ -4,6 +4,8 @@
   <div class="container">
     <div class="go-back">
       <img src="assets/icons/feed/flecha.png" onclick="history.back()">
+      <input type="text" placeholder="¿Who are you searching?" #mobileSearcher>
+      <button class="white-button" (click)="changeData(mobileSearcher.value)">Search</button>
     </div>
     <hr>
     <app-search-loader *ngIf="isLoading"></app-search-loader>
@@ -55,3 +57,5 @@
     </div>
   </div>
 </div>
+
+<app-bottombar></app-bottombar>
