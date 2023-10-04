@@ -4,27 +4,29 @@
     <div class="users">
       <div *ngFor="let b of blocks" class="profile">
         <div class="profile-img">
-          <img [src]="b.image_url">
+          <img [src]="b.image_url" alt="Profile pic">
         </div>
         <div class="profile-info-container">
           <h3>{{b.blocked_id.username}}</h3>
           <div class="profile-info">
             <div class="info">
-              <img src="../../assets/icons/feed/eye.png">
+              <img src="../../assets/icons/feed/eye.png" alt="Views">
               <p>{{b.blocked_id.views}}</p>
             </div>
             <div class="info">
-              <img src="../../assets/icons/signUp/usuario.png">
+              <img src="../../assets/icons/signUp/usuario.png" alt="Follows">
               <p>{{b.followers}}</p>
             </div>
             <div class="info">
-              <img src="../../assets/iconSheep.png">
+              <img src="../../assets/iconSheep.png" alt="Rank points">
               <p>{{b.points}}</p>
             </div>
           </div>
         </div>
         <div class="buttons" id="buttons-fb">
-          <button (click)="unblock(b.blocked_id._id)"><img src="../../assets/icons/feed/bloquear-usuario.png">Unblock</button>
+          <button (click)="unblock(b.blocked_id._id)">
+            <img src="../../assets/icons/feed/bloquear-usuario.png" alt="Unblock">Unblock
+          </button>
         </div>
       </div>
       <img

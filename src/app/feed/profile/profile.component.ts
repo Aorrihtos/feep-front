@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit, OnChanges{
   descArea!: ElementRef<HTMLTextAreaElement>;
 
   @ViewChild("sumText")
-  sumText!: ElementRef<HTMLInputElement>;
+  sumText?: ElementRef<HTMLInputElement>;
 
   @ViewChild("descBtn")
   descBtn!: ElementRef<HTMLButtonElement>;
@@ -48,20 +48,15 @@ export class ProfileComponent implements OnInit, OnChanges{
     this.initialize();
   }
 
-  keyCapEvent(){
-    const summaryInput = this.sumText.nativeElement;
-    summaryInput.addEventListener('keypress', event =>{
-      if(event.code == "Enter")
-        event.preventDefault();
-    });
-    summaryInput.addEventListener('paste', event =>{
-        event.preventDefault();
-    });
-    summaryInput.addEventListener('change', event =>{
-      if(summaryInput.textContent!.length > 20){
-        summaryInput.textContent = summaryInput.textContent!.substring(0,20);
-      }
-    });
+  keyDownEvent(event: any){
+    if(event.code == 'Enter') event.preventDefault();
+  }
+
+  inputChangeEvent(){
+    const summaryInput = this.sumText!.nativeElement;
+    if(summaryInput.textContent!.length > 20){
+      summaryInput.textContent = summaryInput.textContent!.substring(0,20);
+    }
   }
 
   initialize(){
@@ -69,7 +64,7 @@ export class ProfileComponent implements OnInit, OnChanges{
       (res: any) => {
         console.log(res);
         this.setData(res.user);
-        setTimeout(()=>{this.isLoading = false; this.keyCapEvent();}, 500);
+        setTimeout(()=>{this.isLoading = false;}, 500);
       },
       err => {
         console.log(err);
@@ -89,7 +84,7 @@ export class ProfileComponent implements OnInit, OnChanges{
   setDescription(){
     this.userService.description({
       description: this.descArea.nativeElement.value,
-      summary: this.sumText.nativeElement.value
+      summary: this.sumText!.nativeElement.value
     })?.subscribe(
       (res: any) => {
         this.description = res.user.description;
@@ -166,4 +161,5 @@ export class ProfileComponent implements OnInit, OnChanges{
     this.initialize();
   }
 
+  protected readonly eval = eval;
 }

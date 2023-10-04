@@ -4,7 +4,7 @@
 <!--  <div class="edit-icon-container">-->
 <!--    <img src="assets/icons/feed/editing.png">-->
 <!--  </div>-->
-  <img loading="lazy" src="assets/redbgdefault.jpg">
+  <img src="assets/redbgdefault.webp" alt="background">
 </div>
 
 <div class="content-container">
@@ -40,7 +40,7 @@
                 }"
               ></ngx-skeleton-loader>
               <!-- END OF SKELETONS -->
-              <img *ngIf="!isLoading" loading="lazy" [src]="image">
+              <img *ngIf="!isLoading" loading="lazy" [src]="image" alt="profile pic">
             </div>
             <div class="text-area-container">
                 <textarea name="post" [maxLength]="500" id="post" placeholder="Write here..." #postArea></textarea>
@@ -57,7 +57,7 @@
             <div class="attach-post">
               <div>
                 <label for="image" class="red-button">
-                  <img loading="lazy" src="assets/icons/feed/imagen.png">
+                  <img loading="lazy" src="assets/icons/feed/imagen.png" alt="picture icon">
                   Image
                   <input (change)="uploadImage(fileInput)" type="file" id="image" style="display: none" #fileInput>
                 </label>
@@ -79,7 +79,7 @@
         <div (scrollend)="loadNext()" *ngIf="!userService.blocks.get(id!) && !isLoading" class="posts">
           <div *ngFor="let post of activeArray" class="post">
             <div class="img-text">
-              <img loading="lazy" src="{{activeArray === feed ? post.user_id.profile_pic : image}}">
+              <img loading="lazy" src="{{activeArray === feed ? post.user_id.profile_pic : image}}" alt="profile pic">
               <div class="text">
                 <p>{{post.user_id.username}}</p>
                 <p>{{post.created_at | date: 'short'}}</p>
@@ -88,53 +88,53 @@
                 <button
                   *ngIf="!userService.followings.get(post.user_id._id)"
                   (click)="userService.follow(post.user_id._id)">
-                  <img loading="lazy" src="assets/icons/feed/agregar-usuario.png">Follow
+                  <img loading="lazy" src="assets/icons/feed/agregar-usuario.png" alt="follow icon">Follow
                 </button>
                 <button
                   *ngIf="userService.followings.get(post.user_id._id)"
                   (click)="unfollow(post.user_id._id)">
-                  <img loading="lazy" src="assets/icons/feed/agregar-usuario.png">Unfollow
+                  <img loading="lazy" src="assets/icons/feed/agregar-usuario.png" alt="unfollow icon">Unfollow
                 </button>
                 <button
                   *ngIf="!userService.blocks.get(post.user_id._id)"
                   (click)="block(post.user_id._id)">
-                  <img loading="lazy" src="assets/icons/feed/bloquear-usuario.png">Block
+                  <img loading="lazy" src="assets/icons/feed/bloquear-usuario.png" alt="block icon">Block
                 </button>
                 <button
                   *ngIf="userService.blocks.get(post.user_id._id)"
                   (click)=" block(post.user_id._id)">
-                  <img loading="lazy" src="assets/icons/feed/bloquear-usuario.png">Unblock
+                  <img loading="lazy" src="assets/icons/feed/bloquear-usuario.png" alt="unblock icon">Unblock
                 </button>
               </div>
               <div *ngIf="post.user_id._id === loggedId" class="buttons buttons-fb">
                 <button
                   (click)="delete(post._id)">
-                  <img loading="lazy" src="assets/icons/feed/deletePost.png">Delete Post
+                  <img loading="lazy" src="assets/icons/feed/deletePost.png" alt="Delete icon">Delete Post
                 </button>
               </div>
             </div>
             <div (click)="navigatePost(post._id)" class="post-content">
               <p>{{post.content}}</p>
-              <img loading="lazy" src="{{post.attached_file || ''}}">
+              <img loading="lazy" src="{{post.attached_file || ''}}" alt="attached file">
               <div class="reaction">
                 <p>
                   <img loading="lazy"
                     *ngIf="!checkIsLiked(post._id)"
                     (click)="like(post._id); $event.stopPropagation();"
-                    src="assets/icons/feed/heart.png">
+                    src="assets/icons/feed/heart.png" alt="like icon">
                   <img loading="lazy" *ngIf="checkIsLiked(post._id)"
                        (click)="unlike(post._id); $event.stopPropagation()"
-                       src="../../assets/icons/feed/redFilledHeart.png">
+                       src="../../assets/icons/feed/redFilledHeart.png" alt="like icon">
                   {{post.likes}}
                 </p>
-                <p><img loading="lazy" src="assets/icons/feed/mensaje.png">{{post.comments}}</p>
+                <p><img loading="lazy" src="assets/icons/feed/mensaje.png" alt="comments icon">{{post.comments}}</p>
               </div>
             </div>
             <hr>
           </div>
           <div class="emptyContainer" style="margin-bottom: 10rem">
             <h3>Oops... Nothing to show here yet!</h3>
-            <img src="./assets/empty-placeholder.png" id="emptyImg">
+            <img src="./assets/empty-placeholder.png" id="emptyImg" alt="empty">
           </div>
         </div>
         <div *ngIf="userService.blocks.get(id!)">

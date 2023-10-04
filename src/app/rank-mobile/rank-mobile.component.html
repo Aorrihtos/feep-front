@@ -32,21 +32,21 @@
       <div class="line"></div>
       <div class="number" id="{{colorMap.get(i+1)}}">{{i+1}}</div>
       <div class="profile-img">
-        <img loading="lazy" src="{{user.user_id.profile_pic}}">
+        <img loading="lazy" src="{{user.user_id.profile_pic}}" alt="Profile pic">
       </div>
       <div class="profile-info-container">
         <h3>{{user.user_id.username}}</h3>
         <div class="profile-info">
           <div class="info">
-            <img loading="lazy" src="assets/icons/feed/eye.png">
+            <img loading="lazy" src="assets/icons/feed/eye.png" alt="Views">
             <p>{{user.user_id.views}}</p>
           </div>
           <div class="info">
-            <img loading="lazy" src="assets/icons/signUp/usuario.png">
+            <img loading="lazy" src="assets/icons/signUp/usuario.png" alt="Follows">
             <p>{{user.followers}}</p>
           </div>
           <div class="info">
-            <img loading="lazy" src="assets/iconSheep.png">
+            <img loading="lazy" src="assets/iconSheep.png" alt="Rank points">
             <p>{{user.points}}</p>
           </div>
         </div>

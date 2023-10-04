@@ -52,8 +52,8 @@
         </div>
         <div *ngIf="!isLoading" class="img-container">
           <label for="imgChanger">
-            <img loading="lazy" [src]="image">
-            <img loading="lazy" *ngIf="!id" id="edit" src="assets/icons/feed/pencil-edit.png">
+            <img loading="lazy" [src]="image" alt="Profile pic">
+            <img loading="lazy" *ngIf="!id" id="edit" src="assets/icons/feed/pencil-edit.png" alt="Edit profile pic">
           </label>
           <input *ngIf="!id" (change)="fileChangeEvent(imgInput); imgInput.value='';" type="file" id="imgChanger" style="display: none" #imgInput>
         </div>
@@ -71,7 +71,16 @@
         appearance="line"
         [theme]="{ 'margin': '100px auto 20px 50px', 'width': '70%', 'height': '15px'}"
       ></ngx-skeleton-loader>
-      <input *ngIf="!isLoading" type="text" placeholder="Insert your summary!" id="summary" [readOnly]="id" [value]="summary" maxlength="20" #sumText>
+      <input
+        *ngIf="!isLoading"
+        type="text"
+        placeholder="Insert your summary!"
+        id="summary" [readOnly]="id"
+        [value]="summary"
+        maxlength="20"
+        (paste)="$event.preventDefault()"
+        (keydown)="keyDownEvent($event)"
+        #sumText>
       <div *ngIf="isLoading" class="loader-info-container">
         <ngx-skeleton-loader
           class="loader-counters"
@@ -82,15 +91,15 @@
       </div>
       <div *ngIf="!isLoading" class="info-container">
         <div class="info">
-          <img src="assets/icons/feed/eye.png">
+          <img src="assets/icons/feed/eye.png" alt="Views">
           <p>{{views}}</p>
         </div>
         <div class="info" [id]="id ? '' : 'info-followers'">
-          <a [routerLink]="id ? null : '/follows'"><img src="assets/icons/signUp/usuario.png" alt=""></a>
+          <a [routerLink]="id ? null : '/follows'"><img src="assets/icons/signUp/usuario.png" alt="Followers"></a>
           <p>{{followers}}</p>
         </div>
         <div class="info">
-          <img src="assets/iconSheep.png" id="buttonSheep">
+          <img src="assets/iconSheep.png" id="buttonSheep" alt="Rank points">
           <p>{{points}}</p>
         </div>
       </div>
