@@ -31,10 +31,4 @@ export class NavbarComponent implements AfterViewInit{
     })
   }
 
-  home(){
-    this.router.navigateByUrl('/feed').then(
-      ()=> window.location.reload()
-    )
-  }
-
 }

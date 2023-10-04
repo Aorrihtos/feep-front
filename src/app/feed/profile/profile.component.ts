@@ -79,10 +79,8 @@ export class ProfileComponent implements OnInit, OnChanges{
 
   setData(user: any){
     this.username = user.data.username;
-    this.summary = user.data.summary;
-    this.description = user.data.description
-      ? user.data.description
-      : '';
+    this.summary = user.data.summary || "";
+    this.description = user.data.description || "";
     this.views = user.data.views;
     this.followers = user.follow_counter.followers;
     this.points = user.points;
