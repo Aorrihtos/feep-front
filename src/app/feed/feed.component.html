@@ -115,7 +115,7 @@
             </div>
             <div (click)="navigatePost(post._id)" class="post-content">
               <p>{{post.content}}</p>
-              <img loading="lazy" src="{{post.attached_file || ''}}" alt="attached file">
+              <img *ngIf="post.attached_file" loading="lazy" src="{{post.attached_file}}" alt="attached file">
               <div class="reaction">
                 <p>
                   <img loading="lazy"
