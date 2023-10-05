@@ -495,6 +495,15 @@ img{
     width: 100% !important;
   }
   .comments .comment:last-child{
-    margin-bottom: 85px;
+    margin-bottom: 200px;
+  }
+  .post-container .user-comment{
+    width: 100%;
+  }
+  .post-container .user-comment img{
+    min-width: 50px;
+  }
+  .post-container .user-comment textarea{
+    width: inherit;
   }
 }
