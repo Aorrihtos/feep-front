@@ -36,7 +36,7 @@ export class RankComponent{
       this.rank = res.rank;
       setTimeout(()=>{
         this.isLoading = false;
-      },200)
+      },500)
     });
   }
 
@@ -49,5 +49,4 @@ export class RankComponent{
         this.pageChanged.emit(null);
       });
   }
-
 }

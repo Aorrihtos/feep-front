@@ -14,10 +14,8 @@ export class NavbarComponent implements AfterViewInit{
   constructor(private router: Router) {
   }
 
-  navigateHome(){
-    this.router.navigateByUrl('/feed').then(
-      () => window.location.reload()
-    )
+  async navigateHome(){
+    await this.router.navigateByUrl('/feed');
   }
 
   ngAfterViewInit(): void {

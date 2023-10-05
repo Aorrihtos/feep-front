@@ -29,12 +29,10 @@ export class FeedComponent{
 
   loggedId: string;
   image: string = '';
-  banner: string = '';
   posts: Array<any> = [];
   feed: Array<any> = [];
   activeArray: Array<any> = [];
   id: string | null = null;
-  mine: boolean = true;
   viewing_post: boolean = false;
   paginationPosts: any;
   paginationFeed: any;
@@ -45,12 +43,17 @@ export class FeedComponent{
 
   constructor(public userService: UserService,
               private postService: PostService,
-              private aRouter: ActivatedRoute) {
-    this.isLoading = true;
+              private aRouter: ActivatedRoute,
+              private router: Router) {
     this.loggedId = (JSON.parse(localStorage.getItem('user')!))._id;
-    this.initialize().then(()=>{
-      setTimeout(()=> {this.isLoading=false}, 1000);
-    })
+    this.aRouter.queryParams.subscribe(res =>{
+      this.isLoading = true;
+      this.id = res['id'];
+      if(!this.id) {this.activeArray = this.feed}
+      this.initialize().then(()=>{
+        setTimeout(()=> {this.isLoading=false}, 1000);
+      });
+    });
   }
 
   post(){
@@ -103,7 +106,6 @@ export class FeedComponent{
 
   unfollow(userId: string){
     this.userService.unfollow(userId);
-    console.log(this.activeArray);
     //this.activeArray = this.activeArray.filter(i => i.user_id._id !== userId);
   }
 
@@ -133,9 +135,7 @@ export class FeedComponent{
   }
 
   navigatePost(idPost: string){
-
     const i = this.activeArray.findIndex(item => item._id === idPost);
-    console.log(this.activeArray[i])
     //Data for post detail variables
     this.data = {
       idPost: idPost,
@@ -149,7 +149,6 @@ export class FeedComponent{
       likes: this.activeArray[i].likes,
       comments: this.activeArray[i].comments
     };
-
     this.viewing_post = true;
   }
 
@@ -257,10 +256,6 @@ export class FeedComponent{
   }
 
   async initialize(){
-    this.aRouter.queryParams.subscribe(res =>{
-      this.id = res['id'];
-      if(this.id) {this.mine = false} else {this.activeArray = this.feed}
-    })
     this.userService.getProfilePic(this.id)!.subscribe(
       (res: any) =>{
         this.image = res;
@@ -292,12 +287,9 @@ export class FeedComponent{
     );
   }
 
-  refreshData(){
-    this.isLoading = true;
-    this.initialize().then(()=> {
-      setTimeout(()=> {this.isLoading=false}, 1000);
-    });
-
+  async visit(userId: string | null){
+    if(userId === this.loggedId) return;
+    await this.router.navigate(['/feed'], {queryParams: {id: userId}});
   }
 
   protected readonly localStorage = localStorage;

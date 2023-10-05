@@ -107,9 +107,11 @@ button:hover{
 .post-container
 .go-back{
   display: flex;
-  padding: 10px;
+  position: relative;
+  top: 25px;
   border-bottom: 0.5px solid #EF443C;
-  margin-top: 5%;
+  align-items: center;
+  height: 30px;
 }
 
 .post-container .go-back
@@ -142,7 +144,7 @@ img:hover{
 
 .post-container .post-comment-container
 .post-top{
-  margin: 30px 30px 10px 30px;
+  margin: 45px 30px 10px 30px;
 }
 
 .post-container .og-post

@@ -62,7 +62,6 @@ export class ProfileComponent implements OnInit, OnChanges{
   initialize(){
     this.userService.detail(this.id)?.subscribe(
       (res: any) => {
-        console.log(res);
         this.setData(res.user);
         setTimeout(()=>{this.isLoading = false;}, 500);
       },

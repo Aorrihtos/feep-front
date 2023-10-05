@@ -35,7 +35,7 @@ export class RankMobileComponent {
       this.rank = res.rank;
       setTimeout(()=>{
         this.isLoading = false;
-      },200)
+      },500)
     });
   }
 

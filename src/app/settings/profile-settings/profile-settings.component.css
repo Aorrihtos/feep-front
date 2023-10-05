@@ -172,7 +172,7 @@ form input[type=button]:hover{
     font-size: 12px !important;
   }
 
-  .settings-profile-container .settings-profile .editable form input[type=submit] {
-    font-size: 12px !important;
+  .settings-profile-container .settings-profile .editable form input:not([type=submit]):not([type=button]){
+    font-size: 16px !important;
   }
 }
