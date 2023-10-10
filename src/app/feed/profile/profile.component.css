@@ -61,6 +61,7 @@ img:first-child{
   object-fit: cover;
   border-radius: 50%;
   border: 5px white solid;
+  background-color: blanchedalmond;
 }
 
 .profile-container .profile-pic-container .img-container

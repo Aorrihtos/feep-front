@@ -1,8 +1,8 @@
 {
-  "name": "Feep",
-  "short_name": "Feep",
+  "name": "FEEP - A new gamified Social Network",
+  "short_name": "FEEP",
   "theme_color": "#EF443C",
-  "background_color": "#282222",
+  "background_color": "#EF443C",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

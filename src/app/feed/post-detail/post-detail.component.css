@@ -112,6 +112,7 @@ button:hover{
   border-bottom: 0.5px solid #EF443C;
   align-items: center;
   height: 30px;
+  background-color: white;
 }
 
 .post-container .go-back
@@ -134,7 +135,7 @@ img:hover{
 .post-container
 .post-comment-container{
   overflow: scroll;
-  height: 92vh;
+  height: 100vh;
 }
 
 .post-container
@@ -212,6 +213,7 @@ img:hover{
   object-fit: cover;
   border-radius: 50%;
   border: 4px #EF443C solid;
+  background-color: blanchedalmond;
 }
 
 .post-container .og-post .img-text
@@ -327,11 +329,6 @@ button{
 .post .comment{
   display: flex;
   flex-direction: column;
-  margin: 30px 30px 10px 30px;
-}
-
-.post-container .post-comment-container
-.post-top{
   margin: 30px 30px 10px 30px;
 }
 

@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import {UserService} from "../../services/user.service";
 import Swal from "sweetalert2";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -27,10 +28,7 @@ export class ProfileComponent implements OnInit, OnChanges{
   descBtn!: ElementRef<HTMLButtonElement>;
 
   @Output('imageChange') emitter: EventEmitter<string> = new EventEmitter<string>();
-  @Input('image')
-  image: string = '';
 
-  @Input()
   id: string | null = null;
 
   username: string = '';
@@ -39,31 +37,32 @@ export class ProfileComponent implements OnInit, OnChanges{
   views: number = 0;
   followers: number = 0;
   points: number = 0;
+  image: string = '';
 
   isLoading: boolean = true;
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService, private aRouter: ActivatedRoute) {
+    this.aRouter.queryParams.subscribe(res =>{
+      this.isLoading = true;
+      this.id = res['id'];
+      this.initialize();
+    });
+  }
 
   ngOnInit(): void {
-    this.initialize();
+    // this.initialize();
   }
 
   keyDownEvent(event: any){
     if(event.code == 'Enter') event.preventDefault();
   }
 
-  inputChangeEvent(){
-    const summaryInput = this.sumText!.nativeElement;
-    if(summaryInput.textContent!.length > 20){
-      summaryInput.textContent = summaryInput.textContent!.substring(0,20);
-    }
-  }
 
   initialize(){
     this.userService.detail(this.id)?.subscribe(
       (res: any) => {
         this.setData(res.user);
-        setTimeout(()=>{this.isLoading = false;}, 500);
+        setTimeout(()=>{this.isLoading = false;}, 200);
       },
       err => {
         console.log(err);
@@ -78,6 +77,7 @@ export class ProfileComponent implements OnInit, OnChanges{
     this.views = user.data.views;
     this.followers = user.follow_counter.followers;
     this.points = user.points;
+    this.image = user.data.profile_pic;
   }
 
   setDescription(){
@@ -156,9 +156,8 @@ export class ProfileComponent implements OnInit, OnChanges{
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.isLoading = true;
-    this.initialize();
+    // this.isLoading = true;
+    // this.initialize();
   }
 
-  protected readonly eval = eval;
 }

@@ -39,14 +39,11 @@ export class RankMobileComponent {
     });
   }
 
-  visit(userId: string | null){
+  async visit(userId: string | null){
     if(userId === (JSON.parse(localStorage.getItem('user')!))._id){
       userId = null;
     }
-    this.router.navigate(['/feed'], {queryParams: {id: userId}})
-      .then(() => {
-        this.pageChanged.emit(null);
-      });
+    await this.router.navigate(['/feed'], {queryParams: {id: userId}});
   }
 
 }

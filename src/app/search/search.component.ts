@@ -73,6 +73,7 @@ export class SearchComponent {
     console.log(this.pagination)
     if(this.pagination.page < this.pagination.total_pages){
       this.userService.search(this.data, ++this.pagination.page)?.subscribe((res: any) => {
+        console.log(res);
         this.results = this.results.concat(res.users);
         this.pagination = res.pagination;
       })

@@ -14,9 +14,6 @@ export class RankComponent{
   rank: Array<any> = [];
   isLoading: boolean = true;
 
-  @Output()
-  pageChanged: EventEmitter<null> = new EventEmitter<null>();
-
   setImage(value: string){
     const element = this.rank.find(item => item.user_id._id === JSON.parse(localStorage.getItem('user')!)._id)
     if(element){
@@ -40,13 +37,10 @@ export class RankComponent{
     });
   }
 
-  visit(userId: string | null){
+  async visit(userId: string | null){
     if(userId === (JSON.parse(localStorage.getItem('user')!))._id){
       userId = null;
     }
-    this.router.navigate(['/feed'], {queryParams: {id: userId}})
-      .then(() => {
-        this.pageChanged.emit(null);
-      });
+    await this.router.navigate(['/feed'], {queryParams: {id: userId}});
   }
 }

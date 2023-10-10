@@ -9,7 +9,7 @@
 
 <div class="content-container">
   <div class="content">
-    <app-profile [id]="id" [image]="image" (imageChange)="imageChangeEvent($event)"></app-profile>
+    <app-profile (imageChange)="imageChangeEvent($event)"></app-profile>
     <div *ngIf="!viewing_post" class="feed-container">
       <div class="header"></div>
       <div class="feed">

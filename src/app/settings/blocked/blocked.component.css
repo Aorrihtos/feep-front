@@ -129,6 +129,7 @@ img{
   object-fit: cover;
   border-radius: 50%;
   border: 4px #EF443C solid;
+  background-color: blanchedalmond;
 }
 
 .settings-profile-container .settings-blocked .users
