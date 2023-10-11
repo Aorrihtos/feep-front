@@ -493,8 +493,11 @@ img{
   .post-container, .header{
     width: 100% !important;
   }
-  .comments .comment:last-child{
-    margin-bottom: 200px;
+
+  .comments .comment:last-child:after{
+    content: "";
+    width: 100vw;
+    height: 78px;
   }
   .post-container .user-comment{
     width: 100%;
