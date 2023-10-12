@@ -210,6 +210,7 @@ export class FeedComponent{
       const index = aux.findIndex(post => post._id === idPost);
       aux[index].likes++;
       this.activeArray = aux;
+
     } else if (action === 'del') {
       const i = this.postService.liked_posts.indexOf(idPost);
       this.postService.liked_posts.splice(i, 1);
