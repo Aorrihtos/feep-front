@@ -8,7 +8,7 @@
       <div class="post-top">
         <div class="og-post">
           <div class="img-text">
-            <img [src]="data.imageUserPost" alt="Profile pic">
+            <img loading="lazy" [src]="data.imageUserPost" alt="Profile pic">
             <div class="text">
               <p>{{data.username}}</p>
               <p>{{data.created_at | date: 'short'}}</p>

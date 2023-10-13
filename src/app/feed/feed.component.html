@@ -148,6 +148,7 @@
     </div>
     <app-post-detail
       *ngIf="viewing_post"
+      [data]="this.data"
       (liked_post)="like($event)"
       (unliked_post)="unlike($event)"
       (delete_post)="deletePostEvent($event)"

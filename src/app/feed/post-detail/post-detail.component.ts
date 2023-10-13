@@ -4,7 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
+  Input, OnDestroy,
   OnInit,
   Output,
   ViewChild
@@ -13,7 +13,7 @@ import {PostService} from "../../services/post.service";
 import {UserService} from "../../services/user.service";
 import Swal from "sweetalert2";
 import {CommentService} from "../../services/comment.service";
-import {finalize} from "rxjs";
+import {finalize, isEmpty, Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -21,9 +21,11 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.css']
 })
-export class PostDetailComponent implements OnInit{
+export class PostDetailComponent implements OnInit, OnDestroy{
 
   postId: string = "";
+
+  @Input()
   data!: any;
 
   @ViewChild('commentArea')
@@ -51,41 +53,48 @@ export class PostDetailComponent implements OnInit{
   comment_emiter: EventEmitter<{idPost: string, value: number}> = new EventEmitter<{idPost: string, value: number}>();
 
   post: any;
+  paramSubscriber! : Subscription;
 
   constructor(private postService: PostService,
               public userService: UserService,
               public commentService: CommentService,
               private aRouter: ActivatedRoute)
   {
-    this.aRouter.queryParams.subscribe(params => {
-      console.log(params['post']);
+    this.paramSubscriber = this.aRouter.queryParams.subscribe(params => {
       this.postId = params['post'];
-    })
-    this.userService.getProfilePic()?.subscribe(
-      url => this.imageLoggedUser = url.toString()
-    );
+    });
+    this.imageLoggedUser = JSON.parse(localStorage.getItem("user")!).profile_pic;
   }
 
   ngOnInit(): void {
-    this.postService.detail(this.postId)?.subscribe(
-      (res: any) => {
-        this.post = res;
-        this.comments = res.comments;
-        this.data = {
-          idPost: this.postId,
-          loggedId: "",
-          idUser: res.post.user_id._id,
-          content: res.post.content,
-          attached_file: res.post.attached_file,
-          imageUserPost: res.post.user_id.profile_pic,
-          username: res.post.user_id.username,
-          created_at: res.post.created_at,
-          likes: res.likes,
-          comments: res.comments.length
-        };
-        setTimeout(()=>{this.isLoading=false}, 200)
-      }
-    );
+    /* Check if data was provided by the parent component.
+    If it wasn't, call the API for the details.*/
+    if(!this.data){
+      this.isLoading = true;
+      this.postService.detail(this.postId)?.subscribe(
+        (res: any) => {
+          this.post = res;
+          this.comments = res.comments;
+          this.data = {
+            idPost: this.postId,
+            loggedId: "",
+            idUser: res.post.user_id._id,
+            content: res.post.content,
+            attached_file: res.post.attached_file,
+            imageUserPost: res.post.user_id.profile_pic,
+            username: res.post.user_id.username,
+            created_at: res.post.created_at,
+            likes: res.likes,
+            comments: res.comments.length
+          };
+          this.isLoading=false;
+        }
+      );
+    } else this.isLoading = false;
+  }
+
+  ngOnDestroy() {
+    this.paramSubscriber.unsubscribe();
   }
 
   likePost(){

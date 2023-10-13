@@ -1,4 +1,14 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {PostService} from "../services/post.service";
 import Swal from "sweetalert2";
@@ -6,14 +16,14 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RankComponent} from "./rank/rank.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {PostDetailComponent} from "./post-detail/post-detail.component";
-import {forkJoin} from "rxjs";
+import {forkJoin, Subscriber, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css']
 })
-export class FeedComponent{
+export class FeedComponent implements OnDestroy{
 
   @ViewChild('postArea')
   postArea!: ElementRef<HTMLTextAreaElement>;
@@ -41,16 +51,16 @@ export class FeedComponent{
   isLoading: boolean = true;
 
   data: any;
+  paramSubscriber!: Subscription;
 
   constructor(public userService: UserService,
               private postService: PostService,
               private aRouter: ActivatedRoute,
               private router: Router) {
     this.loggedId = (JSON.parse(localStorage.getItem('user')!))._id;
-    this.aRouter.queryParams.subscribe(res =>{
-
+    this.paramSubscriber = this.aRouter.queryParams.subscribe(res =>{
       // Check if user id has changed to show skeleton
-      if(this.id != res['id'] || this.isLoading && this.id === null){
+      if(this.id != res['id'] || this.isLoading && !this.id){
         this.isLoading = true;
         this.id = res['id'];
         this.initialize();
@@ -61,8 +71,14 @@ export class FeedComponent{
         this.viewing_post = true;
       } else this.viewing_post = false;
 
-      if(!this.id) {this.activeArray = this.feed}
+      // Set FEED as selected if loading own profile
+      if(!this.id && this.isLoading) {this.activeArray = this.feed}
+
     });
+  }
+
+  ngOnDestroy() {
+    this.paramSubscriber.unsubscribe();
   }
 
   post(){
@@ -110,7 +126,7 @@ export class FeedComponent{
         });
         this.postBtn.nativeElement.disabled=false;
       }
-    )
+    );
   }
 
   unfollow(userId: string){
@@ -144,18 +160,32 @@ export class FeedComponent{
   }
 
   navigatePost(idPost: string){
-    // changes the route without moving from the current view or
-    // triggering a navigation event,
+    const indexPost = this.activeArray.findIndex(item => item._id === idPost);
+    if(indexPost >= 0){
+      //Data for post detail variables
+      this.data = {
+        idPost: idPost,
+        loggedId: this.loggedId,
+        idUser: this.activeArray[indexPost].user_id._id,
+        content: this.activeArray[indexPost].content,
+        attached_file: this.activeArray[indexPost].attached_file,
+        imageUserPost: this.activeArray[indexPost].user_id.profile_pic,
+        username: this.activeArray[indexPost].user_id.username,
+        created_at: this.activeArray[indexPost].created_at,
+        likes: this.activeArray[indexPost].likes,
+        comments: this.activeArray[indexPost].comments
+      };
+    }
+
+    // changes the route without moving from the current view
     this.router.navigate([], {
       relativeTo: this.aRouter,
       queryParams: {
         post: idPost
       },
-      queryParamsHandling: 'merge',
-      // preserve the existing query params in the route
-      // skipLocationChange: true
-      // do not trigger navigation
+      queryParamsHandling: 'merge'
     });
+
     this.viewing_post = true;
   }
 
