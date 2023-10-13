@@ -48,10 +48,20 @@ export class FeedComponent{
               private router: Router) {
     this.loggedId = (JSON.parse(localStorage.getItem('user')!))._id;
     this.aRouter.queryParams.subscribe(res =>{
-      this.isLoading = true;
-      this.id = res['id'];
+
+      // Check if user id has changed to show skeleton
+      if(this.id != res['id'] || this.isLoading && this.id === null){
+        this.isLoading = true;
+        this.id = res['id'];
+        this.initialize();
+      } else this.isLoading = false;
+
+      // Check if viewing post
+      if(res['post']){
+        this.viewing_post = true;
+      } else this.viewing_post = false;
+
       if(!this.id) {this.activeArray = this.feed}
-      this.initialize();
     });
   }
 
@@ -134,30 +144,24 @@ export class FeedComponent{
   }
 
   navigatePost(idPost: string){
-    const i = this.activeArray.findIndex(item => item._id === idPost);
-    //Data for post detail variables
-    this.data = {
-      idPost: idPost,
-      loggedId: this.loggedId,
-      idUser: this.activeArray[i].user_id._id,
-      content: this.activeArray[i].content,
-      attached_file: this.activeArray[i].attached_file,
-      imageUserPost: this.activeArray[i].user_id.profile_pic,
-      username: this.activeArray[i].user_id.username,
-      created_at: this.activeArray[i].created_at,
-      likes: this.activeArray[i].likes,
-      comments: this.activeArray[i].comments
-    };
+    // changes the route without moving from the current view or
+    // triggering a navigation event,
+    this.router.navigate([], {
+      relativeTo: this.aRouter,
+      queryParams: {
+        post: idPost
+      },
+      queryParamsHandling: 'merge',
+      // preserve the existing query params in the route
+      // skipLocationChange: true
+      // do not trigger navigation
+    });
     this.viewing_post = true;
   }
 
   imageChangeEvent(url: any){
     this.image = url;
     this.rank.setImage(url);
-  }
-
-  backEvent(value: boolean){
-    this.viewing_post = value;
   }
 
   like(idPost: string){
@@ -256,7 +260,8 @@ export class FeedComponent{
   }
 
   initialize(){
-    this.isLoading = true;
+    if(this.viewing_post) return;
+    console.log("entro al initialize este de la vaina")
 
     let promises = [
       this.userService.getProfilePic(this.id)!,

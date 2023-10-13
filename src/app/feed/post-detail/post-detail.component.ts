@@ -14,6 +14,7 @@ import {UserService} from "../../services/user.service";
 import Swal from "sweetalert2";
 import {CommentService} from "../../services/comment.service";
 import {finalize} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-post-detail',
@@ -22,11 +23,8 @@ import {finalize} from "rxjs";
 })
 export class PostDetailComponent implements OnInit{
 
-  @Input()
-  isLiked!: boolean;
-
-  @Input()
-  data: any;
+  postId: string = "";
+  data!: any;
 
   @ViewChild('commentArea')
   commentArea!: ElementRef<HTMLTextAreaElement>;
@@ -39,9 +37,6 @@ export class PostDetailComponent implements OnInit{
   comments!: Array<any>;
 
   isLoading: boolean = true;
-
-  @Output('viewing_post')
-  emitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output('liked_post')
   likeEmitter: EventEmitter<string> = new EventEmitter<string>();
@@ -57,21 +52,40 @@ export class PostDetailComponent implements OnInit{
 
   post: any;
 
-  constructor(private postService: PostService, public userService: UserService, public commentService: CommentService) {
+  constructor(private postService: PostService,
+              public userService: UserService,
+              public commentService: CommentService,
+              private aRouter: ActivatedRoute)
+  {
+    this.aRouter.queryParams.subscribe(params => {
+      console.log(params['post']);
+      this.postId = params['post'];
+    })
     this.userService.getProfilePic()?.subscribe(
       url => this.imageLoggedUser = url.toString()
     );
   }
 
   ngOnInit(): void {
-    this.postService.detail(this.data.idPost)?.subscribe(
+    this.postService.detail(this.postId)?.subscribe(
       (res: any) => {
         this.post = res;
         this.comments = res.comments;
-        setTimeout(()=>{this.isLoading=false}, 500)
+        this.data = {
+          idPost: this.postId,
+          loggedId: "",
+          idUser: res.post.user_id._id,
+          content: res.post.content,
+          attached_file: res.post.attached_file,
+          imageUserPost: res.post.user_id.profile_pic,
+          username: res.post.user_id.username,
+          created_at: res.post.created_at,
+          likes: res.likes,
+          comments: res.comments.length
+        };
+        setTimeout(()=>{this.isLoading=false}, 200)
       }
     );
-
   }
 
   likePost(){
@@ -123,7 +137,7 @@ export class PostDetailComponent implements OnInit{
       if (result.isConfirmed) {
         if(action === 'post'){
           this.delete_emitter.emit(this.data.idPost);
-          this.back();
+          history.back();
         } else if (action === 'comment' && idComment !== null){
           this.postService.delComment(idComment)?.subscribe(
             (res: any) =>{
@@ -138,10 +152,6 @@ export class PostDetailComponent implements OnInit{
     })
   }
 
-  back(){
-    this.emitter.emit(false);
-  }
-
   keyPressEvent(event: any){
     if(event.key === 'Enter'){
       event.preventDefault();
@@ -149,4 +159,6 @@ export class PostDetailComponent implements OnInit{
     }
   }
 
+  protected readonly window = window;
+  protected readonly history = history;
 }

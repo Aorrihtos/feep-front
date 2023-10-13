@@ -43,7 +43,9 @@ export class ProfileComponent implements OnInit, OnChanges{
 
   constructor(public userService: UserService, private aRouter: ActivatedRoute) {
     this.aRouter.queryParams.subscribe(res =>{
-      this.isLoading = true;
+      if(res['id'] != this.id){
+        this.isLoading = true;
+      }
       this.id = res['id'];
       this.initialize();
     });

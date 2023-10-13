@@ -2,9 +2,9 @@
   <div class="header"></div>
   <div class="post">
     <div class="go-back">
-      <img loading="lazy" src="../../assets/icons/feed/flecha.png" (click)="back()" alt="Arrow left">
+      <img loading="lazy" src="../../assets/icons/feed/flecha.png" (click)="history.back()" alt="Arrow left">
     </div>
-    <div class="post-comment-container" id="comment-container">
+    <div *ngIf="!isLoading" class="post-comment-container" id="comment-container">
       <div class="post-top">
         <div class="og-post">
           <div class="img-text">
@@ -48,10 +48,10 @@
             <img *ngIf="data.attached_file" src="{{data.attached_file}}" alt="attached file">
             <div class="reaction">
               <p style="cursor: pointer">
-                <img *ngIf="!isLiked"
+                <img *ngIf="false"
                      (click)="likePost()"
                      src="assets/icons/feed/heart.png" alt="Like">
-                <img *ngIf="isLiked"
+                <img *ngIf="true"
                      (click)="unlikePost()"
                      src="../../assets/icons/feed/redFilledHeart.png" alt="Like">
                 {{data.likes}}
