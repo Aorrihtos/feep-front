@@ -8,19 +8,14 @@
   </div>
 
   <div class="logo">
-    <a (click)="home()" style="cursor: pointer "><img loading="lazy" src="assets/logo.png"></a>
+    <a (click)="navigateHome()" style="cursor: pointer" id="home-link"><img loading="lazy" src="assets/logo.png" alt="Logo"></a>
   </div>
 
   <div class="nav-items-topBar" id="myTopnav" #myTopnav>
-    <li>
-      <a href="javascript:void(0);" class="icon" id="hamburguer-icon" #hamburguerIcon>
-        <i class="fa fa-bars"></i>
-      </a>
-    </li>
     <div class="dropdown-content">
-      <li><img loading="lazy" src="assets/icons/navbar/home.png"><a (click)="navigateHome()" style="cursor: pointer">Home</a></li>
-      <li><img loading="lazy" src="assets/icons/navbar/contact.png"><a routerLink="/contact">Contact</a></li>
-      <li><img loading="lazy" src="assets/icons/navbar/settings.png"><a routerLink="/settings">Settings</a></li>
+      <li><img loading="lazy" src="assets/icons/navbar/home.png" alt="Home"><a (click)="navigateHome()" style="cursor: pointer" id="home-topbar-link">Home</a></li>
+      <li><img loading="lazy" src="assets/icons/navbar/contact.png" alt="Contact"><a routerLink="/contact" id="contact-topbar-link">Contact</a></li>
+      <li><img loading="lazy" src="assets/icons/navbar/settings.png" alt="Settings"><a routerLink="/settings" id="settings-topbar-link">Settings</a></li>
     </div>
   </div>
 

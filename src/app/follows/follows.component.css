@@ -172,6 +172,7 @@ img{
   object-fit: cover;
   border-radius: 50%;
   border: 4px #EF443C solid;
+  background-color: blanchedalmond;
 }
 
 .follows
@@ -246,4 +247,23 @@ p{
 .follows .profile
 .buttons img{
   width: 16px;
+}
+
+@media (max-width: 650px) {
+  .follows{
+    width: auto;
+    margin-top: 0;
+  }
+
+  .follows .profile-info-container{
+    flex-direction: column;
+  }
+  .header {
+    display: none;
+  }
+
+  .users .profile:last-child{
+    margin-bottom: 63px;
+  }
+
 }

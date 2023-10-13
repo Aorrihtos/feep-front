@@ -107,9 +107,12 @@ button:hover{
 .post-container
 .go-back{
   display: flex;
-  padding: 10px;
+  position: relative;
+  top: 25px;
   border-bottom: 0.5px solid #EF443C;
-  margin-top: 5%;
+  align-items: center;
+  height: 30px;
+  background-color: white;
 }
 
 .post-container .go-back
@@ -132,7 +135,7 @@ img:hover{
 .post-container
 .post-comment-container{
   overflow: scroll;
-  height: 92vh;
+  height: 100vh;
 }
 
 .post-container
@@ -142,7 +145,7 @@ img:hover{
 
 .post-container .post-comment-container
 .post-top{
-  margin: 30px 30px 10px 30px;
+  margin: 45px 30px 10px 30px;
 }
 
 .post-container .og-post
@@ -210,6 +213,7 @@ img:hover{
   object-fit: cover;
   border-radius: 50%;
   border: 4px #EF443C solid;
+  background-color: blanchedalmond;
 }
 
 .post-container .og-post .img-text
@@ -325,11 +329,6 @@ button{
 .post .comment{
   display: flex;
   flex-direction: column;
-  margin: 30px 30px 10px 30px;
-}
-
-.post-container .post-comment-container
-.post-top{
   margin: 30px 30px 10px 30px;
 }
 
@@ -485,7 +484,29 @@ img{
   margin-right: 28px;
 }
 
+.comments .comment:last-child:after{
+  content: "";
+  width: 100vw;
+  height: 78px;
+}
+
 @keyframes scaleIcon{
   0% {transform: scale(1)}
   100% {transform: scale(1.1)}
+}
+
+@media (max-width: 1336px) {
+  .post-container, .header{
+    width: 100% !important;
+  }
+
+  .post-container .user-comment{
+    width: 100%;
+  }
+  .post-container .user-comment img{
+    min-width: 50px;
+  }
+  .post-container .user-comment textarea{
+    width: inherit;
+  }
 }

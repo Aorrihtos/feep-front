@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import {UserService} from "../../services/user.service";
 import Swal from "sweetalert2";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -21,16 +22,13 @@ export class ProfileComponent implements OnInit, OnChanges{
   descArea!: ElementRef<HTMLTextAreaElement>;
 
   @ViewChild("sumText")
-  sumText!: ElementRef<HTMLInputElement>;
+  sumText?: ElementRef<HTMLInputElement>;
 
   @ViewChild("descBtn")
   descBtn!: ElementRef<HTMLButtonElement>;
 
   @Output('imageChange') emitter: EventEmitter<string> = new EventEmitter<string>();
-  @Input('image')
-  image: string = '';
 
-  @Input()
   id: string | null = null;
 
   username: string = '';
@@ -39,37 +37,32 @@ export class ProfileComponent implements OnInit, OnChanges{
   views: number = 0;
   followers: number = 0;
   points: number = 0;
+  image: string = '';
 
   isLoading: boolean = true;
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService, private aRouter: ActivatedRoute) {
+    this.aRouter.queryParams.subscribe(res =>{
+      this.isLoading = true;
+      this.id = res['id'];
+      this.initialize();
+    });
+  }
 
   ngOnInit(): void {
-    this.initialize();
+    // this.initialize();
   }
 
-  keyCapEvent(){
-    const summaryInput = this.sumText.nativeElement;
-    summaryInput.addEventListener('keypress', event =>{
-      if(event.code == "Enter")
-        event.preventDefault();
-    });
-    summaryInput.addEventListener('paste', event =>{
-        event.preventDefault();
-    });
-    summaryInput.addEventListener('change', event =>{
-      if(summaryInput.textContent!.length > 20){
-        summaryInput.textContent = summaryInput.textContent!.substring(0,20);
-      }
-    });
+  keyDownEvent(event: any){
+    if(event.code == 'Enter') event.preventDefault();
   }
+
 
   initialize(){
     this.userService.detail(this.id)?.subscribe(
       (res: any) => {
-        console.log(res);
         this.setData(res.user);
-        setTimeout(()=>{this.isLoading = false; this.keyCapEvent();}, 500);
+        setTimeout(()=>{this.isLoading = false;}, 200);
       },
       err => {
         console.log(err);
@@ -79,19 +72,18 @@ export class ProfileComponent implements OnInit, OnChanges{
 
   setData(user: any){
     this.username = user.data.username;
-    this.summary = user.data.summary;
-    this.description = user.data.description
-      ? user.data.description
-      : '';
+    this.summary = user.data.summary || "";
+    this.description = user.data.description || "";
     this.views = user.data.views;
     this.followers = user.follow_counter.followers;
     this.points = user.points;
+    this.image = user.data.profile_pic;
   }
 
   setDescription(){
     this.userService.description({
       description: this.descArea.nativeElement.value,
-      summary: this.sumText.nativeElement.value
+      summary: this.sumText!.nativeElement.value
     })?.subscribe(
       (res: any) => {
         this.description = res.user.description;
@@ -164,8 +156,8 @@ export class ProfileComponent implements OnInit, OnChanges{
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.isLoading = true;
-    this.initialize();
+    // this.isLoading = true;
+    // this.initialize();
   }
 
 }

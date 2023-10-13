@@ -123,13 +123,13 @@
           <input
             type="password"
             placeholder="Password"
-            maxlength="15"
-            title="Please, enter between 3 and 15 characters"
+            minlength="3"
+            title="Minimum 3 characters required"
             formControlName="password"/>
           <p class="input-error"
              *ngIf="this.signUpForm.controls['password'].errors
                     && this.signUpForm.controls['password'].touched">
-            Please, enter between 3 and 15 characters
+            Minimum 3 characters required.
           </p>
         </div>
         <div class="input-field">
@@ -137,8 +137,8 @@
           <input
             type="password"
             placeholder="Repeat password"
-            maxlength="15"
-            title="Please, enter between 3 and 15 characters"
+            minlength="3"
+            title="Repeat password"
             formControlName="repeatPassword"/>
           <p class="input-error"
              *ngIf="(this.signUpForm.controls['repeatPassword'].errors
@@ -155,7 +155,7 @@
   <div class="panels-container">
     <div class="panel left-panel">
       <div class="content">
-        <img loading="lazy" src="assets/logo.png">
+        <img loading="lazy" src="assets/logo.png" alt="logo">
         <h1>Sign up</h1>
         <p>
           Provide your info and sign up now
@@ -170,7 +170,7 @@
     </div>
     <div class="panel right-panel">
       <div class="content">
-        <img loading="lazy" src="assets/logo.png">
+        <img loading="lazy" src="assets/logo.png" alt="logo">
         <h1>Sign In</h1>
         <p>
           Use your user name to sign in

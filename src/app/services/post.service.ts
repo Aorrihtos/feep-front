@@ -60,6 +60,8 @@ export class PostService {
   like(idPost: string){
     const [token] = this.getUserCredentials();
     if(!token) return;
+    const snd = new Audio("../../assets/sfx/like.wav");
+    snd.play().then(r => snd.currentTime=0);
     const headers = new HttpHeaders().set("Authorization", token);
     return this.http.post(`${this.baseUrl}/like/add/post/${idPost}`,null , {headers});
   }

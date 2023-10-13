@@ -297,8 +297,12 @@ input[type=submit]:hover{
 }
 
 @media (max-width: 850px) {
+  .container{
+  }
+
   .form {
     grid-template-columns: 1fr;
+    margin-bottom: 100px;
   }
 
   .contact-info:before {

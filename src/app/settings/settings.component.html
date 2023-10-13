@@ -2,7 +2,7 @@
 <div class="settings">
   <div class="settings-container">
     <div class="img">
-      <img src="../assets/settings/settings.gif">
+      <img src="../assets/settings/settings.gif" alt="Settings gif">
     </div>
     <div class="text">
       <h1>Settings</h1>
@@ -15,8 +15,9 @@
       </div>
     </div>
   </div>
-  <div>
+  <div class="data-container">
     <app-profile-settings *ngIf="active === 'profile'"></app-profile-settings>
     <app-blocked *ngIf="active === 'blocked'"></app-blocked>
   </div>
 </div>
+<app-bottombar></app-bottombar>

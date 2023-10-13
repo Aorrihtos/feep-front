@@ -274,13 +274,20 @@ input[type=date] {
 }
 
 @media (max-width: 870px) {
+
+  .input-error{
+    top: 57px;
+    left: 52px;
+    font-size: 11px;
+  }
+
   .container {
-    min-height: 800px;
+    min-height: 910px;
     height: 100vh;
   }
   .signin-signup {
     width: 100%;
-    top: 95%;
+    top: 85%;
     transform: translate(-50%, -100%);
     transition: 0.7s 0.1s ease-in-out;
   }
@@ -379,7 +386,7 @@ input[type=date] {
   }
 
   .container.sign-up-mode .signin-signup {
-    top: 5%;
+    top: 2%;
     transform: translate(-50%, 0);
   }
 

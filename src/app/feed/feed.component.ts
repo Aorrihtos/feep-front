@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RankComponent} from "./rank/rank.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {PostDetailComponent} from "./post-detail/post-detail.component";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-feed',
@@ -29,12 +30,10 @@ export class FeedComponent{
 
   loggedId: string;
   image: string = '';
-  banner: string = '';
   posts: Array<any> = [];
   feed: Array<any> = [];
   activeArray: Array<any> = [];
   id: string | null = null;
-  mine: boolean = true;
   viewing_post: boolean = false;
   paginationPosts: any;
   paginationFeed: any;
@@ -45,12 +44,15 @@ export class FeedComponent{
 
   constructor(public userService: UserService,
               private postService: PostService,
-              private aRouter: ActivatedRoute) {
-    this.isLoading = true;
+              private aRouter: ActivatedRoute,
+              private router: Router) {
     this.loggedId = (JSON.parse(localStorage.getItem('user')!))._id;
-    this.initialize().then(()=>{
-      setTimeout(()=> {this.isLoading=false}, 1000);
-    })
+    this.aRouter.queryParams.subscribe(res =>{
+      this.isLoading = true;
+      this.id = res['id'];
+      if(!this.id) {this.activeArray = this.feed}
+      this.initialize();
+    });
   }
 
   post(){
@@ -103,7 +105,6 @@ export class FeedComponent{
 
   unfollow(userId: string){
     this.userService.unfollow(userId);
-    console.log(this.activeArray);
     //this.activeArray = this.activeArray.filter(i => i.user_id._id !== userId);
   }
 
@@ -133,9 +134,7 @@ export class FeedComponent{
   }
 
   navigatePost(idPost: string){
-
     const i = this.activeArray.findIndex(item => item._id === idPost);
-    console.log(this.activeArray[i])
     //Data for post detail variables
     this.data = {
       idPost: idPost,
@@ -149,7 +148,6 @@ export class FeedComponent{
       likes: this.activeArray[i].likes,
       comments: this.activeArray[i].comments
     };
-
     this.viewing_post = true;
   }
 
@@ -212,6 +210,7 @@ export class FeedComponent{
       const index = aux.findIndex(post => post._id === idPost);
       aux[index].likes++;
       this.activeArray = aux;
+
     } else if (action === 'del') {
       const i = this.postService.liked_posts.indexOf(idPost);
       this.postService.liked_posts.splice(i, 1);
@@ -224,7 +223,7 @@ export class FeedComponent{
 
   loadNext(){
     if(this.activeArray === this.posts && this.paginationPosts.page < this.paginationPosts.total_pages){
-      this.userService.posts(null, ++this.paginationPosts.page)?.subscribe(
+      this.userService.posts(this.id, ++this.paginationPosts.page)?.subscribe(
         (res: any) => {
           this.posts = this.posts.concat(res.posts);
           this.activeArray = this.posts;
@@ -256,50 +255,43 @@ export class FeedComponent{
     return this.postService.liked_posts.indexOf(idPost) >= 0;
   }
 
-  async initialize(){
-    this.aRouter.queryParams.subscribe(res =>{
-      this.id = res['id'];
-      if(this.id) {this.mine = false} else {this.activeArray = this.feed}
-    })
-    this.userService.getProfilePic(this.id)!.subscribe(
-      (res: any) =>{
-        this.image = res;
-      }
-    );
+  initialize(){
+    this.isLoading = true;
+
+    let promises = [
+      this.userService.getProfilePic(this.id)!,
+      this.userService.posts(this.id)!
+    ];
+
     if(!this.id){
-      this.userService.feed()?.subscribe(
-        (res: any) => {
-          this.feed = res.feed;
-          this.activeArray = this.feed;
-          this.paginationFeed = res.pagination;
-        },
-        (err: any) => {
-          console.log(err);
-        }
-      );
+      promises.push(this.userService.feed()!);
     }
-    this.userService.posts(this.id)?.subscribe(
-      (res: any) => {
-        this.paginationPosts = res.pagination;
-        this.posts = res.posts;
-        if(this.id){
-          this.activeArray = this.posts;
-        }
-      },
-      (err: any) => {
-        console.log(err);
+
+    forkJoin(promises).subscribe(([profilePic, postsData, feedData = null]: Array<any>) => {
+      this.image = profilePic;
+      this.paginationPosts = postsData.pagination!;
+      this.posts = postsData.posts;
+
+      if(feedData){
+        this.feed = feedData.feed;
+        this.activeArray = this.feed;
+        this.paginationFeed = feedData.pagination;
       }
-    );
+
+      this.activeArray = this.id
+        ? this.posts
+        : this.feed;
+
+      setTimeout(()=>{this.isLoading = false;}, 200)
+    });
   }
 
-  refreshData(){
-    this.isLoading = true;
-    this.initialize().then(()=> {
-      setTimeout(()=> {this.isLoading=false}, 1000);
-    });
-
+  async visit(userId: string | null){
+    if(userId === this.loggedId) return;
+    await this.router.navigate(['/feed'], {queryParams: {id: userId}});
   }
 
   protected readonly localStorage = localStorage;
   protected readonly window = window;
+  protected readonly console = console;
 }

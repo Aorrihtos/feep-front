@@ -1,4 +1,4 @@
-div {
+.content {
   padding: 20px 0 20px 30px;
   display: flex;
   align-items: center;
@@ -7,6 +7,20 @@ div {
   border-bottom: 1px solid #EF443C;
 }
 
-div:first-child{
+.container:first-child{
   border-top: 1px solid #EF443C;
+}
+
+.info-loader{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+@media (max-width: 650px) {
+  .info-loader{
+    flex-direction: column;
+  }
+
 }

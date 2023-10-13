@@ -26,6 +26,8 @@ export class CommentService {
   like(commentId: string){
     const [token] = this.getUserCredentials();
     if(!token) return;
+    const snd = new Audio("../../assets/sfx/like.wav");
+    snd.play().then(r => snd.currentTime=0);
     const headers = new HttpHeaders().set("Authorization", token);
     this.http.post(`${this.baseUrl}/like/add/comment/${commentId}`,null, {headers}).subscribe(
       (res: any) => {this._likedComments.push(commentId)}

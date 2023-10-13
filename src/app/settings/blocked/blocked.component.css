@@ -129,6 +129,7 @@ img{
   object-fit: cover;
   border-radius: 50%;
   border: 4px #EF443C solid;
+  background-color: blanchedalmond;
 }
 
 .settings-profile-container .settings-blocked .users
@@ -171,4 +172,42 @@ img{
 .settings-profile-container .settings-blocked .users .profile-info-container .info
 p{
   font-size: 14px;
+}
+
+#no-blocks-img{
+  margin: 0 auto;
+  width: 80%;
+  height: 100%
+}
+
+@media (max-width: 1300px){
+  /* SECTIONS */
+  .settings-blocked{
+    width: 100% !important;
+  }
+
+  #no-blocks-img{
+    width: 40%;
+    height: auto;
+  }
+}
+
+@media (max-width: 822px){
+  #no-blocks-img{
+    width: 70%;
+    height: auto;
+  }
+}
+
+
+@media (max-width: 495px){
+  .settings-profile-container .settings-blocked .users .profile-info-container{
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #no-blocks-img{
+    width: 100%;
+    height: auto;
+  }
 }

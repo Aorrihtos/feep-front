@@ -1,0 +1,58 @@
+<div class="month-profile-container">
+  <h2>Monthly Profiles</h2>
+  <div *ngIf="isLoading" class="profile-container-loader">
+    <div *ngFor="let i of [].constructor(10)">
+      <div class="profile-loader">
+        <div class="line"></div>
+        <ngx-skeleton-loader
+          appearance="circle"
+          [theme]="{'width':'40px', 'height':'40px', 'margin-left':'8px'}">
+        </ngx-skeleton-loader>
+        <ngx-skeleton-loader
+          appearance="circle"
+          [theme]="{'width':'63px', 'height':'63px'}">
+        </ngx-skeleton-loader>
+        <div class="info-loader">
+          <ngx-skeleton-loader
+            appearance="line"
+            [theme]="{'width':'75px', 'height':'19px'}">
+          </ngx-skeleton-loader>
+          <ngx-skeleton-loader
+            appearance="line"
+            count="3"
+            [theme]="{'width':'15px', 'height':'39px', 'margin-right':'15px'}">
+          </ngx-skeleton-loader>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+  <div *ngIf="!isLoading" class="profile-container">
+    <div *ngFor="let user of rank; index as i" class="profile" (click)="visit(user.user_id._id)">
+      <div class="line"></div>
+      <div class="number" id="{{colorMap.get(i+1)}}">{{i+1}}</div>
+      <div class="profile-img">
+        <img loading="lazy" src="{{user.user_id.profile_pic}}" alt="Profile pic">
+      </div>
+      <div class="profile-info-container">
+        <h3>{{user.user_id.username}}</h3>
+        <div class="profile-info">
+          <div class="info">
+            <img loading="lazy" src="assets/icons/feed/eye.png" alt="Views">
+            <p>{{user.user_id.views}}</p>
+          </div>
+          <div class="info">
+            <img loading="lazy" src="assets/icons/signUp/usuario.png" alt="Follows">
+            <p>{{user.followers}}</p>
+          </div>
+          <div class="info">
+            <img loading="lazy" src="assets/iconSheep.png" alt="Rank points">
+            <p>{{user.points}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-bottombar></app-bottombar>

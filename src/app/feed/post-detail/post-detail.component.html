@@ -2,13 +2,13 @@
   <div class="header"></div>
   <div class="post">
     <div class="go-back">
-      <img loading="lazy" src="../../assets/icons/feed/flecha.png" (click)="back()">
+      <img loading="lazy" src="../../assets/icons/feed/flecha.png" (click)="back()" alt="Arrow left">
     </div>
     <div class="post-comment-container" id="comment-container">
       <div class="post-top">
         <div class="og-post">
           <div class="img-text">
-            <img [src]="data.imageUserPost">
+            <img [src]="data.imageUserPost" alt="Profile pic">
             <div class="text">
               <p>{{data.username}}</p>
               <p>{{data.created_at | date: 'short'}}</p>
@@ -17,51 +17,51 @@
               <button
                 *ngIf="!userService.followings.get(data.idUser)"
                 (click)="userService.follow(data.idUser)">
-                <img src="../../assets/icons/feed/agregar-usuario.png">Follow
+                <img src="../../assets/icons/feed/agregar-usuario.png" alt="Follow">Follow
               </button>
               <button
                 *ngIf="userService.followings.get(data.idUser)"
                 (click)="userService.unfollow(data.idUser)">
-                <img src="../../assets/icons/feed/agregar-usuario.png">Unfollow
+                <img src="../../assets/icons/feed/agregar-usuario.png" alt="Unfollow">Unfollow
               </button>
               <button
                 *ngIf="!userService.blocks.get(data.idUser)"
                 (click)="userService.block(post.post.user_id._id)">
-                <img src="../../assets/icons/feed/bloquear-usuario.png">Block
+                <img src="../../assets/icons/feed/bloquear-usuario.png" alt="Block">Block
               </button>
               <button
                 *ngIf="userService.blocks.get(data.idUser)"
                 (click)="userService.pardon(data.idUser)">
-                <img src="../../assets/icons/feed/bloquear-usuario.png">Unblock
+                <img src="../../assets/icons/feed/bloquear-usuario.png" alt="Block user">Unblock
               </button>
             </div>
             <div *ngIf="data.idUser === data.loggedId" class="buttons buttons-fb">
               <button
                 style="width: auto"
                 (click)="delete('post')">
-                <img src="assets/icons/feed/deletePost.png">Delete Post
+                <img src="assets/icons/feed/deletePost.png" alt="Delete post">Delete Post
               </button>
             </div>
           </div>
           <div class="post-content">
             <p>{{data.content}}</p>
-            <img src="{{data.attached_file}}">
+            <img *ngIf="data.attached_file" src="{{data.attached_file}}" alt="attached file">
             <div class="reaction">
               <p style="cursor: pointer">
                 <img *ngIf="!isLiked"
                      (click)="likePost()"
-                     src="assets/icons/feed/heart.png">
+                     src="assets/icons/feed/heart.png" alt="Like">
                 <img *ngIf="isLiked"
                      (click)="unlikePost()"
-                     src="../../assets/icons/feed/redFilledHeart.png">
+                     src="../../assets/icons/feed/redFilledHeart.png" alt="Like">
                 {{data.likes}}
               </p>
-              <p><img src="../../assets/icons/feed/mensaje.png">{{data.comments}}</p>
+              <p><img src="../../assets/icons/feed/mensaje.png" alt="Comments">{{data.comments}}</p>
             </div>
           </div>
         </div>
         <div class="user-comment">
-          <img [src]="imageLoggedUser">
+          <img [src]="imageLoggedUser" alt="Profile Pic">
           <textarea (keydown)="keyPressEvent($event)" id="commentArea" maxlength="250" cols="30" rows="10" placeholder="Leave your comment" #commentArea></textarea>
         </div>
         <button (click)="postComment()" class="red-button" #postBtn>Post</button>
@@ -71,19 +71,19 @@
       <div *ngIf="!isLoading" class="comments">
         <div *ngFor="let c of comments" class="comment">
           <div class="img-text">
-            <img src="{{c.user_id.profile_pic}}">
+            <img src="{{c.user_id.profile_pic}}" alt="Profile pic">
             <div class="text">
               <p>{{c.user_id.username}}</p>
               <p>{{c.created_at | date: 'short'}}</p>
             </div>
             <div *ngIf="c.user_id._id !== data.loggedId" class="buttons buttons-fb">
-              <button><img src="../../assets/icons/feed/agregar-usuario.png">Follow</button>
-              <button><img src="../../assets/icons/feed/bloquear-usuario.png">Block</button>
+              <button><img src="../../assets/icons/feed/agregar-usuario.png" alt="Follow">Follow</button>
+              <button><img src="../../assets/icons/feed/bloquear-usuario.png" alt="Block">Block</button>
             </div>
             <div *ngIf="c.user_id._id === data.loggedId" class="buttons buttons-fb">
               <button
                 (click)="delete('comment', c._id)">
-                <img src="assets/icons/feed/deletePost.png">Delete Comment
+                <img src="assets/icons/feed/deletePost.png" alt="Delete comment">Delete Comment
               </button>
             </div>
           </div>
@@ -94,12 +94,12 @@
                 <img *ngIf="commentService._likedComments.indexOf(c._id) >= 0"
                   src="../../assets/icons/feed/redFilledHeart.png"
                   (click)="commentService.unlike(c._id); c.likes = c.likes-1;"
-                  style="cursor: pointer">
+                  style="cursor: pointer" alt="Like">
                 <img
                   *ngIf="commentService._likedComments.indexOf(c._id) < 0"
                   src="../../assets/icons/feed/heart.png"
                   (click)="commentService.like(c._id); c.likes = c.likes+1;"
-                  style="cursor: pointer;">
+                  style="cursor: pointer;" alt="Like">
                 {{c.likes}}
               </p>
             </div>
@@ -109,5 +109,5 @@
       </div>
     </div>
   </div>
-  <img id="myBtn" src="../../assets/icons/feed/flecha-arriba.png">
+  <img id="myBtn" src="../../assets/icons/feed/flecha-arriba.png" alt="Arrow up">
 </div>

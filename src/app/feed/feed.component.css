@@ -193,7 +193,7 @@ button:active{
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin: 20px 20px 23px 20px;
   gap: 28px;
 }
 
@@ -333,6 +333,7 @@ img{
   object-fit: cover;
   border-radius: 50%;
   border: 4px #EF443C solid;
+  background-color: blanchedalmond;
 }
 
 .content-container .content .feed-container .feed .post .img-text
@@ -421,4 +422,173 @@ img{
   width: 95%;
   margin: 0 auto;
   display: block;
+}
+
+.mobile-skeleton{
+  display: none;
+}
+.desktop-skeleton{
+  display: block;
+}
+
+#attached_file_name{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: absolute;
+  max-width: 50%;
+}
+
+#attached_file_name > pre{
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#attached_file_name > svg{
+  min-width: min-content;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1336px){
+  .content-container .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+    overflow: visible;
+    margin-top: 0;
+  }
+
+  .content-container .content .feed-container {
+    width: 100%;
+  }
+
+  .content-container .content .feed-container .header {
+    width: 100%;
+  }
+
+  .content-container .content .feed-container .feed .post .post-content > p{
+    font-size: 15px;
+  }
+
+  .content-container .content .feed-container .feed .my-post .img-post .text-area-container {
+    width: 50%;
+  }
+
+  .content-container .content .feed-container .feed .my-post .img-post textarea {
+    height: 118px;
+    width: 100%;
+  }
+
+  .content-container .content .feed-container .feed .my-post .img-post .profile-img img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .content-container .content .feed-container .feed {
+    margin-top: 5%;
+    overflow: hidden;
+  }
+
+  .content-container .content .feed-container .feed .my-post .post-buttons {
+    margin: 0 auto;
+    margin-bottom: 10px;
+    width: 57%;
+  }
+
+  .content-container .content .feed-container .feed .post .post-content .reaction p {
+    font-size: 12px;
+  }
+
+  .content-container .content .feed-container .feed .post .post-content .reaction p img {
+    width: 12px;
+  }
+
+  #emptyImg {
+    width: 65%;
+  }
+
+  .desktop-skeleton{
+    display: none;
+  }
+
+  .mobile-skeleton{
+    display: block;
+  }
+
+}
+
+@media (max-width: 650px){
+
+  .content-container .content .feed-container .feed .post
+  .img-text:hover{
+    background-color: white;
+    cursor: unset;
+  }
+
+  .content-container .content .feed-container .feed .post
+  .img-text:hover .buttons-fb{
+    display: none;
+  }
+
+  .content-container .content .feed-container .feed .my-post .img-post .text-area-container {
+    width: 71%;
+  }
+
+  .content-container .content .feed-container .feed .my-post .img-post .profile-img img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .content-container .content .feed-container .feed .my-post .img-post textarea {
+    width: 100%;
+    height: 64px;
+    font-size: 12px;
+  }
+
+  button {
+    font-size: 10px;
+    width: 90px;
+  }
+
+  .content-container .content .feed-container .feed .my-post .post-buttons {
+    width: 80%;
+  }
+
+  .content-container .content .feed-container .feed .my-post .post-buttons .attach-post label{
+    font-size: 10px;
+  }
+
+  .content-container .content .feed-container .feed .my-post .post-buttons .attach-post img {
+    width: 11px;
+    margin-right: 2px;
+  }
+
+  .content-container .content .feed-container .feed > .buttons button {
+    font-size: 12px;
+  }
+
+  .content-container .content .feed-container .feed .post .img-text > img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .content-container .content .feed-container .feed .post .img-text div p:first-child {
+    font-size: 13px;
+  }
+
+  .content-container .content .feed-container .feed .post .img-text .text p {
+    font-size: 11px;
+  }
+
+  .content-container .content .feed-container .feed .post .post-content > p {
+    margin-bottom: 12px;
+    font-size: 15px;
+  }
+
+  #emptyImg {
+    width: 100%;
+  }
+
 }

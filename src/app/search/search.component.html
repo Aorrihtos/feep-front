@@ -3,28 +3,30 @@
   <div class="header"></div>
   <div class="container">
     <div class="go-back">
-      <img src="assets/icons/feed/flecha.png" onclick="history.back()">
+      <img src="assets/icons/feed/flecha.png" onclick="history.back()" alt="Arrow left">
+      <input type="text" placeholder="¿Who are you looking for?" #mobileSearcher>
+      <button class="white-button" (click)="changeData(mobileSearcher.value)">Search</button>
     </div>
     <hr>
     <app-search-loader *ngIf="isLoading"></app-search-loader>
     <div *ngIf="!isLoading" (scrollend)="loadNext()" class="users">
       <div (click)="visit(user._id)" *ngFor = "let user of results" class="profile">
         <div class="profile-img">
-          <img [src]="user.profile_pic">
+          <img [src]="user.profile_pic" alt="Profile pic">
         </div>
         <div class="profile-info-container">
           <h3>{{user.username}}</h3>
           <div class="profile-info">
             <div class="info">
-              <img src="../assets/icons/feed/eye.png">
+              <img src="../assets/icons/feed/eye.png" alt="Views">
               <p>{{user.views}}</p>
             </div>
             <div class="info">
-              <img src="../assets/icons/signUp/usuario.png">
+              <img src="../assets/icons/signUp/usuario.png" alt="Follows">
               <p>{{user.followers}}</p>
             </div>
             <div class="info">
-              <img src="../assets/iconSheep.png">
+              <img src="../assets/iconSheep.png" alt="Rank points">
               <p>{{user.points}}</p>
             </div>
           </div>
@@ -33,25 +35,27 @@
           <button
             *ngIf="!userService.followings.get(user._id)"
             (click)="follow(user._id, $event)">
-            <img src="assets/icons/feed/agregar-usuario.png">Follow
+            <img src="assets/icons/feed/agregar-usuario.png" alt="Follow">Follow
           </button>
           <button
             *ngIf="userService.followings.get(user._id)"
             (click)="unfollow(user._id, $event)">
-            <img src="assets/icons/feed/agregar-usuario.png">Unfollow
+            <img src="assets/icons/feed/agregar-usuario.png" alt="Unfollow">Unfollow
           </button>
           <button
             *ngIf="!userService.blocks.get(user._id)"
             (click)="block(user._id, $event)">
-            <img src="assets/icons/feed/bloquear-usuario.png">Block
+            <img src="assets/icons/feed/bloquear-usuario.png" alt="Block">Block
           </button>
           <button
             *ngIf="userService.blocks.get(user._id)"
             (click)="pardon(user._id, $event)">
-            <img src="assets/icons/feed/bloquear-usuario.png">Unblock
+            <img src="assets/icons/feed/bloquear-usuario.png" alt="Unblock">Unblock
           </button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<app-bottombar></app-bottombar>
