@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {map} from "rxjs";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {map, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -80,17 +80,12 @@ export class PostService {
     return this.http.delete(`${this.baseUrl}/post/remove/${idPost}` , {headers});
   }
 
-  getImage(idPost: string){
+  getComments(idPost: string, page: number = 1){
     const [token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.get(`${this.baseUrl}/post/image/${idPost}` , {headers, responseType: "arraybuffer"})
-      .pipe(
-        map(res => {
-          let blob = new Blob([res]);
-          return window.URL.createObjectURL(blob);
-        })
-      );
+    const params = new HttpParams().set("page", page);
+    return this.http.get(`${this.baseUrl}/post/comments/${idPost}` , {headers, params});
   }
 
   getUserCredentials(){

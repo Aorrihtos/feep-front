@@ -4,7 +4,7 @@
     <div class="go-back">
       <img loading="lazy" src="../../assets/icons/feed/flecha.png" (click)="history.back()" alt="Arrow left">
     </div>
-    <div *ngIf="!isLoading" class="post-comment-container" id="comment-container">
+    <div *ngIf="!isLoading" (scrollend)="loadNext()" class="post-comment-container" id="comment-container">
       <div class="post-top">
         <div class="og-post">
           <div class="img-text">
@@ -26,7 +26,7 @@
               </button>
               <button
                 *ngIf="!userService.blocks.get(data.idUser)"
-                (click)="userService.block(post.post.user_id._id)">
+                (click)="userService.block(data.idUser)">
                 <img src="../../assets/icons/feed/bloquear-usuario.png" alt="Block">Block
               </button>
               <button
@@ -48,10 +48,10 @@
             <img *ngIf="data.attached_file" src="{{data.attached_file}}" alt="attached file">
             <div class="reaction">
               <p style="cursor: pointer">
-                <img *ngIf="false"
+                <img *ngIf="!isLiked"
                      (click)="likePost()"
                      src="assets/icons/feed/heart.png" alt="Like">
-                <img *ngIf="true"
+                <img *ngIf="isLiked"
                      (click)="unlikePost()"
                      src="../../assets/icons/feed/redFilledHeart.png" alt="Like">
                 {{data.likes}}
@@ -67,8 +67,8 @@
         <button (click)="postComment()" class="red-button" #postBtn>Post</button>
       </div>
       <hr>
-      <app-comments-loader *ngIf="isLoading && data.comments > 0"></app-comments-loader>
-      <div *ngIf="!isLoading" class="comments">
+      <app-comments-loader *ngIf="isCommentLoading && data.comments > 0"></app-comments-loader>
+      <div *ngIf="!isCommentLoading" class="comments">
         <div *ngFor="let c of comments" class="comment">
           <div class="img-text">
             <img src="{{c.user_id.profile_pic}}" alt="Profile pic">

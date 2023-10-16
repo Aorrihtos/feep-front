@@ -37,8 +37,13 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   imageLoggedUser!: string
 
   comments!: Array<any>;
+  commentPagination: any;
 
   isLoading: boolean = true;
+  isCommentLoading: boolean = true;
+  isLiked?: boolean;
+
+  paramSubscriber! : Subscription;
 
   @Output('liked_post')
   likeEmitter: EventEmitter<string> = new EventEmitter<string>();
@@ -52,9 +57,6 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   @Output('comment_update')
   comment_emiter: EventEmitter<{idPost: string, value: number}> = new EventEmitter<{idPost: string, value: number}>();
 
-  post: any;
-  paramSubscriber! : Subscription;
-
   constructor(private postService: PostService,
               public userService: UserService,
               public commentService: CommentService,
@@ -64,6 +66,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
       this.postId = params['post'];
     });
     this.imageLoggedUser = JSON.parse(localStorage.getItem("user")!).profile_pic;
+    this.isLiked = this.checkIsLiked(this.postId);
   }
 
   ngOnInit(): void {
@@ -73,7 +76,6 @@ export class PostDetailComponent implements OnInit, OnDestroy{
       this.isLoading = true;
       this.postService.detail(this.postId)?.subscribe(
         (res: any) => {
-          this.post = res;
           this.comments = res.comments;
           this.data = {
             idPost: this.postId,
@@ -85,12 +87,20 @@ export class PostDetailComponent implements OnInit, OnDestroy{
             username: res.post.user_id.username,
             created_at: res.post.created_at,
             likes: res.likes,
-            comments: res.comments.length
+            comments: res.pagination.total_items
           };
+          this.commentPagination = res.pagination;
           this.isLoading=false;
         }
       );
-    } else this.isLoading = false;
+    } else {
+      this.isLoading = false;
+      this.postService.getComments(this.postId)?.subscribe((res: any) => {
+        this.comments = res.comments;
+        this.commentPagination = res.pagination;
+        this.isCommentLoading = false;
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -99,11 +109,13 @@ export class PostDetailComponent implements OnInit, OnDestroy{
 
   likePost(){
     this.data.likes++;
+    this.isLiked = true;
     this.likeEmitter.emit(this.data.idPost);
   }
 
   unlikePost(){
     this.data.likes--;
+    this.isLiked = false;
     this.unlikeEmitter.emit(this.data.idPost);
   }
 
@@ -159,6 +171,22 @@ export class PostDetailComponent implements OnInit, OnDestroy{
         }
       }
     })
+  }
+
+  loadNext(){
+    console.log(this.commentPagination.page);
+    if(this.commentPagination.page < this.commentPagination.total_pages){
+      const newPage = ++this.commentPagination.page;
+      this.postService.getComments(this.postId, newPage)!.subscribe((res: any)=>{
+        this.comments = this.comments.concat(res.comments);
+        console.log(this.comments);
+        this.commentPagination = res.pagination;
+      });
+    }
+  }
+
+  checkIsLiked(idPost: string){
+    return this.postService.liked_posts.indexOf(idPost) >= 0;
   }
 
   keyPressEvent(event: any){
