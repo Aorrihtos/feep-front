@@ -1,6 +1,4 @@
 import {
-  AfterViewChecked,
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -13,7 +11,7 @@ import {PostService} from "../../services/post.service";
 import {UserService} from "../../services/user.service";
 import Swal from "sweetalert2";
 import {CommentService} from "../../services/comment.service";
-import {finalize, isEmpty, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -34,6 +32,9 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   @ViewChild('postBtn')
   postBtn!: ElementRef<HTMLButtonElement>;
 
+  @ViewChild('commentDiv')
+  commentDiv!: ElementRef<HTMLDivElement>;
+
   imageLoggedUser!: string
 
   comments!: Array<any>;
@@ -42,6 +43,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   isLoading: boolean = true;
   isCommentLoading: boolean = true;
   isLiked?: boolean;
+  isLoadingNext: boolean = false;
 
   paramSubscriber! : Subscription;
 
@@ -91,6 +93,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
           };
           this.commentPagination = res.pagination;
           this.isLoading=false;
+          this.isCommentLoading = false;
         }
       );
     } else {
@@ -173,16 +176,35 @@ export class PostDetailComponent implements OnInit, OnDestroy{
     })
   }
 
+  scrollDebounce: boolean = true;
   loadNext(){
-    console.log(this.commentPagination.page);
-    if(this.commentPagination.page < this.commentPagination.total_pages){
-      const newPage = ++this.commentPagination.page;
-      this.postService.getComments(this.postId, newPage)!.subscribe((res: any)=>{
-        this.comments = this.comments.concat(res.comments);
-        console.log(this.comments);
-        this.commentPagination = res.pagination;
-      });
-    }
+    setTimeout(()=>{
+      if(this.scrollDebounce){
+        this.scrollDebounce = false;
+        // Checking scroll percentage
+        let height = this.commentDiv.nativeElement.clientHeight;
+        let scrollHeight = this.commentDiv.nativeElement.scrollHeight - height;
+        let scrollTop = this.commentDiv.nativeElement.scrollTop;
+        let percent = Math.floor(scrollTop / scrollHeight * 100);
+        console.log("me disparo con "+percent);
+        if(percent >= 95) {
+          // Load next page
+          if (this.commentPagination.page < this.commentPagination.total_pages) {
+            this.isLoadingNext = true;
+            const newPage = ++this.commentPagination.page;
+            this.postService.getComments(this.postId, newPage)!.subscribe((res: any) => {
+              console.log(this.comments);
+              this.commentPagination = res.pagination;
+              this.commentDiv.nativeElement.scrollTop = scrollTop;
+              this.comments = this.comments.concat(res.comments);
+              this.isLoadingNext = false;
+            });
+          }
+        }
+        setTimeout(()=>{this.scrollDebounce = true}, 500);
+      }
+
+    }, 500);
   }
 
   checkIsLiked(idPost: string){

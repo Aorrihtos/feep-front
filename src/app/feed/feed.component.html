@@ -76,7 +76,7 @@
           </button>
         </div>
         <app-feed-loader *ngIf="isLoading"></app-feed-loader>
-        <div (scrollend)="loadNext()" *ngIf="!userService.blocks.get(id!) && !isLoading" class="posts">
+        <div (scrollend)="loadNext(postsDiv)" *ngIf="!userService.blocks.get(id!) && !isLoading" class="posts" #postsDiv>
           <div *ngFor="let post of activeArray" class="post">
             <div class="img-text" (click)="visit(post.user_id._id)">
               <img loading="lazy" src="{{activeArray === feed ? post.user_id.profile_pic : image}}" alt="profile pic">

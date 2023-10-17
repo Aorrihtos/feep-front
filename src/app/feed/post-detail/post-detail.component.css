@@ -487,7 +487,7 @@ img{
 .comments .comment:last-child:after{
   content: "";
   width: 100vw;
-  height: 78px;
+  height: 80px;
 }
 
 @keyframes scaleIcon{
@@ -509,4 +509,5 @@ img{
   .post-container .user-comment textarea{
     width: inherit;
   }
+
 }

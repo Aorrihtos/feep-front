@@ -255,17 +255,26 @@ export class FeedComponent implements OnDestroy{
     }
   }
 
-  loadNext(){
-    if(this.activeArray === this.posts && this.paginationPosts.page < this.paginationPosts.total_pages){
-      this.userService.posts(this.id, ++this.paginationPosts.page)?.subscribe(
-        (res: any) => {
-          this.posts = this.posts.concat(res.posts);
-          this.activeArray = this.posts;
-          this.paginationPosts = res.pagination;
-        },
-        err => console.log(err)
-      );
-    } else if (this.activeArray === this.feed && this.paginationFeed.page < this.paginationFeed.total_pages){
+  loadNext(postsDiv: any){
+
+    // Checking scroll percentage
+    let height = postsDiv.clientHeight;
+    let scrollHeight = postsDiv.scrollHeight - height;
+    let scrollTop = postsDiv.scrollTop;
+    let percent = Math.floor(scrollTop / scrollHeight * 100);
+
+    if(percent >= 60){
+      // Load next page
+      if(this.activeArray === this.posts && this.paginationPosts.page < this.paginationPosts.total_pages){
+        this.userService.posts(this.id, ++this.paginationPosts.page)?.subscribe(
+          (res: any) => {
+            this.posts = this.posts.concat(res.posts);
+            this.activeArray = this.posts;
+            this.paginationPosts = res.pagination;
+          },
+          err => console.log(err)
+        );
+      } else if (this.activeArray === this.feed && this.paginationFeed.page < this.paginationFeed.total_pages){
         this.userService.feed(++this.paginationFeed.page)?.subscribe(
           (res: any) => {
             this.feed = this.feed.concat(res.feed);
@@ -276,6 +285,7 @@ export class FeedComponent implements OnDestroy{
             console.log(err);
           }
         );
+      }
     }
   }
 
