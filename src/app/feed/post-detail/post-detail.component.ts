@@ -181,12 +181,13 @@ export class PostDetailComponent implements OnInit, OnDestroy{
     setTimeout(()=>{
       if(this.scrollDebounce){
         this.scrollDebounce = false;
+
         // Checking scroll percentage
         let height = this.commentDiv.nativeElement.clientHeight;
         let scrollHeight = this.commentDiv.nativeElement.scrollHeight - height;
         let scrollTop = this.commentDiv.nativeElement.scrollTop;
         let percent = Math.floor(scrollTop / scrollHeight * 100);
-        console.log("me disparo con "+percent);
+
         if(percent >= 95) {
           // Load next page
           if (this.commentPagination.page < this.commentPagination.total_pages) {
@@ -203,7 +204,6 @@ export class PostDetailComponent implements OnInit, OnDestroy{
         }
         setTimeout(()=>{this.scrollDebounce = true}, 500);
       }
-
     }, 500);
   }
 

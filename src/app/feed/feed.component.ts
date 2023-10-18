@@ -1,10 +1,11 @@
 import {
+  AfterContentInit, AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
+  OnDestroy, OnInit,
   Output,
   SimpleChanges,
   ViewChild
@@ -38,6 +39,9 @@ export class FeedComponent implements OnDestroy{
 
   @ViewChild(ProfileComponent) profileCard!: ProfileComponent;
 
+  @ViewChild('postsDiv')
+  postsDiv!: ElementRef<HTMLDivElement>;
+
   loggedId: string;
   image: string = '';
   posts: Array<any> = [];
@@ -59,26 +63,64 @@ export class FeedComponent implements OnDestroy{
               private router: Router) {
     this.loggedId = (JSON.parse(localStorage.getItem('user')!))._id;
     this.paramSubscriber = this.aRouter.queryParams.subscribe(res =>{
-      // Check if user id has changed to show skeleton
-      if(this.id != res['id'] || this.isLoading && !this.id){
-        this.isLoading = true;
-        this.id = res['id'];
-        this.initialize();
-      } else this.isLoading = false;
+
+      // Set FEED as selected if loading own profile
+      if(!this.id && this.isLoading) {this.activeArray = this.feed}
 
       // Check if viewing post
       if(res['post']){
         this.viewing_post = true;
       } else this.viewing_post = false;
 
-      // Set FEED as selected if loading own profile
-      if(!this.id && this.isLoading) {this.activeArray = this.feed}
+      // Check if user id has changed to show skeleton
+      if(this.id != res['id'] || this.isLoading && !this.id){
+        this.isLoading = true;
+        this.id = res['id'];
+        localStorage.setItem("scrollPost", "0");
+        localStorage.setItem("scrollFeed", "0");
+        this.initialize();
+      } else this.isLoading = false;
 
+      this.restoreScrollPosition();
     });
   }
 
   ngOnDestroy() {
     this.paramSubscriber.unsubscribe();
+  }
+
+  restoreScrollPosition(){
+    setTimeout(()=>{
+      if(!this.viewing_post){
+        // Set the last scroll position
+        const scrollPost = Number(localStorage.getItem("scrollPost") || 0),
+          scrollFeed = Number(localStorage.getItem("scrollFeed") || 0);
+
+        if(this.activeArray == this.posts){
+          this.postsDiv.nativeElement.scrollTop = scrollPost;
+        } else this.postsDiv.nativeElement.scrollTop = scrollFeed;
+      }
+    }, 10)
+  }
+
+  changeFeed(){
+    let currentPostScroll = String(this.postsDiv.nativeElement.scrollTop);
+    localStorage.setItem('scrollPost', currentPostScroll);
+    this.activeArray = this.feed;
+    // We set timeout to not bug the scrollTop when changing Div length
+    setTimeout(()=>{
+      this.postsDiv.nativeElement.scrollTop = Number(localStorage.getItem('scrollFeed'));
+    }, 10);
+  }
+
+  changePosts(){
+    let currentFeedScroll = String(this.postsDiv.nativeElement.scrollTop);
+    localStorage.setItem('scrollFeed', currentFeedScroll);
+    this.activeArray = this.posts;
+    // Set timeout to not bug the scrollTop when changing Div length
+    setTimeout(()=>{
+      this.postsDiv.nativeElement.scrollTop = Number(localStorage.getItem('scrollPost'));
+    }, 10);
   }
 
   post(){
@@ -177,6 +219,13 @@ export class FeedComponent implements OnDestroy{
       };
     }
 
+    // Save the current scroll position
+    if(this.activeArray == this.posts){
+      localStorage.setItem("scrollPost", String(this.postsDiv.nativeElement.scrollTop));
+    } else{
+      localStorage.setItem("scrollFeed", String(this.postsDiv.nativeElement.scrollTop));
+    }
+
     // changes the route without moving from the current view
     this.router.navigate([], {
       relativeTo: this.aRouter,
@@ -255,35 +304,46 @@ export class FeedComponent implements OnDestroy{
     }
   }
 
-  loadNext(postsDiv: any){
+  isLoadingNext: boolean = false;
+  scrollBounce: boolean = true;
+  loadNext(){
+    setTimeout(()=>{
+      if(!this.scrollBounce) return;
+      this.scrollBounce = false;
+      this.loadNextManagement();
+      setTimeout(()=>{this.scrollBounce = true}, 500);
+    }, 500);
+  }
 
+  loadNextManagement(){
     // Checking scroll percentage
-    let height = postsDiv.clientHeight;
-    let scrollHeight = postsDiv.scrollHeight - height;
-    let scrollTop = postsDiv.scrollTop;
+    let height = this.postsDiv.nativeElement.clientHeight;
+    let scrollHeight = this.postsDiv.nativeElement.scrollHeight - height;
+    let scrollTop = this.postsDiv.nativeElement.scrollTop;
     let percent = Math.floor(scrollTop / scrollHeight * 100);
-
-    if(percent >= 60){
+    if(percent >= 95){
       // Load next page
       if(this.activeArray === this.posts && this.paginationPosts.page < this.paginationPosts.total_pages){
+        this.isLoadingNext = true;
         this.userService.posts(this.id, ++this.paginationPosts.page)?.subscribe(
           (res: any) => {
             this.posts = this.posts.concat(res.posts);
             this.activeArray = this.posts;
             this.paginationPosts = res.pagination;
+            this.isLoadingNext = false;
           },
           err => console.log(err)
         );
       } else if (this.activeArray === this.feed && this.paginationFeed.page < this.paginationFeed.total_pages){
+        this.isLoadingNext = true;
         this.userService.feed(++this.paginationFeed.page)?.subscribe(
           (res: any) => {
             this.feed = this.feed.concat(res.feed);
             this.activeArray = this.feed;
             this.paginationFeed = res.pagination;
+            this.isLoadingNext = false;
           },
-          (err: any) => {
-            console.log(err);
-          }
+          (err: any) => console.log(err)
         );
       }
     }

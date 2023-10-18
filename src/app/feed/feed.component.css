@@ -178,13 +178,14 @@ button:active{
 .feed{
   display: flex;
   flex-direction: column;
-  margin-top: 9%;
+  margin-top: 25px
 }
 
 .content-container .content .feed-container .feed
 .my-post{
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .content-container .content .feed-container .feed .my-post
@@ -265,6 +266,13 @@ img{
   display: flex;
   flex-direction: column;
   overflow-wrap: break-word;
+}
+
+.content-container .content .feed-container .feed
+.posts > .post:last-child:after{
+  content: "";
+  width: 100%;
+  height: 350px;
 }
 
 .content-container .content .feed-container .feed .post
@@ -418,6 +426,38 @@ img{
   text-align: center;
 }
 
+.send-post-loader{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #2d2d2d;
+  opacity: 50%;
+}
+
+.loader {
+  width: 35px;
+  height: 35px;
+  border: 5px solid #FFF;
+  border-bottom-color: #ff0d00;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 #emptyImg{
   width: 95%;
   margin: 0 auto;
@@ -487,7 +527,6 @@ img{
   }
 
   .content-container .content .feed-container .feed {
-    margin-top: 5%;
     overflow: hidden;
   }
 
@@ -515,6 +554,13 @@ img{
 
   .mobile-skeleton{
     display: block;
+  }
+
+  .content-container .content .feed-container .feed
+  .posts > .post:last-child:after{
+    content: "";
+    width: 100%;
+    height: 100px;
   }
 
 }

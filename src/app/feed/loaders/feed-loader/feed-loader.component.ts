@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-feed-loader',
@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class FeedLoaderComponent {
 
+  @Input()
+  count: string = "15";
+
+  protected readonly parseInt = parseInt;
 }

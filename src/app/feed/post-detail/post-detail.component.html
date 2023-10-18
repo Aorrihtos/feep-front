@@ -4,6 +4,9 @@
     <div class="go-back">
       <img loading="lazy" src="../../assets/icons/feed/flecha.png" (click)="history.back()" alt="Arrow left">
     </div>
+    <div *ngIf="isLoading" id="loaderDiv">
+      <span class="loader"></span>
+    </div>
     <div *ngIf="!isLoading" (scroll)="loadNext()" class="post-comment-container" id="comment-container" #commentDiv>
       <div class="post-top">
         <div class="og-post">

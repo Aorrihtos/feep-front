@@ -1,5 +1,5 @@
 <div>
-  <div *ngFor="let i of [].constructor(15)" class="loader">
+  <div *ngFor="let i of [].constructor(parseInt(count))" class="loader">
     <div class="loader-title">
       <ngx-skeleton-loader
         appearance="circle" [theme]="{

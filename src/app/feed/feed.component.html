@@ -68,15 +68,18 @@
               <button (click)="post()" class="white-button" #postBtn>Post</button>
             </div>
           </div>
+          <div *ngIf="postBtn.disabled" class="send-post-loader">
+            <span class="loader"></span>
+          </div>
         </div>
         <div *ngIf="!id" class="buttons">
-          <button (click)="activeArray = feed" [ngClass]="activeArray === feed ? 'active' : ''">Feed</button>
-          <button (click)="activeArray = posts" [ngClass]="activeArray === posts ? 'active': ''">My Posts
+          <button (click)="changeFeed();" [disabled]="isLoading || isLoadingNext" [ngClass]="activeArray === feed ? 'active' : ''" #feedDivBtn>Feed</button>
+          <button (click)="changePosts()" [disabled]="isLoading || isLoadingNext" [ngClass]="activeArray === posts ? 'active': ''" #postsDivBtn>My Posts
             <div *ngIf="paginationPosts" class="counter">[ {{paginationPosts.total_items}} ]</div>
           </button>
         </div>
         <app-feed-loader *ngIf="isLoading"></app-feed-loader>
-        <div (scrollend)="loadNext(postsDiv)" *ngIf="!userService.blocks.get(id!) && !isLoading" class="posts" #postsDiv>
+        <div (scroll)="loadNext()" [class.show]="!userService.blocks.get(id!) && !isLoading" class="posts" #postsDiv>
           <div *ngFor="let post of activeArray" class="post">
             <div class="img-text" (click)="visit(post.user_id._id)">
               <img loading="lazy" src="{{activeArray === feed ? post.user_id.profile_pic : image}}" alt="profile pic">
@@ -132,7 +135,8 @@
             </div>
             <hr>
           </div>
-          <div class="emptyContainer" style="margin-bottom: 10rem">
+          <app-feed-loader *ngIf="isLoadingNext" count="2"></app-feed-loader>
+          <div *ngIf="activeArray.length === 0" class="emptyContainer" style="margin-bottom: 10rem">
             <h3>Oops... Nothing to show here yet!</h3>
             <img src="./assets/empty-placeholder.png" id="emptyImg" alt="empty">
           </div>
