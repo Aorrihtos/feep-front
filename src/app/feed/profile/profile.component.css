@@ -34,6 +34,12 @@ h1,h2, button, textarea{
   left: 217px;
 }
 
+.disabled{
+  pointer-events: none !important;
+  color: #93a2ad !important;
+  border-color: #93a2ad !important;
+}
+
 .profile-container
 .header{
   background-color: #EF443C;

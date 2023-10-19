@@ -56,6 +56,9 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   @Output('delete_post')
   delete_emitter: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output('blocked_user')
+  blocked_emitter: EventEmitter<string> = new EventEmitter<string>();
+
   @Output('comment_update')
   comment_emiter: EventEmitter<{idPost: string, value: number}> = new EventEmitter<{idPost: string, value: number}>();
 
@@ -94,6 +97,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
           this.commentPagination = res.pagination;
           this.isLoading=false;
           this.isCommentLoading = false;
+          console.log(res);
         }
       );
     } else {
@@ -172,6 +176,23 @@ export class PostDetailComponent implements OnInit, OnDestroy{
             }
           )
         }
+      }
+    })
+  }
+
+  block(userId: string){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You wont be able to see his posts and comments',
+      showDenyButton: true,
+      confirmButtonText: 'Block',
+      denyButtonText: `Cancel`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.block(userId)?.subscribe(()=>{
+          this.blocked_emitter.emit(userId);
+          history.back();
+        });
       }
     })
   }

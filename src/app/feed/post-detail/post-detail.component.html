@@ -29,13 +29,8 @@
               </button>
               <button
                 *ngIf="!userService.blocks.get(data.idUser)"
-                (click)="userService.block(data.idUser)">
+                (click)="block(data.idUser)">
                 <img src="../../assets/icons/feed/bloquear-usuario.png" alt="Block">Block
-              </button>
-              <button
-                *ngIf="userService.blocks.get(data.idUser)"
-                (click)="userService.pardon(data.idUser)">
-                <img src="../../assets/icons/feed/bloquear-usuario.png" alt="Block user">Unblock
               </button>
             </div>
             <div *ngIf="data.idUser === data.loggedId" class="buttons buttons-fb">
@@ -80,8 +75,12 @@
               <p>{{c.created_at | date: 'short'}}</p>
             </div>
             <div *ngIf="c.user_id._id !== data.loggedId" class="buttons buttons-fb">
-              <button><img src="../../assets/icons/feed/agregar-usuario.png" alt="Follow">Follow</button>
-              <button><img src="../../assets/icons/feed/bloquear-usuario.png" alt="Block">Block</button>
+              <button>
+                <img src="../../assets/icons/feed/agregar-usuario.png" alt="Follow">Follow
+              </button>
+              <button>
+                <img src="../../assets/icons/feed/bloquear-usuario.png" alt="Block">Block
+              </button>
             </div>
             <div *ngIf="c.user_id._id === data.loggedId" class="buttons buttons-fb">
               <button

@@ -94,14 +94,16 @@ export class UserService{
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
     return this.http.post(`${this.baseUrl}/block/add/${userId}`, null, {headers})
-      .subscribe((res: any) => {
-        this._blocks.set(userId, {
-          blocked_id: res.block.blocked_id,
-          points: res.block.blocked_id.points,
-          followers: res.block.blocked_id.followers
-        });
-        this._followings.delete(userId);
-      });
+      .pipe(
+        tap((res: any) => {
+          this._blocks.set(userId, {
+            blocked_id: res.block.blocked_id,
+            points: res.block.blocked_id.points,
+            followers: res.block.blocked_id.followers
+          });
+          this._followings.delete(userId);
+        })
+      );
   }
 
   pardon(userId: string){
@@ -109,9 +111,11 @@ export class UserService{
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
     return this.http.delete(`${this.baseUrl}/block/pardon/${userId}`, {headers})
-      .subscribe((res: any) =>{
-        this._blocks.delete(userId);
-      })
+      .pipe(
+        tap((res: any) => {
+          this._blocks.delete(userId);
+        })
+      );
   }
 
   uploadImg(file: File){

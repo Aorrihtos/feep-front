@@ -1,5 +1,9 @@
 <app-navbar></app-navbar>
 
+<div *ngIf="clientBlocked" class="client-blocked">
+  <img src="assets/client-blocked.webp" alt="client-blocked">
+</div>
+
 <div class="background-img-container">
 <!--  <div class="edit-icon-container">-->
 <!--    <img src="assets/icons/feed/editing.png">-->
@@ -7,9 +11,12 @@
   <img src="assets/redbgdefault.webp" alt="background">
 </div>
 
-<div class="content-container">
+<div *ngIf="!clientBlocked" class="content-container">
   <div class="content">
-    <app-profile (imageChange)="imageChangeEvent($event)"></app-profile>
+    <app-profile
+      (imageChange)="imageChangeEvent($event)"
+      (blockChange)="reloadPosts($event)">
+    </app-profile>
     <div *ngIf="!viewing_post" class="feed-container">
       <div class="header"></div>
       <div class="feed">
@@ -79,7 +86,7 @@
           </button>
         </div>
         <app-feed-loader *ngIf="isLoading"></app-feed-loader>
-        <div (scroll)="loadNext()" [class.show]="!userService.blocks.get(id!) && !isLoading" class="posts" #postsDiv>
+        <div (scroll)="loadNext()" [class.show]="!blockedByMe && !isLoading" class="posts" #postsDiv>
           <div *ngFor="let post of activeArray" class="post">
             <div class="img-text" (click)="visit(post.user_id._id)">
               <img loading="lazy" src="{{activeArray === feed ? post.user_id.profile_pic : image}}" alt="profile pic">
@@ -136,17 +143,15 @@
             <hr>
           </div>
           <app-feed-loader *ngIf="isLoadingNext" count="2"></app-feed-loader>
-          <div *ngIf="activeArray.length === 0" class="emptyContainer" style="margin-bottom: 10rem">
+          <div *ngIf="activeArray.length === 0 && !userService.blocks.get(id!)" class="emptyContainer" style="margin-bottom: 10rem">
             <h3>Oops... Nothing to show here yet!</h3>
             <img src="./assets/empty-placeholder.png" id="emptyImg" alt="empty">
           </div>
-        </div>
-        <div *ngIf="userService.blocks.get(id!)">
-          <img
-            src="./assets/blockedUser.webp"
-            alt="blocked-user.png"
-            style="width: 100%; height: 500px;"
-          >
+          <div *ngIf="userService.blocks.get(id!)" style="display: flex; width: 100%; justify-content: center">
+            <img
+              src="./assets/blockedUser.webp"
+              alt="blocked-user.png" id="blockedImg">
+          </div>
         </div>
       </div>
     </div>
@@ -156,7 +161,8 @@
       (liked_post)="like($event)"
       (unliked_post)="unlike($event)"
       (delete_post)="deletePostEvent($event)"
-      (comment_update)="commentEvent($event)">
+      (comment_update)="commentEvent($event)"
+      (blocked_user)="rmPostBlockedUser($event)">
     </app-post-detail>
     <app-rank></app-rank>
   </div>

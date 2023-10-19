@@ -2,8 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input, OnChanges,
-  OnInit,
+  OnChanges,
   Output, SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -16,7 +15,7 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit, OnChanges{
+export class ProfileComponent implements OnChanges{
 
   @ViewChild("descArea")
   descArea!: ElementRef<HTMLTextAreaElement>;
@@ -28,6 +27,7 @@ export class ProfileComponent implements OnInit, OnChanges{
   descBtn!: ElementRef<HTMLButtonElement>;
 
   @Output('imageChange') emitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output('blockChange') blockEmitter: EventEmitter<string> = new EventEmitter<string>();
 
   id: string | null = null;
 
@@ -51,14 +51,9 @@ export class ProfileComponent implements OnInit, OnChanges{
     });
   }
 
-  ngOnInit(): void {
-    // this.initialize();
-  }
-
   keyDownEvent(event: any){
     if(event.code == 'Enter') event.preventDefault();
   }
-
 
   initialize(){
     this.userService.detail(this.id)?.subscribe(
@@ -120,7 +115,9 @@ export class ProfileComponent implements OnInit, OnChanges{
       denyButtonText: `Cancel`,
     }).then((result) => {
       if (result.isConfirmed) {
-        this.userService.block(userId);
+        this.userService.block(userId)?.subscribe(()=>{
+          this.blockEmitter.emit("block");
+        });
       }
     })
   }
@@ -135,7 +132,9 @@ export class ProfileComponent implements OnInit, OnChanges{
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        this.userService.pardon(userId);
+        this.userService.pardon(userId)?.subscribe(()=>{
+          this.blockEmitter.emit("unblock")
+        });
       }
     })
   }

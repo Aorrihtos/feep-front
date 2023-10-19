@@ -17,7 +17,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RankComponent} from "./rank/rank.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {PostDetailComponent} from "./post-detail/post-detail.component";
-import {forkJoin, Subscriber, Subscription} from "rxjs";
+import {catchError, forkJoin, of, Subscriber, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-feed',
@@ -46,13 +46,15 @@ export class FeedComponent implements OnDestroy{
   image: string = '';
   posts: Array<any> = [];
   feed: Array<any> = [];
-  activeArray: Array<any> = [];
+  activeArray: Array<any> = this.feed;
   id: string | null = null;
   viewing_post: boolean = false;
   paginationPosts: any;
   paginationFeed: any;
   postImage: File | null = null;
   isLoading: boolean = true;
+  clientBlocked: boolean = false;
+  blockedByMe: boolean = false;
 
   data: any;
   paramSubscriber!: Subscription;
@@ -63,6 +65,10 @@ export class FeedComponent implements OnDestroy{
               private router: Router) {
     this.loggedId = (JSON.parse(localStorage.getItem('user')!))._id;
     this.paramSubscriber = this.aRouter.queryParams.subscribe(res =>{
+
+      if(res['id']){
+        this.blockedByMe = this.userService.blocks.get(res['id']);
+      }
 
       // Set FEED as selected if loading own profile
       if(!this.id && this.isLoading) {this.activeArray = this.feed}
@@ -75,13 +81,15 @@ export class FeedComponent implements OnDestroy{
       // Check if user id has changed to show skeleton
       if(this.id != res['id'] || this.isLoading && !this.id){
         this.isLoading = true;
+        this.clientBlocked = false;
         this.id = res['id'];
         localStorage.setItem("scrollPost", "0");
         localStorage.setItem("scrollFeed", "0");
         this.initialize();
       } else this.isLoading = false;
 
-      this.restoreScrollPosition();
+      if(!this.blockedByMe)
+        this.restoreScrollPosition();
     });
   }
 
@@ -177,11 +185,36 @@ export class FeedComponent implements OnDestroy{
   }
 
   block(userId: string){
-    this.userService.block(userId);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You wont be able to see his posts and comments',
+      showDenyButton: true,
+      confirmButtonText: 'Block',
+      denyButtonText: `Cancel`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.block(userId)?.subscribe(()=>{
+          this.rmPostBlockedUser(userId);
+        });
+      }
+    })
+  }
+
+  rmPostBlockedUser(userId: string){
     if(this.activeArray === this.feed){
-      this.activeArray = this.activeArray.filter(i => i.user_id._id !== userId);
+      this.isLoading = true;
+      this.userService.feed()?.subscribe((res: any) => {
+        this.feed = res.feed;
+        this.paginationFeed = res.pagination;
+        this.activeArray = this.feed;
+        this.isLoading = false;
+      })
+    } else {
+      this.posts = this.posts.filter(i => i.user_id._id !== userId);
+      this.activeArray = this.posts;
     }
   }
+
   createPost(data: any){
     if(this.postImage){
       data.attached_file = window.URL.createObjectURL(this.postImage);
@@ -359,13 +392,27 @@ export class FeedComponent implements OnDestroy{
     return this.postService.liked_posts.indexOf(idPost) >= 0;
   }
 
+  reloadPosts(event: string){
+    if(event==="block"){
+      this.blockedByMe = true;
+      this.activeArray = [];
+    } else {
+      this.isLoading = true;
+      this.userService.posts(this.id)!.subscribe((res: any) =>{
+        this.paginationPosts = res.pagination;
+        this.posts = res.posts;
+        this.activeArray = this.posts;
+        this.isLoading = false;
+      });
+    }
+  }
+
   initialize(){
     if(this.viewing_post) return;
-    console.log("entro al initialize este de la vaina")
 
     let promises = [
       this.userService.getProfilePic(this.id)!,
-      this.userService.posts(this.id)!
+      this.userService.posts(this.id)!.pipe(catchError(e => of(e)))
     ];
 
     if(!this.id){
@@ -374,6 +421,15 @@ export class FeedComponent implements OnDestroy{
 
     forkJoin(promises).subscribe(([profilePic, postsData, feedData = null]: Array<any>) => {
       this.image = profilePic;
+
+      if(postsData.status === 403){
+        this.activeArray = [];
+        if(postsData.error.message == "You have blocked this user")
+          this.blockedByMe = true;
+        else this.clientBlocked = true;
+        this.isLoading = false;
+        return;
+      }
       this.paginationPosts = postsData.pagination!;
       this.posts = postsData.posts;
 

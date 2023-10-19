@@ -1,7 +1,11 @@
 <div class="profile-container">
   <div class="header">
     <div *ngIf="id && !isLoading" class="fb-buttons-mobile">
-      <button *ngIf="!userService.followings.get(id)" (click)="follow(id)" class="white-button">Follow</button>
+      <button *ngIf="!userService.followings.get(id)"
+              (click)="follow(id)"
+              [ngClass]="userService.blocks.get(id) ? 'disabled':''"
+              class="white-button">Follow
+      </button>
       <button *ngIf="userService.followings.get(id)" (click)="unfollow(id)" class="white-button">Unfollow</button>
       <button *ngIf="!userService.blocks.get(id)" (click)="block(id)" class="white-button">Block</button>
       <button *ngIf="userService.blocks.get(id)" (click)="pardon(id)" class="white-button">Unblock</button>
@@ -30,7 +34,10 @@
         ></ngx-skeleton-loader>
       </div>
       <div *ngIf="id && !isLoading" class="fb-buttons">
-        <button *ngIf="!userService.followings.get(id)" (click)="follow(id)" class="white-button">Follow</button>
+        <button *ngIf="!userService.followings.get(id)"
+                (click)="follow(id)"
+                [ngClass]="userService.blocks.get(id) ? 'disabled':''"
+                class="white-button">Follow</button>
         <button *ngIf="userService.followings.get(id)" (click)="unfollow(id)" class="white-button">Unfollow</button>
         <button *ngIf="!userService.blocks.get(id)" (click)="block(id)" class="white-button">Block</button>
         <button *ngIf="userService.blocks.get(id)" (click)="pardon(id)" class="white-button">Unblock</button>
