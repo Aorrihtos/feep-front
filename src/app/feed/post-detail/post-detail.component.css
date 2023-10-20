@@ -484,8 +484,9 @@ img{
   margin-right: 28px;
 }
 
-.comments .comment:last-child:after{
+.comments:after{
   content: "";
+  display: block;
   width: 100%;
   height: 80px;
 }

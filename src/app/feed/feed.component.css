@@ -367,7 +367,6 @@ p:first-child{
   max-height: 800px;
   border-radius: 5px;
   object-fit: cover;
-
 }
 
 .content-container .content .feed-container .feed
@@ -506,6 +505,11 @@ img{
   min-width: 200px;
   max-height: 70%;
   margin-top: -10%;
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
 /* RESPONSIVE */
