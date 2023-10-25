@@ -18,6 +18,7 @@ import {RankComponent} from "./rank/rank.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {PostDetailComponent} from "./post-detail/post-detail.component";
 import {catchError, forkJoin, of, Subscriber, Subscription} from "rxjs";
+import {WebsocketsService} from "../services/websockets.service";
 
 @Component({
   selector: 'app-feed',
@@ -62,7 +63,8 @@ export class FeedComponent implements OnDestroy{
   constructor(public userService: UserService,
               private postService: PostService,
               private aRouter: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private socketService: WebsocketsService) {
     this.loggedId = (JSON.parse(localStorage.getItem('user')!))._id;
     this.paramSubscriber = this.aRouter.queryParams.subscribe(res =>{
 
@@ -132,6 +134,7 @@ export class FeedComponent implements OnDestroy{
   }
 
   post(){
+
     this.postBtn.nativeElement.disabled = true;
     const content = this.postArea.nativeElement.value;
 
@@ -276,9 +279,9 @@ export class FeedComponent implements OnDestroy{
     this.rank.setImage(url);
   }
 
-  like(idPost: string){
-    this.postService.like(idPost)?.subscribe(res => {
-      this.updatePostLikes(idPost, 'add')
+  like(post: any){
+    this.postService.like(post)!.subscribe(res => {
+      this.updatePostLikes(post._id, 'add')
     });
   }
 

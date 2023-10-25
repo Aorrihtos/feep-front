@@ -4,9 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
-import {FontAwesomeModule, FaIconLibrary} from "@fortawesome/angular-fontawesome";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SocketIoModule } from 'ngx-socket-io';
+import { CookieService } from 'ngx-cookie-service';
+import { WebsocketsService } from "./services/websockets.service";
 
 @NgModule({
   declarations: [
@@ -25,7 +28,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [],
+  providers: [WebsocketsService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

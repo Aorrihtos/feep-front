@@ -100,7 +100,7 @@
                 <img
                   *ngIf="commentService._likedComments.indexOf(c._id) < 0"
                   src="../../assets/icons/feed/heart.png"
-                  (click)="commentService.like(c._id); c.likes = c.likes+1;"
+                  (click)="commentService.like(c); c.likes = c.likes+1;"
                   style="cursor: pointer;" alt="Like">
                 {{c.likes}}
               </p>

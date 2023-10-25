@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {map, tap} from "rxjs";
+import {WebsocketsService} from "./websockets.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class PostService {
   _likedPosts: Array<string> = [];
 
   baseUrl = environment.baseUrl;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private socketService: WebsocketsService) {
     const [token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
@@ -43,11 +44,27 @@ export class PostService {
     return this.http.get(`${this.baseUrl}/post/detail/${idPost}`, {headers});
   }
 
-  sendComment(content: string, idPost: string){
-    const [token] = this.getUserCredentials();
-    if(!token) return;
+  sendComment(content: string, post: any){
+    const [token, user] = this.getUserCredentials();
+    if(!token || !user) return;
+    const idPost = post.idPost;
+    console.log(post);
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.post(`${this.baseUrl}/comment/send/${idPost}`,{content: content} , {headers});
+    return this.http.post(`${this.baseUrl}/comment/send/${idPost}`,{content: content} , {headers}).pipe(
+      tap( ()=> this.socketService.emitEvent("sendComment",{
+        loggedId: user._id,
+        title: `${user.username} has sent you a comment!`,
+        subtitle: content,
+        loggedUsername: user.username,
+        userProfilePic: user.profile_pic,
+        destinyUser: post.idUser,
+        idPost,
+        contentPost: post.content,
+        attached_file: post.attached_file,
+        link: `http://localhost:4200/feed?post=${idPost}`,
+        created_at: Date.now()
+      }))
+    );
   }
 
   delComment(idComment: string){
@@ -57,13 +74,29 @@ export class PostService {
     return this.http.delete(`${this.baseUrl}/comment/remove/${idComment}` , {headers});
   }
 
-  like(idPost: string){
-    const [token] = this.getUserCredentials();
-    if(!token) return;
-    const snd = new Audio("../../assets/sfx/like.wav");
-    snd.play().then(r => snd.currentTime=0);
+  snd = new Audio("../../assets/sfx/like.wav");
+  like(post: any){
+    const [token, user] = this.getUserCredentials();
+    if(!token || !user) return;
+    const idPost = post._id;
+    this.snd.play().then(r => this.snd.currentTime=0);
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.post(`${this.baseUrl}/like/add/post/${idPost}`,null , {headers});
+    return this.http.post(`${this.baseUrl}/like/add/post/${idPost}`,null , {headers}).pipe(
+      tap(
+        ()=> this.socketService.emitEvent("likedPost", {
+          loggedId: user._id,
+          title: `${user.username} liked your post!`,
+          text: post.content,
+          loggedUsername: user.username,
+          userProfilePic: user.profile_pic,
+          destinyUser: post.user_id._id,
+          idPost,
+          attached_file: post.attached_file,
+          link: `http://localhost:4200/feed?post=${idPost}`,
+          created_at: Date.now()
+        })
+      )
+    );
   }
 
   unlike(idPost: string){

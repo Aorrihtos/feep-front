@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {map, tap} from "rxjs";
+import {WebsocketsService} from "./websockets.service";
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +13,7 @@ export class UserService{
   _followers: Map<string, any> = new Map();
   _blocks: Map<string, any> = new Map();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private socketService: WebsocketsService) {
     this.initalize()
   }
 
@@ -68,13 +69,21 @@ export class UserService{
   }
 
   follow(userId: string){
-    const[token] = this.getUserCredentials();
-    if(!token) return;
+    const[token, user] = this.getUserCredentials();
+    if(!token || !user) return;
     const headers = new HttpHeaders().set("Authorization", token);
     return this.http.post(`${this.baseUrl}/follow/add/${userId}`, null, {headers})
       .subscribe((res: any) => {
-        this._followings.set(userId, res.follow.followed_id)
-        console.log(this.followings)
+        this._followings.set(userId, res.follow.followed_id);
+        this.socketService.emitEvent("followed", {
+          loggedId: user._id,
+          title: `${user.username} started following you!`,
+          loggedUsername: user.username,
+          userProfilePic: user.profile_pic,
+          destinyUser: userId,
+          link: `http://localhost:4200/feed?id=${user._id}`,
+          created_at: Date.now()
+        })
       });
   }
 

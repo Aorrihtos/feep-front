@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {WebsocketsService} from "./websockets.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class CommentService {
   _likedComments: Array<string> = [];
 
   baseUrl: string = environment.baseUrl;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private socketService: WebsocketsService) {
     const [token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
@@ -23,14 +24,28 @@ export class CommentService {
     return this._likedComments;
   }
 
-  like(commentId: string){
-    const [token] = this.getUserCredentials();
-    if(!token) return;
+  like(comment: any){
+    const [token, user] = this.getUserCredentials();
+    if(!token || !user) return;
+    const commentId = comment._id;
     const snd = new Audio("../../assets/sfx/like.wav");
     snd.play().then(r => snd.currentTime=0);
     const headers = new HttpHeaders().set("Authorization", token);
     this.http.post(`${this.baseUrl}/like/add/comment/${commentId}`,null, {headers}).subscribe(
-      (res: any) => {this._likedComments.push(commentId)}
+      (res: any) => {
+        this._likedComments.push(commentId);
+        this.socketService.emitEvent("likedComment", {
+          loggedId: user._id,
+          title: `${user.username} liked your comment!`,
+          loggedUsername: user.username,
+          userProfilePic: user.profile_pic,
+          destinyUser: comment.user_id._id,
+          idComment: comment._id,
+          content: comment.content,
+          link: `http://localhost:4200/feed?post=${commentId.post_id}`,
+          created_at: Date.now()
+        });
+      }
     )
   }
 

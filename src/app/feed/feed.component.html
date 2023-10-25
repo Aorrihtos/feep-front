@@ -130,7 +130,7 @@
                 <p>
                   <img loading="lazy"
                     *ngIf="!checkIsLiked(post._id)"
-                    (click)="like(post._id); $event.stopPropagation();"
+                    (click)="like(post); $event.stopPropagation();"
                     src="assets/icons/feed/heart.png" alt="like icon">
                   <img loading="lazy" *ngIf="checkIsLiked(post._id)"
                        (click)="unlike(post._id); $event.stopPropagation()"

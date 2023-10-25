@@ -48,7 +48,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   paramSubscriber! : Subscription;
 
   @Output('liked_post')
-  likeEmitter: EventEmitter<string> = new EventEmitter<string>();
+  likeEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   @Output('unliked_post')
   unlikeEmitter: EventEmitter<string> = new EventEmitter<string>();
@@ -95,6 +95,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
             comments: res.pagination.total_items
           };
           this.commentPagination = res.pagination;
+          this.isLiked = this.checkIsLiked(this.postId);
           this.isLoading=false;
           this.isCommentLoading = false;
           console.log(res);
@@ -117,7 +118,15 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   likePost(){
     this.data.likes++;
     this.isLiked = true;
-    this.likeEmitter.emit(this.data.idPost);
+    this.likeEmitter.emit({
+      attached_file: this.data.attached_file,
+      content: this.data.content,
+      _id: this.data.idPost,
+      user_id: {
+        _id: this.data.idUser,
+        profile_pic: this.data.imageUserPost
+      }
+    });
   }
 
   unlikePost(){
@@ -140,7 +149,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
       return;
     }
 
-    this.postService.sendComment(content, this.data.idPost)?.subscribe(
+    this.postService.sendComment(content, this.data)?.subscribe(
       (res: any) => {
         this.commentArea.nativeElement.value = '';
         res.comment.user_id.profile_pic = this.imageLoggedUser;
