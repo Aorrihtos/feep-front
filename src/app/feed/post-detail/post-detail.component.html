@@ -84,7 +84,7 @@
             </div>
             <div *ngIf="c.user_id._id === data.loggedId" class="buttons buttons-fb">
               <button
-                (click)="delete('comment', c._id)">
+                (click)="delete('comment', c)">
                 <img src="assets/icons/feed/deletePost.png" alt="Delete comment">Delete Comment
               </button>
             </div>
@@ -95,12 +95,12 @@
               <p>
                 <img *ngIf="commentService._likedComments.indexOf(c._id) >= 0"
                   src="../../assets/icons/feed/redFilledHeart.png"
-                  (click)="commentService.unlike(c._id); c.likes = c.likes-1;"
+                  (click)="commentService.unlike(c); c.likes = c.likes-1;"
                   style="cursor: pointer" alt="Like">
                 <img
                   *ngIf="commentService._likedComments.indexOf(c._id) < 0"
                   src="../../assets/icons/feed/heart.png"
-                  (click)="commentService.like(c); c.likes = c.likes+1;"
+                  (click)="commentService.like(c, postId); c.likes = c.likes+1;"
                   style="cursor: pointer;" alt="Like">
                 {{c.likes}}
               </p>

@@ -10,6 +10,9 @@
       <button *ngIf="!userService.blocks.get(id)" (click)="block(id)" class="white-button">Block</button>
       <button *ngIf="userService.blocks.get(id)" (click)="pardon(id)" class="white-button">Unblock</button>
     </div>
+    <div *ngIf="!isLoading" class="notifications-btn">
+      <a routerLink="/notifications"><img src="assets/icons/feed/notifications.png" alt="notifications"></a>
+    </div>
   </div>
   <div *ngIf="isLoading" class="loader-card-mobile">
     <ngx-skeleton-loader

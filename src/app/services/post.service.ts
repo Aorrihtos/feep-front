@@ -51,27 +51,39 @@ export class PostService {
     console.log(post);
     const headers = new HttpHeaders().set("Authorization", token);
     return this.http.post(`${this.baseUrl}/comment/send/${idPost}`,{content: content} , {headers}).pipe(
-      tap( ()=> this.socketService.emitEvent("sendComment",{
-        loggedId: user._id,
-        title: `${user.username} has sent you a comment!`,
-        subtitle: content,
-        loggedUsername: user.username,
-        userProfilePic: user.profile_pic,
-        destinyUser: post.idUser,
-        idPost,
-        contentPost: post.content,
-        attached_file: post.attached_file,
-        link: `http://localhost:4200/feed?post=${idPost}`,
-        created_at: Date.now()
-      }))
+      tap( (res: any)=>{
+        this.socketService.emitEvent("sendComment",{
+          loggedId: user._id,
+          title: `${user.username} has sent you a comment!`,
+          text: content,
+          loggedUsername: user.username,
+          userProfilePic: user.profile_pic,
+          destinyUser: post.idUser,
+          idPost,
+          idComment: res.comment._id,
+          contentPost: post.content,
+          attached_file: post.attached_file,
+          link: `http://localhost:4200/feed?post=${idPost}`,
+          created_at: Date.now()
+        })
+      })
     );
   }
 
-  delComment(idComment: string){
-    const [token] = this.getUserCredentials();
-    if(!token) return;
+  delComment(comment: any){
+    const [token, user] = this.getUserCredentials();
+    if(!token || !user) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.delete(`${this.baseUrl}/comment/remove/${idComment}` , {headers});
+    return this.http.delete(`${this.baseUrl}/comment/remove/${comment._id}` , {headers})
+      .pipe(
+        tap(()=>{
+          this.socketService.emitEvent("deletedComment", {
+            loggedId: user._id,
+            idPost: comment.post_id,
+            idComment: comment._id
+          });
+        })
+      );
   }
 
   snd = new Audio("../../assets/sfx/like.wav");

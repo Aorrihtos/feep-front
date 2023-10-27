@@ -24,10 +24,11 @@ export class CommentService {
     return this._likedComments;
   }
 
-  like(comment: any){
+  like(comment: any, idPost: string){
     const [token, user] = this.getUserCredentials();
     if(!token || !user) return;
     const commentId = comment._id;
+    console.log(comment)
     const snd = new Audio("../../assets/sfx/like.wav");
     snd.play().then(r => snd.currentTime=0);
     const headers = new HttpHeaders().set("Authorization", token);
@@ -37,26 +38,31 @@ export class CommentService {
         this.socketService.emitEvent("likedComment", {
           loggedId: user._id,
           title: `${user.username} liked your comment!`,
+          text: comment.content,
           loggedUsername: user.username,
           userProfilePic: user.profile_pic,
           destinyUser: comment.user_id._id,
           idComment: comment._id,
-          content: comment.content,
-          link: `http://localhost:4200/feed?post=${commentId.post_id}`,
+          link: `http://localhost:4200/feed?post=${idPost}`,
           created_at: Date.now()
         });
       }
     )
   }
 
-  unlike(commentId: string){
-    const [token] = this.getUserCredentials();
-    if(!token) return;
+  unlike(comment: any){
+    const [token, user] = this.getUserCredentials();
+    if(!token || !user) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    this.http.delete(`${this.baseUrl}/like/unlike/comment/${commentId}`, {headers}).subscribe(
+    this.http.delete(`${this.baseUrl}/like/unlike/comment/${comment._id}`, {headers}).subscribe(
       (res: any) => {
-        const index = this._likedComments.indexOf(commentId);
+        const index = this._likedComments.indexOf(comment._id);
         this._likedComments.splice(index, 1);
+        this.socketService.emitEvent("unlikedComment", {
+          loggedId: user._id,
+          destinyUser: comment.user_id._id,
+          idComment: comment._id
+        });
       }
     )
   }

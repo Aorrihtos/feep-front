@@ -162,7 +162,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
     )
   }
 
-  delete(action: string, idComment: string | null = null){
+  delete(action: string, comment: any | null = null){
     Swal.fire({
       icon: "question",
       title: 'Are you sure?',
@@ -175,10 +175,10 @@ export class PostDetailComponent implements OnInit, OnDestroy{
         if(action === 'post'){
           this.delete_emitter.emit(this.data.idPost);
           history.back();
-        } else if (action === 'comment' && idComment !== null){
-          this.postService.delComment(idComment)?.subscribe(
+        } else if (action === 'comment' && comment._id !== null){
+          this.postService.delComment(comment)?.subscribe(
             (res: any) =>{
-              const index = this.comments.findIndex(c => c._id === idComment);
+              const index = this.comments.findIndex(c => c._id === comment._id);
               this.data.comments--;
               this.comments.splice(index, 1);
               this.comment_emiter.emit({idPost: this.data.idPost, value: this.data.comments});

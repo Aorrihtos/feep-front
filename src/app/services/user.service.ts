@@ -78,6 +78,7 @@ export class UserService{
         this.socketService.emitEvent("followed", {
           loggedId: user._id,
           title: `${user.username} started following you!`,
+          text: "Click to visit his/her profile!",
           loggedUsername: user.username,
           userProfilePic: user.profile_pic,
           destinyUser: userId,
@@ -88,12 +89,16 @@ export class UserService{
   }
 
   unfollow(userId: string){
-    const[token] = this.getUserCredentials();
-    if(!token) return;
+    const[token, user] = this.getUserCredentials();
+    if(!token || !user) return;
     const headers = new HttpHeaders().set("Authorization", token);
     return this.http.delete(`${this.baseUrl}/follow/unfollow/${userId}`, {headers}).subscribe(
       (res: any) => {
         this._followings.delete(userId);
+        this.socketService.emitEvent("unfollowed", {
+          loggedId: user._id,
+          destinyUser: userId
+        });
       }
     );
   }

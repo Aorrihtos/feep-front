@@ -38,6 +38,11 @@ const routes: Routes = [
     canMatch: [authGuard]
   },
   {
+    path: "notifications",
+    loadChildren: ()=> import('./notifications/notifications.module').then(m => m.NotificationsModule),
+    canMatch: [authGuard]
+  },
+  {
     path: "**",
     redirectTo: ""
   }

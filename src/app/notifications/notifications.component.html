@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div class="searcher">
+  <div class="header"></div>
+  <div class="container">
+    <div class="go-back">
+      <img src="assets/icons/feed/flecha.png" onclick="history.back()" alt="Arrow left">
+    </div>
+    <hr>
+    <div *ngIf="notifications" class="notifications" (scroll)="loadNext()" #notificationsDiv>
+      <div (click)="navigate(n.link)" *ngFor="let n of notifications" class="notification">
+        <div class="notification-img">
+          <img [src]="n.userProfilePic" alt="Profile pic">
+        </div>
+        <div class="notification-title">
+          <h3>{{n.title}}</h3>
+          <h5 style="opacity: 0.6">{{n.created_at | date:'short'}}</h5>
+        </div>
+        <div *ngIf="n.event !='followed'" class="notification-text">
+          {{n.text}}
+        </div>
+      </div>
+      <div style="width: 100%; height: 85px" class="white-space"></div>
+    </div>
+  </div>
+</div>
+
+<app-bottombar></app-bottombar>
+

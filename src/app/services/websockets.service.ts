@@ -39,18 +39,6 @@ export class WebsocketsService extends Socket{
 
     this.ioSocket.on('message', (res: any) => {
       console.log(res)
-      let options: any = {
-        imageUrl: res.userProfilePic,
-        title: res.title
-      }
-      let customCss: any = {
-        image: 'circle-popup',
-        popup: 'container-popup'
-      }
-      if(res.text != ""){
-        options.footer = res.text;
-        customCss.footer = 'text-popup'
-      }
       //if(res.loggedId == this.loggedId) return;
       const Toast = Swal.mixin({
         toast: true,
@@ -58,7 +46,11 @@ export class WebsocketsService extends Socket{
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
-        customClass: customCss,
+        customClass: {
+          image: 'circle-popup',
+          popup: 'container-popup',
+          footer: 'text-popup'
+        },
         didOpen: (toast) => {
           toast.addEventListener('mouseenter', Swal.stopTimer)
           toast.addEventListener('mouseleave', Swal.resumeTimer)
@@ -66,7 +58,11 @@ export class WebsocketsService extends Socket{
         }
       })
 
-      Toast.fire(options);
+      Toast.fire({
+        imageUrl: res.userProfilePic,
+        title: res.title,
+        footer: res.text
+      });
     });
   }
 
