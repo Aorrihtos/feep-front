@@ -49,9 +49,26 @@ h1,h2, button, textarea{
 }
 
 .notifications-btn{
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
+}
+
+.notifications-prw{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #EF443C;
+  left: 63px;
+  top: 23px;
+  font-size: smaller;
+  font-weight: bold;
+  font-family: Poppins, 'sans-serif';
 }
 
 .notifications-btn a > img{
@@ -213,6 +230,7 @@ button{
 .loader-pic-mobile{
   display: none;
 }
+
 
 /* RESPONSIVE */
 @media (max-width: 1336px){

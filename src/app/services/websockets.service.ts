@@ -3,6 +3,7 @@ import {Socket} from "ngx-socket-io";
 import {CookieService} from "ngx-cookie-service";
 import {environment} from "../../environments/environment";
 import Swal from "sweetalert2";
+import {Observable, of, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,14 @@ import Swal from "sweetalert2";
  * Extendemos la clase "Socket" a nuestra clase
  */
 export class WebsocketsService extends Socket{
+
+  notifications_pendent: number = 0;
+  public notifications_obs = new Subject<number>();
+
+  public resetNotifications(){
+    this.notifications_pendent = 0;
+    this.notifications_obs.next(this.notifications_pendent);
+  }
 
   /**
    * Declaramos un metodo de emitir el cual llamaremos "outEven"
@@ -37,8 +46,12 @@ export class WebsocketsService extends Socket{
       }
     });
 
+    this.ioSocket.on('counter', (res: any) => {
+      this.notifications_pendent = res;
+      this.notifications_obs.next(this.notifications_pendent);
+    });
     this.ioSocket.on('message', (res: any) => {
-      console.log(res)
+      this.notifications_obs.next(++this.notifications_pendent);
       //if(res.loggedId == this.loggedId) return;
       const Toast = Swal.mixin({
         toast: true,
@@ -54,7 +67,10 @@ export class WebsocketsService extends Socket{
         didOpen: (toast) => {
           toast.addEventListener('mouseenter', Swal.stopTimer)
           toast.addEventListener('mouseleave', Swal.resumeTimer)
-          toast.addEventListener('click', ()=> window.location.href = res.link)
+          toast.addEventListener('click', ()=> {
+            this.notifications_obs.next(--this.notifications_pendent);
+            window.location.href = res.link;
+          });
         }
       })
 

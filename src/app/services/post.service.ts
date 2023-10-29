@@ -112,10 +112,18 @@ export class PostService {
   }
 
   unlike(idPost: string){
-    const [token] = this.getUserCredentials();
-    if(!token) return;
+    const [token, user] = this.getUserCredentials();
+    if(!token || !user) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.delete(`${this.baseUrl}/like/unlike/post/${idPost}` , {headers});
+    return this.http.delete(`${this.baseUrl}/like/unlike/post/${idPost}` , {headers})
+      .pipe(
+        tap(()=>{
+          this.socketService.emitEvent("unlikedPost", {
+            loggedId: user._id,
+            idPost: idPost
+          })
+        })
+      );
   }
 
   delete(idPost: string){

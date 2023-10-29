@@ -2,20 +2,22 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnChanges,
+  OnChanges, OnDestroy,
   Output, SimpleChanges,
   ViewChild
 } from '@angular/core';
 import {UserService} from "../../services/user.service";
 import Swal from "sweetalert2";
 import {ActivatedRoute} from "@angular/router";
+import {WebsocketsService} from "../../services/websockets.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnChanges{
+export class ProfileComponent implements OnChanges, OnDestroy{
 
   @ViewChild("descArea")
   descArea!: ElementRef<HTMLTextAreaElement>;
@@ -38,16 +40,23 @@ export class ProfileComponent implements OnChanges{
   followers: number = 0;
   points: number = 0;
   image: string = '';
+  notifications: number = 0;
+  notification_subs: Subscription;
 
   isLoading: boolean = true;
 
-  constructor(public userService: UserService, private aRouter: ActivatedRoute) {
+  constructor(public userService: UserService,
+              private aRouter: ActivatedRoute,
+              public socketService: WebsocketsService) {
     this.aRouter.queryParams.subscribe(res =>{
       if(res['id'] != this.id){
         this.isLoading = true;
       }
       this.id = res['id'];
       this.initialize();
+    });
+    this.notification_subs = this.socketService.notifications_obs.subscribe(n => {
+      this.notifications = n;
     });
   }
 
@@ -159,6 +168,10 @@ export class ProfileComponent implements OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     // this.isLoading = true;
     // this.initialize();
+  }
+
+  ngOnDestroy() {
+    this.notification_subs.unsubscribe();
   }
 
 }

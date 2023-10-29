@@ -18,6 +18,14 @@ export class NotificationService {
     return this.http.get(`${this.baseUrl}/user/notifications`, {headers, params});
   }
 
+  markAsReaded(){
+    const [token] = this.getUserCredentials();
+    if(!token) return;
+    const headers = new HttpHeaders().set("Authorization", token);
+    return this.http.patch(`${this.baseUrl}/notifications/read`, null,{headers})
+      .subscribe();
+  }
+
   getUserCredentials(){
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user')!);

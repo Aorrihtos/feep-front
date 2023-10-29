@@ -1,5 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {NotificationService} from "../services/notification.service";
+import {WebsocketsService} from "../services/websockets.service";
 
 @Component({
   selector: 'app-notifications',
@@ -13,11 +14,14 @@ export class NotificationsComponent {
 
   notifications?: Array<any>;
   pagination?: any;
-  constructor(private notificationService: NotificationService) {
+  constructor(private notificationService: NotificationService,
+              private socketService: WebsocketsService) {
     notificationService.getNotifications()?.subscribe((res: any) => {
       this.notifications = res.notifications;
       this.pagination = res.pagination;
     });
+    notificationService.markAsReaded();
+    socketService.resetNotifications();
   }
 
   navigate(url: string){
