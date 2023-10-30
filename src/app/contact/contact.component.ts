@@ -41,7 +41,6 @@ export class ContactComponent implements OnInit{
     const data = this.contactForm.value;
     this.smtp.send(data)?.subscribe(
       (res: any) =>{
-        console.log(res);
         Swal.fire({
           title: "Everything OK!",
           text: res.message,

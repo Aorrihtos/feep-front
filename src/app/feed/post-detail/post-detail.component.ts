@@ -224,7 +224,6 @@ export class PostDetailComponent implements OnInit, OnDestroy{
             this.isLoadingNext = true;
             const newPage = ++this.commentPagination.page;
             this.postService.getComments(this.postId, newPage)!.subscribe((res: any) => {
-              console.log(this.comments);
               this.commentPagination = res.pagination;
               this.commentDiv.nativeElement.scrollTop = scrollTop;
               this.comments = this.comments.concat(res.comments);

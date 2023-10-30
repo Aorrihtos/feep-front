@@ -16,7 +16,6 @@ export class BlockedComponent {
       this.blocks.push(user);
     });
     this.blocks.forEach((user, index) => {
-      console.log(user);
       this.userService.getProfilePic(user.blocked_id._id)?.subscribe(
         url => this.blocks[index].image_url = url
       );

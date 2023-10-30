@@ -48,7 +48,6 @@ export class PostService {
     const [token, user] = this.getUserCredentials();
     if(!token || !user) return;
     const idPost = post.idPost;
-    console.log(post);
     const headers = new HttpHeaders().set("Authorization", token);
     return this.http.post(`${this.baseUrl}/comment/send/${idPost}`,{content: content} , {headers}).pipe(
       tap( (res: any)=>{

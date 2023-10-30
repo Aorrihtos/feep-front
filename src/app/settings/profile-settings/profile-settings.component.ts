@@ -62,7 +62,6 @@ export class ProfileSettingsComponent implements OnInit{
     }
     this.userService.update(value)?.subscribe(
       (res: any) => {
-        console.log(res);
         Swal.fire(
           'Everything OK!',
           'User updated successfully',

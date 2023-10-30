@@ -54,8 +54,7 @@ export class WebsocketsService extends Socket{
     });
     this.ioSocket.on('message', (res: any) => {
       this.notifications_obs.next(++this.notifications_pendent);
-      console.log(res);
-      //if(res.loggedId == this.loggedId) return;
+      if(res.loggedId == this.loggedId) return;
       const Toast = Swal.mixin({
         toast: true,
         position: 'top',

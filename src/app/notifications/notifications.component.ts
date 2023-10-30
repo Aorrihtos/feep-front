@@ -48,7 +48,7 @@ export class NotificationsComponent {
     let scrollHeight = this.notificationsDiv.nativeElement.scrollHeight - height;
     let scrollTop = this.notificationsDiv.nativeElement.scrollTop;
     let percent = Math.floor(scrollTop / scrollHeight * 100);
-    console.log(percent)
+
     if(percent >= 95){
       // Load next page
       if(this.pagination.page < this.pagination.total_pages) {
