@@ -1,0 +1,44 @@
+<div *ngFor="let i of [].constructor(counter)"
+  style="display: flex; justify-content: start; align-items: center; padding: 20px 0 20px 25px;
+  border-bottom: 1px solid #EF443C; gap: 15px">
+  <ngx-skeleton-loader
+    style="display: flex;"
+    appearance="circle"
+    [theme]="{
+    'min-width': '55px',
+    'min-height': '55px'
+  }"
+  ></ngx-skeleton-loader>
+  <div style="display: inline-flex; flex-direction: column; flex-basis: 40%">
+    <ngx-skeleton-loader
+      style="display: flex;"
+      appearance="line"
+      count="1"
+      [theme]="{
+      'width': '80%',
+      'height': '15x'
+    }"
+    ></ngx-skeleton-loader>
+    <ngx-skeleton-loader
+      style="display: flex;"
+      appearance="line"
+      count="1"
+      [theme]="{
+      'width': '50%',
+      'height': '15px',
+      'margin-bottom': '0px'
+    }"
+    ></ngx-skeleton-loader>
+  </div>
+  <ngx-skeleton-loader
+    style="display:flex; flex-basis: 40%"
+    appearance="line"
+    count="1"
+    [theme]="{
+        'height': '40px',
+        'border-radius': '20px',
+        'margin-right': '10px',
+        'margin-bottom': '0'
+      }"
+  ></ngx-skeleton-loader>
+</div>

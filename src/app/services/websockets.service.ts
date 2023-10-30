@@ -4,6 +4,7 @@ import {CookieService} from "ngx-cookie-service";
 import {environment} from "../../environments/environment";
 import Swal from "sweetalert2";
 import {Observable, of, Subject} from "rxjs";
+import {NotificationService} from "./notification.service";
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class WebsocketsService extends Socket{
   /**
    * En nuestro constructor injectamos el "CookieService" para luego hacer uso de sus metodos.
    */
-  constructor(private cookieService: CookieService) {
+  constructor(private notificationService: NotificationService) {
     /**
      * En nuestro "super" declaramos la configuración inicial de conexión la cual hemos declarado en nuestro
      * "environment.serverSocket",
@@ -47,11 +48,13 @@ export class WebsocketsService extends Socket{
     });
 
     this.ioSocket.on('counter', (res: any) => {
+      console.log(res);
       this.notifications_pendent = res;
       this.notifications_obs.next(this.notifications_pendent);
     });
     this.ioSocket.on('message', (res: any) => {
       this.notifications_obs.next(++this.notifications_pendent);
+      console.log(res);
       //if(res.loggedId == this.loggedId) return;
       const Toast = Swal.mixin({
         toast: true,
@@ -69,6 +72,7 @@ export class WebsocketsService extends Socket{
           toast.addEventListener('mouseleave', Swal.resumeTimer)
           toast.addEventListener('click', ()=> {
             this.notifications_obs.next(--this.notifications_pendent);
+            this.notificationService.markAsReaded(res._id);
             window.location.href = res.link;
           });
         }

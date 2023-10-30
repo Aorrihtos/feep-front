@@ -6,7 +6,10 @@
       <img src="assets/icons/feed/flecha.png" onclick="history.back()" alt="Arrow left">
     </div>
     <hr>
-    <div *ngIf="notifications" class="notifications" (scroll)="loadNext()" #notificationsDiv>
+    <div *ngIf="isLoading" style="overflow: scroll; height: 100vh">
+      <app-notifications-skeleton></app-notifications-skeleton>
+    </div>
+    <div *ngIf="!isLoading" class="notifications" (scroll)="loadNext()" #notificationsDiv>
       <div (click)="navigate(n.link)" *ngFor="let n of notifications" class="notification">
         <div class="notification-img">
           <img [src]="n.userProfilePic" alt="Profile pic">
@@ -19,6 +22,7 @@
           {{n.text}}
         </div>
       </div>
+      <app-notifications-skeleton *ngIf="isLoadingNext" [counter]="2"></app-notifications-skeleton>
       <div style="width: 100%; height: 85px" class="white-space"></div>
     </div>
   </div>

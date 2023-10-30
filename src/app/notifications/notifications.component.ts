@@ -14,11 +14,15 @@ export class NotificationsComponent {
 
   notifications?: Array<any>;
   pagination?: any;
+
+  isLoading: boolean  = true;
+  isLoadingNext: boolean = false;
   constructor(private notificationService: NotificationService,
               private socketService: WebsocketsService) {
     notificationService.getNotifications()?.subscribe((res: any) => {
       this.notifications = res.notifications;
       this.pagination = res.pagination;
+      this.isLoading = false;
     });
     notificationService.markAsReaded();
     socketService.resetNotifications();
@@ -48,12 +52,12 @@ export class NotificationsComponent {
     if(percent >= 95){
       // Load next page
       if(this.pagination.page < this.pagination.total_pages) {
-        //this.isLoadingNext = true;
+        this.isLoadingNext = true;
         this.notificationService.getNotifications(++this.pagination.page)?.subscribe(
           (res: any) => {
             this.notifications = this.notifications?.concat(res.notifications);
             this.pagination = res.pagination;
-            //this.isLoadingNext = false;
+            this.isLoadingNext = false;
           },
           err => console.log(err)
         );

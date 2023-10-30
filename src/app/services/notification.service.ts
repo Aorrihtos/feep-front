@@ -18,11 +18,12 @@ export class NotificationService {
     return this.http.get(`${this.baseUrl}/user/notifications`, {headers, params});
   }
 
-  markAsReaded(){
+  markAsReaded(id: string = ""){
+    console.log(id)
     const [token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
-    return this.http.patch(`${this.baseUrl}/notifications/read`, null,{headers})
+    return this.http.patch(`${this.baseUrl}/notifications/read/${id}`, null,{headers})
       .subscribe();
   }
 
