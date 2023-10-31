@@ -62,7 +62,7 @@ export class PostService {
           idComment: res.comment._id,
           contentPost: post.content,
           attached_file: post.attached_file,
-          link: `http://localhost:4200/feed?post=${idPost}`,
+          link: `https://feep-social.es/feed?post=${idPost}`,
           created_at: Date.now()
         })
       })
@@ -103,7 +103,7 @@ export class PostService {
           destinyUser: post.user_id._id,
           idPost,
           attached_file: post.attached_file,
-          link: `http://localhost:4200/feed?post=${idPost}`,
+          link: `https://feep-social.es/feed?post=${idPost}`,
           created_at: Date.now()
         })
       )

@@ -5,9 +5,10 @@
 .notifications-prw{
   position: absolute;
   top:5px;
-  right: 14px;
-  width: 13px;
-  height: 13px;
+  right: 16%;
+  width: 15px;
+  height: 15px;
+  padding: 1px;
   background-color: #EF443C;
   color: white;
   display: flex;

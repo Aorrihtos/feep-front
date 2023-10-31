@@ -82,7 +82,7 @@ export class UserService{
           loggedUsername: user.username,
           userProfilePic: user.profile_pic,
           destinyUser: userId,
-          link: `http://localhost:4200/feed?id=${user._id}`,
+          link: `https://feep-social.es/feed?id=${user._id}`,
           created_at: Date.now()
         })
       });

@@ -43,7 +43,7 @@ export class CommentService {
           userProfilePic: user.profile_pic,
           destinyUser: comment.user_id._id,
           idComment: comment._id,
-          link: `http://localhost:4200/feed?post=${idPost}`,
+          link: `https://feep-social.es/feed?post=${idPost}`,
           created_at: Date.now()
         });
       }

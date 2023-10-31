@@ -11,7 +11,7 @@
       <button *ngIf="userService.blocks.get(id)" (click)="pardon(id)" class="white-button">Unblock</button>
     </div>
     <div *ngIf="!isLoading" class="notifications-btn">
-      <div *ngIf="notifications > 0" class="notifications-prw">{{notifications}}</div>
+      <div *ngIf="notifications > 0" class="notifications-prw">{{notifications <= 9 ? notifications : '+9'}}</div>
       <a routerLink="/notifications"><img src="assets/icons/feed/notifications.png" alt="notifications"></a>
     </div>
   </div>
