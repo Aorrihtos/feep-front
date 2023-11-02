@@ -54,11 +54,26 @@ export class WebsocketsService extends Socket{
     });
 
     // Asks to allow push notifications
-    this.ioSocket.on('allow', (res:any) =>{
+    this.ioSocket.on('allow', (subs: Array<any>) =>{
+      console.log(subs);
       swPush.requestSubscription({
         serverPublicKey: this.VAPID_PUBLIC_KEY
       })
-        .then(sub => this.newsletterService.addSubscription(sub))
+        .then(sub => {
+          const newSub = {
+            endpoint: sub.endpoint,
+            expirationTime: sub.expirationTime,
+            keys: {
+              p256dh: sub.toJSON().keys!["p256dh"],
+              auth: sub.toJSON().keys!["auth"]
+            }
+          }
+          // Check if sub is already stored
+          const index = subs.findIndex(s => s.endpoint == newSub.endpoint && s.expirationTime == newSub.expirationTime && s.keys.auth == newSub.keys.auth);
+          if(index < 0){
+            this.newsletterService.addSubscription(sub);
+          }
+        })
         .catch(err => console.log("Notifications not allowed"))
     });
 

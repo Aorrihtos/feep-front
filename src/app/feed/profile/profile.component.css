@@ -110,8 +110,8 @@ img:first-child{
 #edit{
   width: 38px;
   position: absolute;
-  top: 46px;
-  left: 46px;
+  top: 35%;
+  left: 36%;
   visibility: hidden;
 }
 
@@ -306,6 +306,12 @@ button{
     min-height: 285px;
   }
 
+  .profile-container .profile-pic-container .img-container
+  #edit{
+    top: 34%;
+    left: 42%;
+  }
+
   .profile-container .profile-container-content .left{
     justify-content: center;
     align-items: center;
@@ -418,6 +424,10 @@ button{
     margin: 0 auto;
   }
 
+  .profile-container .profile-pic-container .img-container
+  #edit{
+    left: 33%;
+  }
 
   .profile-container .info-container .info img {
     width: 16px;
