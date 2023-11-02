@@ -5,6 +5,8 @@ import {environment} from "../../environments/environment";
 import Swal from "sweetalert2";
 import {Observable, of, Subject} from "rxjs";
 import {NotificationService} from "./notification.service";
+import {SwPush} from "@angular/service-worker";
+import {NewsletterService} from "./newsletter.service";
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +31,14 @@ export class WebsocketsService extends Socket{
 
   loggedId: string = JSON.parse(localStorage.getItem('user')!)._id;
 
+  readonly VAPID_PUBLIC_KEY = "BILqlwCR-fWjGbN4WiCclOhsziMEtQdTg6nWThvetzIVcdsiP83dfrfQUPTT4X3OcHCsUOj66Ze8PLzEZ3j0B4k";
+
   /**
    * En nuestro constructor injectamos el "CookieService" para luego hacer uso de sus metodos.
    */
-  constructor(private notificationService: NotificationService) {
+  constructor(private notificationService: NotificationService,
+              private swPush: SwPush,
+              private newsletterService: NewsletterService) {
     /**
      * En nuestro "super" declaramos la configuración inicial de conexión la cual hemos declarado en nuestro
      * "environment.serverSocket",
@@ -47,11 +53,23 @@ export class WebsocketsService extends Socket{
       }
     });
 
+    // Asks to allow push notifications
+    this.ioSocket.on('allow', (res:any) =>{
+      swPush.requestSubscription({
+        serverPublicKey: this.VAPID_PUBLIC_KEY
+      })
+        .then(sub => this.newsletterService.addSubscription(sub))
+        .catch(err => console.log("Notifications not allowed"))
+    });
+
+    // Get number of pendent notifications
     this.ioSocket.on('counter', (res: any) => {
       console.log(res);
       this.notifications_pendent = res;
       this.notifications_obs.next(this.notifications_pendent);
     });
+
+    // Displays notification alert in real-time
     this.ioSocket.on('message', (res: any) => {
       if(res.loggedId == this.loggedId) return;
       this.notifications_obs.next(++this.notifications_pendent);
