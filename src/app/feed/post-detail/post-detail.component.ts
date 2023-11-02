@@ -35,7 +35,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   @ViewChild('commentDiv')
   commentDiv!: ElementRef<HTMLDivElement>;
 
-  imageLoggedUser!: string
+  imageLoggedUser!: string;
 
   comments!: Array<any>;
   commentPagination: any;
@@ -44,6 +44,9 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   isCommentLoading: boolean = true;
   isLiked?: boolean;
   isLoadingNext: boolean = false;
+
+  // Indicates if the user navigate to the post through the feed or not
+  isFromFeed: boolean = true;
 
   paramSubscriber! : Subscription;
 
@@ -79,12 +82,13 @@ export class PostDetailComponent implements OnInit, OnDestroy{
     If it wasn't, call the API for the details.*/
     if(!this.data){
       this.isLoading = true;
+      this.isFromFeed = false;
       this.postService.detail(this.postId)?.subscribe(
         (res: any) => {
           this.comments = res.comments;
           this.data = {
             idPost: this.postId,
-            loggedId: "",
+            loggedId: JSON.parse(localStorage.getItem('user')!)._id,
             idUser: res.post.user_id._id,
             content: res.post.content,
             attached_file: res.post.attached_file,
@@ -118,21 +122,25 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   likePost(){
     this.data.likes++;
     this.isLiked = true;
-    this.likeEmitter.emit({
-      attached_file: this.data.attached_file,
-      content: this.data.content,
-      _id: this.data.idPost,
-      user_id: {
-        _id: this.data.idUser,
-        profile_pic: this.data.imageUserPost
-      }
-    });
+    if(this.isFromFeed){
+      this.likeEmitter.emit({
+        attached_file: this.data.attached_file,
+        content: this.data.content,
+        _id: this.data.idPost,
+        user_id: {
+          _id: this.data.idUser,
+          profile_pic: this.data.imageUserPost
+        }
+      });
+    }
   }
 
   unlikePost(){
     this.data.likes--;
     this.isLiked = false;
-    this.unlikeEmitter.emit(this.data.idPost);
+    if(this.isFromFeed){
+      this.unlikeEmitter.emit(this.data.idPost);
+    }
   }
 
   postComment(){
@@ -157,7 +165,9 @@ export class PostDetailComponent implements OnInit, OnDestroy{
         this.data.comments++;
         this.comments.unshift(res.comment);
         this.postBtn.nativeElement.disabled=false;
-        this.comment_emiter.emit({idPost: this.data.idPost, value: this.data.comments});
+        if(this.isFromFeed){
+          this.comment_emiter.emit({idPost: this.data.idPost, value: this.data.comments});
+        }
       }
     )
   }
@@ -181,7 +191,9 @@ export class PostDetailComponent implements OnInit, OnDestroy{
               const index = this.comments.findIndex(c => c._id === comment._id);
               this.data.comments--;
               this.comments.splice(index, 1);
-              this.comment_emiter.emit({idPost: this.data.idPost, value: this.data.comments});
+              if(this.isFromFeed){
+                this.comment_emiter.emit({idPost: this.data.idPost, value: this.data.comments});
+              }
             }
           )
         }
