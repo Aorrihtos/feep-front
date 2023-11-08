@@ -119,14 +119,10 @@ export class AuthComponent {
       res => {
         Swal.fire({
           icon: "success",
-          title: 'Everything OK!',
-          html: 'You will be redirected to your page in a moment',
-          timer: 2000,
-          timerProgressBar: true,
-        }).then((result) => {
-          this.signUpBtn.nativeElement.disabled = false;
-          this.router.navigateByUrl("/feed")
-        })
+          title: 'Email validation required',
+          html: 'Please, check your email inbox to validate your account!',
+        });
+        this.signUpBtn.nativeElement.disabled = false;
       },
       err =>{
         console.log(err)

@@ -28,11 +28,14 @@ export class AuthService {
       .pipe(
         tap((res: any) => {
           if(res.status && res.status === "success"){
-            console.log("patata")
             localStorage.setItem("user", JSON.stringify(res.user));
             localStorage.setItem("token", JSON.stringify(res.token));
           }
         })
       );
+  }
+
+  confirm(username: string, token: string){
+    return this.http.patch(`${this.baseUrl}/user/confirmation/${token}`, {username});
   }
 }

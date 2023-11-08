@@ -16,6 +16,7 @@ export class BottombarComponent implements OnDestroy{
   notifications: number = 0;
   subscription: Subscription;
   constructor(private router: Router, private socketService: WebsocketsService) {
+
     this.subscription = this.socketService.notifications_obs.subscribe(notifications => {
       this.notifications = notifications;
     })

@@ -28,7 +28,7 @@ export class CommentService {
     const [token, user] = this.getUserCredentials();
     if(!token || !user) return;
     const commentId = comment._id;
-    console.log(comment)
+
     const snd = new Audio("../../assets/sfx/like.wav");
     snd.play().then(r => snd.currentTime=0);
     const headers = new HttpHeaders().set("Authorization", token);

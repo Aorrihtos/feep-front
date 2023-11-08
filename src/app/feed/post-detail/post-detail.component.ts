@@ -102,7 +102,6 @@ export class PostDetailComponent implements OnInit, OnDestroy{
           this.isLiked = this.checkIsLiked(this.postId);
           this.isLoading=false;
           this.isCommentLoading = false;
-          console.log(res);
         }
       );
     } else {
@@ -261,4 +260,5 @@ export class PostDetailComponent implements OnInit, OnDestroy{
 
   protected readonly window = window;
   protected readonly history = history;
+  protected readonly console = console;
 }

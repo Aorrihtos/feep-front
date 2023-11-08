@@ -3,7 +3,7 @@ import {Socket} from "ngx-socket-io";
 import {CookieService} from "ngx-cookie-service";
 import {environment} from "../../environments/environment";
 import Swal from "sweetalert2";
-import {Observable, of, Subject} from "rxjs";
+import {BehaviorSubject, Observable, of, Subject} from "rxjs";
 import {NotificationService} from "./notification.service";
 import {SwPush} from "@angular/service-worker";
 import {NewsletterService} from "./newsletter.service";
@@ -17,7 +17,7 @@ import {NewsletterService} from "./newsletter.service";
 export class WebsocketsService extends Socket{
 
   notifications_pendent: number = 0;
-  public notifications_obs = new Subject<number>();
+  public notifications_obs = new BehaviorSubject<number>(this.notifications_pendent);
 
   public resetNotifications(){
     this.notifications_pendent = 0;
@@ -53,9 +53,9 @@ export class WebsocketsService extends Socket{
       }
     });
 
+
     // Asks to allow push notifications
     this.ioSocket.on('allow', (subs: Array<any>) =>{
-      console.log(subs);
       swPush.requestSubscription({
         serverPublicKey: this.VAPID_PUBLIC_KEY
       })
@@ -79,7 +79,6 @@ export class WebsocketsService extends Socket{
 
     // Get number of pendent notifications
     this.ioSocket.on('counter', (res: any) => {
-      console.log(res);
       this.notifications_pendent = res;
       this.notifications_obs.next(this.notifications_pendent);
     });

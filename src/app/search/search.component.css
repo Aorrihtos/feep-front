@@ -75,6 +75,7 @@ button:hover{
   display: flex;
   padding: 10px;
   position: relative;
+  min-height: 40px;
 }
 
 .searcher .container .go-back

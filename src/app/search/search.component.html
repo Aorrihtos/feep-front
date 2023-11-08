@@ -9,6 +9,7 @@
     </div>
     <hr>
     <app-search-loader *ngIf="isLoading"></app-search-loader>
+    <img style="margin-top: 50ng serpx" *ngIf="idle" loading="eager" src="./assets/searcher/searcher-avatar.webp" alt="search-avatar">
     <div *ngIf="!isLoading" (scrollend)="loadNext()" class="users">
       <div (click)="visit(user._id)" *ngFor = "let user of results" class="profile">
         <div class="profile-img">

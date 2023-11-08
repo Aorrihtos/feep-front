@@ -14,6 +14,7 @@ export class SearchComponent {
   data!: string;
   pagination: any;
   isLoading: boolean = false;
+  idle: boolean = true;
 
   constructor(public userService: UserService, private aRouter: ActivatedRoute, private router: Router) {
     this.aRouter.queryParams.subscribe(res => {
@@ -70,10 +71,8 @@ export class SearchComponent {
   }
 
   loadNext(){
-    console.log(this.pagination)
     if(this.pagination.page < this.pagination.total_pages){
       this.userService.search(this.data, ++this.pagination.page)?.subscribe((res: any) => {
-        console.log(res);
         this.results = this.results.concat(res.users);
         this.pagination = res.pagination;
       })
@@ -91,6 +90,7 @@ export class SearchComponent {
   }
 
   initData(data: string){
+    this.idle = false;
     this.userService.search(data)?.subscribe((res: any) => {
       this.results = res.users;
       this.pagination = res.pagination;

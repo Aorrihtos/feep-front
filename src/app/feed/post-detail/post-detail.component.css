@@ -183,6 +183,26 @@ img:hover{
   display: none;
 }
 
+.post-options-mobile{
+  width: 100%;
+  position: relative;
+}
+
+.post-options-mobile > svg{
+  float: right;
+  opacity: 0.6;
+}
+
+.post-options-mobile-container{
+  display: none;
+  width: 154px;
+  height: 100px;
+  background-color: #EF443C;
+  position: absolute;
+  right: 4px;
+  top: 23px;
+}
+
 .post-container .og-post .img-text
 .buttons button{
   background: none;
@@ -208,8 +228,8 @@ img:hover{
 
 .post-container .og-post .img-text
 > img{
-  width: 55px;
-  height: 55px;
+  min-width: 55px;
+  max-height: 55px;
   object-fit: cover;
   border-radius: 50%;
   border: 4px #EF443C solid;
@@ -536,6 +556,10 @@ img{
   }
   .post-container .user-comment textarea{
     width: inherit;
+  }
+
+  .post-container .og-post .img-text:hover .buttons-fb{
+    display: none;
   }
 
 }

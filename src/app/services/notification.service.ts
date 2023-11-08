@@ -19,7 +19,6 @@ export class NotificationService {
   }
 
   markAsReaded(id: string = ""){
-    console.log(id)
     const [token] = this.getUserCredentials();
     if(!token) return;
     const headers = new HttpHeaders().set("Authorization", token);
