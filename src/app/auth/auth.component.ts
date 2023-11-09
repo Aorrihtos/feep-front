@@ -117,20 +117,31 @@ export class AuthComponent {
     }
     this.authService.register(this.signUpForm.value).subscribe(
       res => {
+        let username = this.signUpForm.controls['username'].value;
+        let email = this.signUpForm.controls['email'].value;
         Swal.fire({
           icon: "success",
           title: 'Email validation required',
           html: 'Please, check your email inbox to validate your account!',
-        });
-        this.signUpBtn.nativeElement.disabled = false;
-      },
-      err =>{
-        console.log(err)
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: err.error.message
-        });
+          showConfirmButton: true,
+          confirmButtonText: "Re-send confirmation email",
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          allowEnterKey: false,
+          preConfirm: () => {
+            this.authService.resendConfirmation(username, email);
+            return false;
+          }
+          });
+          this.signUpBtn.nativeElement.disabled = false;
+        },
+        err =>{
+          console.log(err)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.error.message
+          });
         this.signUpBtn.nativeElement.disabled = false;
       }
     )

@@ -38,4 +38,10 @@ export class AuthService {
   confirm(username: string, token: string){
     return this.http.patch(`${this.baseUrl}/user/confirmation/${token}`, {username});
   }
+
+  resendConfirmation(username: string, email: string){
+    console.log(username + " " + email);
+    return this.http.post(`${this.baseUrl}/user/confirmation/resend`, {username, email}).subscribe();
+  }
+
 }
