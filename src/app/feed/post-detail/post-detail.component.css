@@ -167,6 +167,7 @@ img:hover{
 .post-container .og-post
 .img-text:hover .buttons-fb{
   display: flex;
+  gap: 15px;
 }
 
 .post-container .og-post
@@ -558,8 +559,8 @@ img{
     width: inherit;
   }
 
-  .post-container .og-post .img-text:hover .buttons-fb{
-    display: none;
-  }
+  /*.post-container .og-post .img-text:hover .buttons-fb{*/
+  /*  display: none;*/
+  /*}*/
 
 }
