@@ -230,7 +230,9 @@ img:hover{
 .post-container .og-post .img-text
 > img{
   min-width: 55px;
+  max-width: 55px;
   max-height: 55px;
+  min-height: 55px;
   object-fit: cover;
   border-radius: 50%;
   border: 4px #EF443C solid;
