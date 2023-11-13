@@ -86,9 +86,10 @@ h1,h2, button, textarea{
 .profile-container
 .profile-pic-container{
   position: absolute;
-  left: 96px;
+  left: 0;
   top: 27px;
   text-align: center;
+  width: 320px;
 }
 
 .profile-container .profile-pic-container
@@ -404,9 +405,11 @@ button{
 
   /* PROFILE */
   .profile-container .profile-pic-container > h2 {
-    font-size: 16px;
-    width: 70%;
+    font-size: 14px;
+    width: 80%;
     margin: 0 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   #summary{
@@ -447,7 +450,6 @@ button{
 
   .profile-container .profile-pic-container {
     top: -110px;
-    width: auto;
   }
 
   .profile-container .aboutMe-container {
