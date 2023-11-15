@@ -121,16 +121,20 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   likePost(){
     this.data.likes++;
     this.isLiked = true;
+    const postToLike = {
+      attached_file: this.data.attached_file,
+      content: this.data.content,
+      _id: this.data.idPost,
+      user_id: {
+        _id: this.data.idUser,
+        profile_pic: this.data.imageUserPost
+      }
+    }
+
     if(this.isFromFeed){
-      this.likeEmitter.emit({
-        attached_file: this.data.attached_file,
-        content: this.data.content,
-        _id: this.data.idPost,
-        user_id: {
-          _id: this.data.idUser,
-          profile_pic: this.data.imageUserPost
-        }
-      });
+      this.likeEmitter.emit(postToLike);
+    } else {
+      this.postService.like(postToLike)?.subscribe()
     }
   }
 
@@ -139,6 +143,8 @@ export class PostDetailComponent implements OnInit, OnDestroy{
     this.isLiked = false;
     if(this.isFromFeed){
       this.unlikeEmitter.emit(this.data.idPost);
+    } else {
+      this.postService.unlike(this.data.idPost)?.subscribe();
     }
   }
 

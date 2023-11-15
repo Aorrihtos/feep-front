@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "es.feep_social.twa",
+      "sha256_cert_fingerprints": [
+        "75:FE:63:8C:15:23:BA:D6:21:43:4F:C9:BC:A3:E7:7E:B3:02:7F:B9:AE:8E:4C:EA:BE:9C:39:93:57:8A:74:E4"
+      ]
+    }
+  }
+]

@@ -110,7 +110,7 @@ export class FeedComponent implements OnDestroy{
           this.postsDiv.nativeElement.scrollTop = scrollPost;
         } else this.postsDiv.nativeElement.scrollTop = scrollFeed;
       }
-    }, 10)
+    }, 2)
   }
 
   changeFeed(){
@@ -120,7 +120,7 @@ export class FeedComponent implements OnDestroy{
     // We set timeout to not bug the scrollTop when changing Div length
     setTimeout(()=>{
       this.postsDiv.nativeElement.scrollTop = Number(localStorage.getItem('scrollFeed'));
-    }, 10);
+    }, 2);
   }
 
   changePosts(){
@@ -130,7 +130,7 @@ export class FeedComponent implements OnDestroy{
     // Set timeout to not bug the scrollTop when changing Div length
     setTimeout(()=>{
       this.postsDiv.nativeElement.scrollTop = Number(localStorage.getItem('scrollPost'));
-    }, 10);
+    }, 2);
   }
 
   post(){
